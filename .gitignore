@@ -1,0 +1,60 @@
+# ==============================================================================
+# WordPress Root .gitignore
+# Tracks ONLY custom themes & plugin for Shrestha Handicraft Atelier
+# ==============================================================================
+
+# OS & Editor Metadata
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.log
+*.tmp
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Server & PHP Configuration Files
+/.htaccess
+/.user.ini
+/php.ini
+/robots.txt
+
+# WordPress Core Folders
+/wp-admin/
+/wp-includes/
+
+# WordPress Core Root Files
+/wp-*.php
+/xmlrpc.php
+/license.txt
+/readme.html
+/index.php
+
+# WordPress Content Uploads, Backups, Caches & Logs
+/wp-content/index.php
+/wp-content/uploads/
+/wp-content/upgrade/
+/wp-content/cache/
+/wp-content/backups/
+/wp-content/*backups/
+/wp-content/wpo-cache/
+/wp-content/wflogs/
+/wp-content/updraft/
+/wp-content/advanced-cache.php
+/wp-content/backup-db/
+/wp-content/languages/
+/wp-content/mu-plugins/
+
+# Ignore all other plugins except shrestha-core
+/wp-content/plugins/*
+!/wp-content/plugins/shrestha-core/
+
+# Ignore all other themes except dynamic and static
+/wp-content/themes/*
+!/wp-content/themes/dynamic/
+!/wp-content/themes/static/

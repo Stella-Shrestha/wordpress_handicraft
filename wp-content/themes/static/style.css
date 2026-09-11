@@ -1,0 +1,88 @@
+/*
+Theme Name: Shrestha Handicraft
+Theme URI: https://shresthahandicraft.com/
+Author: Shrestha Handicraft Atelier
+Author URI: https://shresthahandicraft.com/
+Description: A luxury, sacred metallurgy artisan e-commerce & portfolio theme for Shrestha Handicraft Atelier (Patan, Nepal). Features dark/light mode toggle, dynamic acquisitions drawer, specimen quick inspection modal, patron ledger tracking, interactive reviews slider, and lost-wax foundry showcase.
+Version: 1.0.0
+Requires at least: 5.8
+Tested up to: 6.7
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: shresthahandicraft
+Tags: e-commerce, custom-colors, custom-menu, featured-images, full-width-template, theme-options, translation-ready
+*/
+
+/* ==========================================================================
+   SHRESTHA HANDICRAFT — CORE STYLES & PATTERNS
+   ========================================================================== */
+
+/* Subtle background grid pattern */
+.bg-grid-pattern {
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.dark .bg-grid-pattern {
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+}
+
+html:not(.dark) .bg-grid-pattern {
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+}
+
+/* Marquee Animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex !important;
+  width: max-content !important;
+  animation: marquee 25s linear infinite !important;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused !important;
+}
+
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spinSlow 40s linear infinite;
+}
+
+/* Custom Scrollbar for Luxury Dark Feel */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0B0C0E;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D49B4B;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #F5C77E;
+}

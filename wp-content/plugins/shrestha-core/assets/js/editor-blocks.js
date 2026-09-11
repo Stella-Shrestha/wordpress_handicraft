@@ -1643,6 +1643,33 @@
       initials: 'KC',
       name: 'Kenjiro & Saki Takahashi',
       role: 'Private Collectors of Tantric Iconography • Kyoto, Japan'
+    },
+    {
+      stars: 5,
+      seal: 'Museum Curator',
+      specimen: 'Mahakala 6-Armed Protector',
+      quote: '"As a museum curator, finding contemporary lost-wax bronze casting that matches 14th-century Malla dynasty density is exceptionally rare. Spectrometry testing confirmed authentic 8-metal Ashtadhatu alloy. Phenomenal art historical fidelity."',
+      initials: 'ES',
+      name: 'Dr. Evelyn V. Sterling',
+      role: 'Curator, Royal Heritage • London, UK'
+    },
+    {
+      stars: 5,
+      seal: 'Verified Collector',
+      specimen: 'Shakyamuni Buddha Bhumisparsha',
+      quote: '"The cold-gold painted face and hand-chiseled antiqued dark bronze patina have an extraordinary spiritual presence in my gallery. The escrow process was seamless, and the physical certificate signed by Master Rajan Tamrakar gives absolute provenance."',
+      initials: 'JM',
+      name: 'Jean-Luc Moreau',
+      role: 'Sacred Art Collector • Geneva, Switzerland'
+    },
+    {
+      stars: 5,
+      seal: 'Monastic Consecration',
+      specimen: 'Chenrezig 1000-Armed Compassion',
+      quote: '"When our nunnery received the thousand-armed Chenrezig, each hand icon accurately held its sacred implement according to the ancient Tibetan canon. The consecrated hollow core allowed our traditional mantra scrolls and relic pills to be sealed with complete monastic reverence."',
+      initials: 'AD',
+      name: 'Ani Choying Drolma',
+      role: 'Nagi Gompa Hermitage • Kathmandu, Nepal'
     }
   ];
 
@@ -1654,17 +1681,17 @@
     attributes: {
       title: { type: 'string', default: 'Testimonials from Our Clients' },
       subtitle: { type: 'string', default: 'Venerated reviews from Buddhist monasteries, museum curators, international collectors, and sacred art connoisseurs across 34 nations.' },
-      source: { type: 'string', default: 'manual' },
-      selectedIds: { type: 'array', default: [26, 27, 28] },
-      numberOfPosts: { type: 'number', default: 3 },
+      source: { type: 'string', default: 'dynamic' },
+      selectedIds: { type: 'array', default: [] },
+      numberOfPosts: { type: 'number', default: 6 },
       testimonials: { type: 'array', default: defaultTestimonialsList }
     },
     edit: function (props) {
       const { attributes, setAttributes } = props;
 
-      const source = attributes.source || 'manual';
-      const selectedIds = Array.isArray(attributes.selectedIds) ? attributes.selectedIds.map(Number) : [26, 27, 28];
-      const numberOfPosts = typeof attributes.numberOfPosts === 'number' ? attributes.numberOfPosts : 3;
+      const source = attributes.source || 'dynamic';
+      const selectedIds = Array.isArray(attributes.selectedIds) ? attributes.selectedIds.map(Number) : [];
+      const numberOfPosts = typeof attributes.numberOfPosts === 'number' ? attributes.numberOfPosts : 6;
 
       const rawTestimonials = (window.shresthaCoreData && Array.isArray(window.shresthaCoreData.availableTestimonials) && window.shresthaCoreData.availableTestimonials.length > 0)
         ? window.shresthaCoreData.availableTestimonials

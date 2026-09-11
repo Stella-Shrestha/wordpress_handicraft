@@ -948,7 +948,147 @@ get_header();
               </div>
             </div>
 
+            <!-- REVIEW CARD 4 -->
+            <div class="w-full md:w-1/2 lg:w-1/3 shrink-0 px-3 flex">
+              <div
+                class="w-full bg-white dark:bg-patina-900 border border-slate-200 dark:border-gold/25 hover:border-gold/60 rounded-2xl p-6 sm:p-7 flex flex-col justify-between shadow-lg hover:shadow-xl transition-all duration-300 relative group">
+                <div>
+                  <div class="flex items-center justify-between gap-2 mb-4">
+                    <div class="flex items-center gap-1 text-amber-400 dark:text-gold">
+                      <i data-lucide="star" class="w-4 h-4 fill-current text-amber-400 dark:text-gold"></i>
+                      <i data-lucide="star" class="w-4 h-4 fill-current text-amber-400 dark:text-gold"></i>
+                      <i data-lucide="star" class="w-4 h-4 fill-current text-amber-400 dark:text-gold"></i>
+                      <i data-lucide="star" class="w-4 h-4 fill-current text-amber-400 dark:text-gold"></i>
+                      <i data-lucide="star" class="w-4 h-4 fill-current text-amber-400 dark:text-gold"></i>
+                    </div>
+                    <span
+                      class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
+                      <i data-lucide="award" class="w-3 h-3"></i> Museum Acquisition
+                    </span>
+                  </div>
+
+                  <div
+                    class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-100 dark:bg-patina-950 border border-slate-200 dark:border-slate-800 text-[11px] font-mono text-gold font-medium mb-3">
+                    <i data-lucide="diamond" class="w-3 h-3 text-gold"></i>
+                    <span>Mahakala 6-Armed — Ashtadhatu (18 in)</span>
+                  </div>
+
+                  <p
+                    class="text-slate-700 dark:text-slate-300 text-xs sm:text-sm font-sans italic leading-relaxed my-3">
+                    "Acquiring the 6-Armed Mahakala for our Himalayan sacred art gallery exceeded all curatorial expectations. The alloy density, cold-hammered chiseled jewelry, and Sanskrit consecration chamber make this a museum-grade masterpiece."
+                  </p>
+                </div>
+
+                <div class="pt-4 mt-2 border-t border-slate-100 dark:border-slate-800 flex items-center gap-3">
+                  <div
+                    class="w-11 h-11 rounded-full bg-gradient-to-tr from-amber-600 via-gold to-copper text-patina-950 font-display font-bold text-sm flex items-center justify-center shadow-md shrink-0">
+                    DR
+                  </div>
+                  <div class="flex flex-col min-w-0">
+                    <span class="font-display font-bold text-sm text-slate-900 dark:text-parchment truncate">Dr. Henriette Richter</span>
+                    <span class="text-[11px] font-mono text-slate-500 dark:text-slate-400 truncate">Curator of Asian Art, Museum Rietberg • Zurich, Switzerland</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- REVIEW CARD 5 -->
+            <div class="w-full md:w-1/2 lg:w-1/3 shrink-0 px-3 flex">
+              <div
+                class="w-full bg-white dark:bg-patina-900 border border-slate-200 dark:border-gold/25 hover:border-gold/60 rounded-2xl p-6 sm:p-7 flex flex-col justify-between shadow-lg hover:shadow-xl transition-all duration-300 relative group">
+                <div>
+                  <div class="flex items-center justify-between gap-2 mb-4">
+                    <div class="flex items-center gap-1 text-amber-400 dark:text-gold">
+                      <i data-lucide="star" class="w-4 h-4 fill-current text-amber-400 dark:text-gold"></i>
+                      <i data-lucide="star" class="w-4 h-4 fill-current text-amber-400 dark:text-gold"></i>
+                      <i data-lucide="star" class="w-4 h-4 fill-current text-amber-400 dark:text-gold"></i>
+                      <i data-lucide="star" class="w-4 h-4 fill-current text-amber-400 dark:text-gold"></i>
+                      <i data-lucide="star" class="w-4 h-4 fill-current text-amber-400 dark:text-gold"></i>
+                    </div>
+                    <span
+                      class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
+                      <i data-lucide="shield-check" class="w-3 h-3"></i> Private Collection
+                    </span>
+                  </div>
+
+                  <div
+                    class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-100 dark:bg-patina-950 border border-slate-200 dark:border-slate-800 text-[11px] font-mono text-gold font-medium mb-3">
+                    <i data-lucide="diamond" class="w-3 h-3 text-gold"></i>
+                    <span>Shakyamuni Buddha — 24K Gilt (24 in)</span>
+                  </div>
+
+                  <p
+                    class="text-slate-700 dark:text-slate-300 text-xs sm:text-sm font-sans italic leading-relaxed my-3">
+                    "Commissioning our Shakyamuni Buddha was a transcendent experience. Receiving photo documentation of the lost-wax casting and Patan monastery blessing gave our family a profound spiritual heirloom that will endure for centuries."
+                  </p>
+                </div>
+
+                <div class="pt-4 mt-2 border-t border-slate-100 dark:border-slate-800 flex items-center gap-3">
+                  <div
+                    class="w-11 h-11 rounded-full bg-gradient-to-tr from-amber-600 via-gold to-copper text-patina-950 font-display font-bold text-sm flex items-center justify-center shadow-md shrink-0">
+                    KC
+                  </div>
+                  <div class="flex flex-col min-w-0">
+                    <span class="font-display font-bold text-sm text-slate-900 dark:text-parchment truncate">Kenjiro & Saki Takahashi</span>
+                    <span class="text-[11px] font-mono text-slate-500 dark:text-slate-400 truncate">Private Collectors • Kyoto, Japan</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- REVIEW CARD 6 -->
+            <div class="w-full md:w-1/2 lg:w-1/3 shrink-0 px-3 flex">
+              <div
+                class="w-full bg-white dark:bg-patina-900 border border-slate-200 dark:border-gold/25 hover:border-gold/60 rounded-2xl p-6 sm:p-7 flex flex-col justify-between shadow-lg hover:shadow-xl transition-all duration-300 relative group">
+                <div>
+                  <div class="flex items-center justify-between gap-2 mb-4">
+                    <div class="flex items-center gap-1 text-amber-400 dark:text-gold">
+                      <i data-lucide="star" class="w-4 h-4 fill-current text-amber-400 dark:text-gold"></i>
+                      <i data-lucide="star" class="w-4 h-4 fill-current text-amber-400 dark:text-gold"></i>
+                      <i data-lucide="star" class="w-4 h-4 fill-current text-amber-400 dark:text-gold"></i>
+                      <i data-lucide="star" class="w-4 h-4 fill-current text-amber-400 dark:text-gold"></i>
+                      <i data-lucide="star" class="w-4 h-4 fill-current text-amber-400 dark:text-gold"></i>
+                    </div>
+                    <span
+                      class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
+                      <i data-lucide="shield-check" class="w-3 h-3"></i> Monastic Consecration
+                    </span>
+                  </div>
+
+                  <div
+                    class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-100 dark:bg-patina-950 border border-slate-200 dark:border-slate-800 text-[11px] font-mono text-gold font-medium mb-3">
+                    <i data-lucide="diamond" class="w-3 h-3 text-gold"></i>
+                    <span>Chenrezig 1000-Armed Compassion</span>
+                  </div>
+
+                  <p
+                    class="text-slate-700 dark:text-slate-300 text-xs sm:text-sm font-sans italic leading-relaxed my-3">
+                    "When our nunnery received the thousand-armed Chenrezig, each hand icon accurately held its sacred implement according to the ancient Tibetan canon. The consecrated hollow core allowed our traditional mantra scrolls and relic pills to be sealed with complete monastic reverence."
+                  </p>
+                </div>
+
+                <div class="pt-4 mt-2 border-t border-slate-100 dark:border-slate-800 flex items-center gap-3">
+                  <div
+                    class="w-11 h-11 rounded-full bg-gradient-to-tr from-amber-600 via-gold to-copper text-patina-950 font-display font-bold text-sm flex items-center justify-center shadow-md shrink-0">
+                    AD
+                  </div>
+                  <div class="flex flex-col min-w-0">
+                    <span class="font-display font-bold text-sm text-slate-900 dark:text-parchment truncate">Ani Choying Drolma</span>
+                    <span class="text-[11px] font-mono text-slate-500 dark:text-slate-400 truncate">Nagi Gompa Hermitage • Kathmandu, Nepal</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
+        </div>
+
+        <!-- Mobile Slide Indicators -->
+        <div class="flex items-center justify-center gap-2 mt-8 md:hidden">
+          <?php for ($i = 0; $i < 6; $i++): ?>
+            <button class="review-indicator w-2.5 h-2.5 rounded-full <?php echo $i === 0 ? 'bg-gold' : 'bg-slate-300 dark:bg-slate-700'; ?> transition-all duration-300"
+              data-slide-to="<?php echo $i; ?>" aria-label="Go to slide <?php echo $i + 1; ?>"></button>
+          <?php endfor; ?>
         </div>
 
       </div>

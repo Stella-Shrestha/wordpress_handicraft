@@ -918,40 +918,82 @@ function shrestha_auto_seed_content() {
     // 4. Seed Patron Reviews
     $sample_reviews = array(
         array(
-            'name'     => 'Dr. Alistair Vance',
-            'location' => 'Oxford, United Kingdom',
-            'specimen' => 'Green Tara (SH-001)',
+            'name'     => 'Lama Tenzin Wangyal',
+            'role'     => 'Abbot, Drukpa Monastery • Paro, Bhutan',
+            'seal'     => 'Monastic Seal',
+            'specimen' => 'Green Tara — 24K Gold (22.5 in)',
             'rating'   => 5,
-            'content'  => 'The iconometric proportion and gold-leaf finish on the Green Tara statue exceed museum standards. It radiates serene presence in our collection hall.',
+            'initials' => 'LW',
+            'content'  => 'The iconometric precision of the 124 Angula grid on our Green Tara is flawless. When the 24K mercury gilding caught the butter lamps in the shrine room, the monastic assembly was deeply moved. Shrestha Atelier preserves the true soul of Patan metallurgy.',
         ),
         array(
-            'name'     => 'Tenzin Chokyi',
-            'location' => 'Dharamsala, India',
-            'specimen' => 'Shakyamuni Buddha (SH-002)',
+            'name'     => 'Dr. Henriette Richter',
+            'role'     => 'Curator of Asian Art, Museum Rietberg • Zurich, Switzerland',
+            'seal'     => 'Museum Acquisition',
+            'specimen' => 'Mahakala 6-Armed — Ashtadhatu (18 in)',
             'rating'   => 5,
-            'content'  => 'Authentic Patan lost-wax casting at its highest level. The facial serenity and cold-chiseled lotus throne detail honor the ancient lineage teachings.',
+            'initials' => 'DR',
+            'content'  => 'Acquiring the 6-Armed Mahakala for our Himalayan sacred art gallery exceeded all curatorial expectations. The alloy density, cold-hammered chiseled jewelry, and Sanskrit consecration chamber make this a museum-grade masterpiece.',
         ),
         array(
-            'name'     => 'Elena Rostova',
-            'location' => 'Zurich, Switzerland',
-            'specimen' => 'Mahakala (SH-003)',
+            'name'     => 'Kenjiro & Saki Takahashi',
+            'role'     => 'Private Collectors of Tantric Iconography • Kyoto, Japan',
+            'seal'     => 'Private Collection',
+            'specimen' => 'Shakyamuni Buddha — 24K Gilt Fire Gilding (24 in)',
             'rating'   => 5,
-            'content'  => 'A majestic, powerful bronze casting with authentic oxidized patina. Packaging was meticulous and customs documentation was flawless.',
+            'initials' => 'KC',
+            'content'  => 'Commissioning our Shakyamuni Buddha was a transcendent experience. Receiving photo documentation of the lost-wax casting and Patan monastery blessing gave our family a profound spiritual heirloom that will endure for centuries.',
+        ),
+        array(
+            'name'     => 'Dr. Evelyn V. Sterling',
+            'role'     => 'Curator, Royal Heritage • London, UK',
+            'seal'     => 'Museum Curator',
+            'specimen' => 'Mahakala 6-Armed Protector',
+            'rating'   => 5,
+            'initials' => 'ES',
+            'content'  => 'As a museum curator, finding contemporary lost-wax bronze casting that matches 14th-century Malla dynasty density is exceptionally rare. Spectrometry testing confirmed authentic 8-metal Ashtadhatu alloy. Phenomenal art historical fidelity.',
+        ),
+        array(
+            'name'     => 'Jean-Luc Moreau',
+            'role'     => 'Sacred Art Collector • Geneva, Switzerland',
+            'seal'     => 'Verified Collector',
+            'specimen' => 'Shakyamuni Buddha Bhumisparsha',
+            'rating'   => 5,
+            'initials' => 'JM',
+            'content'  => 'The cold-gold painted face and hand-chiseled antiqued dark bronze patina have an extraordinary spiritual presence in my gallery. The escrow process was seamless, and the physical certificate signed by Master Rajan Tamrakar gives absolute provenance.',
+        ),
+        array(
+            'name'     => 'Ani Choying Drolma',
+            'role'     => 'Nagi Gompa Hermitage • Kathmandu, Nepal',
+            'seal'     => 'Monastic Consecration',
+            'specimen' => 'Chenrezig 1000-Armed Compassion',
+            'rating'   => 5,
+            'initials' => 'AD',
+            'content'  => 'When our nunnery received the thousand-armed Chenrezig, each hand icon accurately held its sacred implement according to the ancient Tibetan canon. The consecrated hollow core allowed our traditional mantra scrolls and relic pills to be sealed with complete monastic reverence.',
         ),
     );
 
     foreach ($sample_reviews as $rev) {
-        $rev_title = $rev['name'] . ' — ' . $rev['specimen'];
-        $existing_rev = get_page_by_title($rev_title, OBJECT, 'testimonial');
-        if (!$existing_rev) {
+        $existing_rev_query = new WP_Query(array(
+            'post_type'      => 'testimonial',
+            'title'          => $rev['name'],
+            'posts_per_page' => 1,
+            'post_status'    => 'publish',
+        ));
+        if (!$existing_rev_query->have_posts()) {
             $rev_id = wp_insert_post(array(
-                'post_title'   => $rev_title,
+                'post_title'   => $rev['name'],
                 'post_content' => $rev['content'],
                 'post_type'    => 'testimonial',
                 'post_status'  => 'publish',
             ));
             if (!is_wp_error($rev_id)) {
-                update_post_meta($rev_id, '_review_location', $rev['location']);
+                update_post_meta($rev_id, '_testimonial_role', $rev['role']);
+                update_post_meta($rev_id, '_testimonial_seal', $rev['seal']);
+                update_post_meta($rev_id, '_testimonial_specimen', $rev['specimen']);
+                update_post_meta($rev_id, '_testimonial_rating', $rev['rating']);
+                update_post_meta($rev_id, '_testimonial_initials', $rev['initials']);
+                update_post_meta($rev_id, '_review_location', $rev['role']);
                 update_post_meta($rev_id, '_review_specimen', $rev['specimen']);
                 update_post_meta($rev_id, '_review_rating', $rev['rating']);
             }

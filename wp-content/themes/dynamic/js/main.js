@@ -746,6 +746,7 @@ function initReviewsSlider() {
   const dotsContainer = document.getElementById('reviewDots');
   const counterEl = document.getElementById('reviewCounter');
   const autoplayBtn = document.getElementById('autoplayReviewBtn');
+  const mobileIndicators = document.querySelectorAll('.review-indicator');
 
   function getCardsPerView() {
     if (window.innerWidth >= 1024) return 3;
@@ -774,10 +775,12 @@ function initReviewsSlider() {
     }
 
     if (prevBtn) {
-      prevBtn.style.opacity = (reviewCurrentIndex === 0) ? '0.6' : '1';
+      prevBtn.style.opacity = (maxIdx === 0) ? '0.4' : '1';
+      prevBtn.style.pointerEvents = (maxIdx === 0) ? 'none' : 'auto';
     }
     if (nextBtn) {
-      nextBtn.style.opacity = (reviewCurrentIndex >= maxIdx) ? '0.6' : '1';
+      nextBtn.style.opacity = (maxIdx === 0) ? '0.4' : '1';
+      nextBtn.style.pointerEvents = (maxIdx === 0) ? 'none' : 'auto';
     }
 
     if (dotsContainer) {
@@ -797,22 +800,50 @@ function initReviewsSlider() {
         dotsContainer.appendChild(dot);
       }
     }
+
+    if (mobileIndicators && mobileIndicators.length > 0) {
+      mobileIndicators.forEach((ind, i) => {
+        if (i === reviewCurrentIndex) {
+          ind.classList.add('bg-gold', 'w-7');
+          ind.classList.remove('bg-slate-300', 'dark:bg-slate-700', 'w-2.5');
+        } else {
+          ind.classList.remove('bg-gold', 'w-7');
+          ind.classList.add('bg-slate-300', 'dark:bg-slate-700', 'w-2.5');
+        }
+      });
+    }
+  }
+
+  if (mobileIndicators && mobileIndicators.length > 0) {
+    mobileIndicators.forEach((ind, i) => {
+      ind.onclick = (e) => {
+        e.preventDefault();
+        const maxIdx = getMaxIndex();
+        reviewCurrentIndex = Math.min(i, maxIdx);
+        updateSliderPosition();
+      };
+    });
   }
 
   if (prevBtn) {
-    prevBtn.onclick = () => {
+    prevBtn.onclick = (e) => {
+      if (e) e.preventDefault();
+      const maxIdx = getMaxIndex();
+      if (maxIdx <= 0) return;
       if (reviewCurrentIndex > 0) {
         reviewCurrentIndex--;
       } else {
-        reviewCurrentIndex = getMaxIndex();
+        reviewCurrentIndex = maxIdx;
       }
       updateSliderPosition();
     };
   }
 
   if (nextBtn) {
-    nextBtn.onclick = () => {
+    nextBtn.onclick = (e) => {
+      if (e) e.preventDefault();
       const maxIdx = getMaxIndex();
+      if (maxIdx <= 0) return;
       if (reviewCurrentIndex < maxIdx) {
         reviewCurrentIndex++;
       } else {
@@ -825,9 +856,12 @@ function initReviewsSlider() {
   let isAutoplay = true;
   function startAutoplay() {
     stopAutoplay();
+    const maxIdx = getMaxIndex();
+    if (maxIdx <= 0) return;
     reviewAutoplayInterval = setInterval(() => {
-      const maxIdx = getMaxIndex();
-      reviewCurrentIndex = (reviewCurrentIndex >= maxIdx) ? 0 : reviewCurrentIndex + 1;
+      const max = getMaxIndex();
+      if (max <= 0) return;
+      reviewCurrentIndex = (reviewCurrentIndex >= max) ? 0 : reviewCurrentIndex + 1;
       updateSliderPosition();
     }, 4500);
   }
@@ -867,13 +901,13 @@ function initReviewsSlider() {
     isDragging = false;
     const endX = e.changedTouches[0].clientX;
     const diffX = startX - endX;
+    const maxIdx = getMaxIndex();
 
-    if (Math.abs(diffX) > 40) {
+    if (Math.abs(diffX) > 40 && maxIdx > 0) {
       if (diffX > 0) {
-        const maxIdx = getMaxIndex();
-        if (reviewCurrentIndex < maxIdx) reviewCurrentIndex++;
+        reviewCurrentIndex = (reviewCurrentIndex < maxIdx) ? reviewCurrentIndex + 1 : 0;
       } else {
-        if (reviewCurrentIndex > 0) reviewCurrentIndex--;
+        reviewCurrentIndex = (reviewCurrentIndex > 0) ? reviewCurrentIndex - 1 : maxIdx;
       }
       updateSliderPosition();
     }

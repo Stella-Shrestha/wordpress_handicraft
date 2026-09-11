@@ -11,9 +11,9 @@ if (!defined('ABSPATH')) {
 
 $title           = isset($attributes['title']) ? $attributes['title'] : 'Testimonials from Our Clients';
 $subtitle        = isset($attributes['subtitle']) ? $attributes['subtitle'] : 'Venerated reviews from Buddhist monasteries, museum curators, international collectors, and sacred art connoisseurs across 34 nations.';
-$source          = isset($attributes['source']) ? $attributes['source'] : 'manual';
-$selected_ids    = (isset($attributes['selectedIds']) && is_array($attributes['selectedIds'])) ? array_map('intval', $attributes['selectedIds']) : array(26, 27, 28);
-$number_of_posts = isset($attributes['numberOfPosts']) ? intval($attributes['numberOfPosts']) : 3;
+$source          = isset($attributes['source']) ? $attributes['source'] : 'dynamic';
+$selected_ids    = (!empty($attributes['selectedIds']) && is_array($attributes['selectedIds'])) ? array_map('intval', $attributes['selectedIds']) : array();
+$number_of_posts = isset($attributes['numberOfPosts']) ? intval($attributes['numberOfPosts']) : 6;
 $number_of_posts = max(1, min(20, $number_of_posts));
 
 $default_testimonials = array(
@@ -43,6 +43,33 @@ $default_testimonials = array(
         'initials' => 'KC',
         'name'     => 'Kenjiro & Saki Takahashi',
         'role'     => 'Private Collectors of Tantric Iconography • Kyoto, Japan'
+    ),
+    array(
+        'stars'    => 5,
+        'seal'     => 'Museum Curator',
+        'specimen' => 'Mahakala 6-Armed Protector',
+        'quote'    => '"As a museum curator, finding contemporary lost-wax bronze casting that matches 14th-century Malla dynasty density is exceptionally rare. Spectrometry testing confirmed authentic 8-metal Ashtadhatu alloy. Phenomenal art historical fidelity."',
+        'initials' => 'ES',
+        'name'     => 'Dr. Evelyn V. Sterling',
+        'role'     => 'Curator, Royal Heritage • London, UK'
+    ),
+    array(
+        'stars'    => 5,
+        'seal'     => 'Verified Collector',
+        'specimen' => 'Shakyamuni Buddha Bhumisparsha',
+        'quote'    => '"The cold-gold painted face and hand-chiseled antiqued dark bronze patina have an extraordinary spiritual presence in my gallery. The escrow process was seamless, and the physical certificate signed by Master Rajan Tamrakar gives absolute provenance."',
+        'initials' => 'JM',
+        'name'     => 'Jean-Luc Moreau',
+        'role'     => 'Sacred Art Collector • Geneva, Switzerland'
+    ),
+    array(
+        'stars'    => 5,
+        'seal'     => 'Monastic Consecration',
+        'specimen' => 'Chenrezig 1000-Armed Compassion',
+        'quote'    => '"When our nunnery received the thousand-armed Chenrezig, each hand icon accurately held its sacred implement according to the ancient Tibetan canon. The consecrated hollow core allowed our traditional mantra scrolls and relic pills to be sealed with complete monastic reverence."',
+        'initials' => 'AD',
+        'name'     => 'Ani Choying Drolma',
+        'role'     => 'Nagi Gompa Hermitage • Kathmandu, Nepal'
     ),
 );
 

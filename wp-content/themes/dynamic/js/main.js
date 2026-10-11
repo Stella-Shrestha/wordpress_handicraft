@@ -704,6 +704,14 @@ function openSpecimenModalByProdId(prodId) {
     };
   }
 
+  const bookBtn = document.getElementById('modalBookBtn');
+  if (bookBtn) {
+    bookBtn.onclick = () => {
+      closeSpecimenModal();
+      bookNowByProdId(p.id);
+    };
+  }
+
   modal.classList.remove('hidden');
   modal.classList.add('flex');
 }
@@ -714,6 +722,67 @@ function closeSpecimenModal() {
     modal.classList.add('hidden');
     modal.classList.remove('flex');
   }
+}
+
+// 5b. BOOK NOW & ATELIER RESERVATION MODAL
+function bookNowByProdId(prodId) {
+  if (!prodId) prodId = 'SH-001';
+  let p = PRODUCTS.find(x => x.id === prodId || (x.id && x.id.toLowerCase() === String(prodId).toLowerCase()));
+
+  if (!p) {
+    const card = document.querySelector(`[data-sku="${prodId}"]`) || 
+                 document.querySelector(`.specimen-card[data-sku="${prodId}"]`);
+    if (card) {
+      const cardTitle = card.getAttribute('data-name') || card.querySelector('h3, h2, h1')?.innerText?.trim() || `Specimen #${prodId}`;
+      const cardAlloy = card.getAttribute('data-alloys') || card.querySelector('.font-mono')?.innerText?.trim() || 'Ashtadhatu (8-Metal)';
+      p = { id: String(prodId), name: cardTitle, alloy: cardAlloy };
+    } else {
+      p = { id: String(prodId), name: `Sacred Specimen #${prodId}`, alloy: 'Ashtadhatu (8-Metal)' };
+    }
+  }
+
+  const bookingModal = document.getElementById('bookingModal');
+  if (bookingModal) {
+    const skuInput = document.getElementById('bookingSkuInput');
+    const deityInput = document.getElementById('bookingDeityInput');
+    const titleSpan = document.getElementById('bookingModalDeityName');
+    const skuSpan = document.getElementById('bookingModalSku');
+    
+    if (skuInput) skuInput.value = p.id;
+    if (deityInput) deityInput.value = p.name;
+    if (titleSpan) titleSpan.innerText = p.name;
+    if (skuSpan) skuSpan.innerText = p.id;
+    
+    bookingModal.classList.remove('hidden');
+    bookingModal.classList.add('flex');
+    if (typeof renderIcons === 'function') renderIcons();
+  } else {
+    var siteUrl = (typeof window.shresthaData !== 'undefined' && window.shresthaData.siteUrl) ? window.shresthaData.siteUrl : '';
+    window.location.href = (siteUrl ? siteUrl.replace(/\/$/, '') : '') + '/contact/?inquiry=booking&sku=' + encodeURIComponent(p.id);
+  }
+}
+
+function closeBookingModal() {
+  const modal = document.getElementById('bookingModal');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+}
+
+function closeBookingOnOverlay(e) {
+  if (e && e.target && e.target.id === 'bookingModal') {
+    closeBookingModal();
+  }
+}
+
+function handleBookingSubmit(e) {
+  e.preventDefault();
+  const form = e.target;
+  const deity = document.getElementById('bookingDeityInput')?.value || 'Sacred Specimen';
+  showToast(`Inquiry for "${deity}" received. Our Master Curator will contact you shortly.`);
+  form.reset();
+  closeBookingModal();
 }
 
 // 6. CHECKOUT MODAL MOCK
@@ -1004,7 +1073,7 @@ function renderCatalog() {
           </div>
 
           <div class="flex items-baseline justify-between gap-3 pt-1">
-            <h3 class="font-sans font-bold text-xl sm:text-2xl text-slate-900 dark:text-parchment leading-tight truncate">
+            <h3 class="font-sans font-bold text-xl sm:text-2xl text-slate-900 dark:text-parchment leading-tight">
               ${p.name}
             </h3>
             <span class="font-mono font-bold text-xl sm:text-2xl text-amber-600 dark:text-gold shrink-0">
@@ -1076,6 +1145,7 @@ const LUCIDE_SVG_MAP = {
   'badge-check': '<path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.78 4.78 4 4 0 0 1-6.74 0 4 4 0 0 1-4.78-4.78 4 4 0 0 1 0-6.75Z"/><path d="m9 12 2 2 4-4"/>',
   'landmark': '<line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7 12 2"/>',
   'message-square': '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+  'message-circle': '<path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z"/>',
   'x': '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
   'menu': '<line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/>',
   'sun': '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>',
@@ -1252,7 +1322,9 @@ document.addEventListener('click', (e) => {
                     btn.getAttribute('data-action') === 'add-to-selection' || 
                     btn.getAttribute('data-action') === 'add-to-cart' ||
                     btnText === 'ADD TO SELECTION' || 
-                    btnText.includes('ADD TO SELECTION');
+                    btnText.includes('ADD TO SELECTION') ||
+                    btnText === 'ADD TO CART' ||
+                    btnText.includes('ADD TO CART');
 
   if (isAddBtn) {
     const onclickAttr = btn.getAttribute('onclick') || '';
@@ -1269,6 +1341,11 @@ document.addEventListener('click', (e) => {
 // Expose functions globally for inline HTML onclick handlers
 if (typeof window !== 'undefined') {
   window.addToCartByProdId = addToCartByProdId;
+  window.bookNowByProdId = bookNowByProdId;
+  window.inquireByProdId = bookNowByProdId;
+  window.closeBookingModal = closeBookingModal;
+  window.closeBookingOnOverlay = closeBookingOnOverlay;
+  window.handleBookingSubmit = handleBookingSubmit;
   window.showToast = showToast;
   window.removeFromCart = removeFromCart;
   window.increaseQty = increaseQty;

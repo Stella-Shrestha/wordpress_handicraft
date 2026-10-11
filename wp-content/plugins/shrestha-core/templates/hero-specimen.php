@@ -15,7 +15,7 @@ $title_highlight  = isset($attributes['titleHighlight']) ? $attributes['titleHig
 $title_subtitle   = isset($attributes['titleSubtitle']) ? $attributes['titleSubtitle'] : 'Mother of Divine Liberation';
 $description      = isset($attributes['description']) ? $attributes['description'] : 'Hand-cast using lost-wax iconometry (Cire Perdue) from 8-metal Ashtadhatu alloy. Adorned with 24K gold-leaf fire gilding and cold-chiseled facial symmetry, crafted according to 14th-century Sanskrit treatise canons in Patan, Nepal.';
 $specimen_sku     = isset($attributes['specimenSku']) ? $attributes['specimenSku'] : 'SH-001';
-$primary_btn_text = isset($attributes['primaryBtnText']) ? $attributes['primaryBtnText'] : 'Acquire Hero Specimen';
+$primary_btn_text = isset($attributes['primaryBtnText']) && !empty($attributes['primaryBtnText']) && $attributes['primaryBtnText'] !== 'Acquire Hero Specimen' ? $attributes['primaryBtnText'] : 'Add to Cart';
 $secondary_btn    = isset($attributes['secondaryBtnText']) ? $attributes['secondaryBtnText'] : 'Inspect Technical Spec';
 $symmetry_text    = isset($attributes['symmetryText']) ? $attributes['symmetryText'] : 'ICONOMETRIC SYMMETRY: 99.8%';
 $image_asset      = isset($attributes['imageAsset']) ? $attributes['imageAsset'] : 'green_tara.jpg';
@@ -27,6 +27,28 @@ if (!empty($attributes['imageUrl'])) {
     $image_url = esc_url(wp_get_attachment_image_url($image_id, 'full'));
 } else {
     $image_url = shrestha_core_get_asset_url($image_asset);
+}
+
+// Resolve specimen permalink for direct next-page inspection
+$specimen_link = '';
+if (!empty($attributes['inspectUrl'])) {
+    $specimen_link = esc_url($attributes['inspectUrl']);
+} else {
+    $matching_specimens = get_posts(array(
+        'post_type'      => array('specimen', 'statue'),
+        'post_status'    => 'publish',
+        'posts_per_page' => 1,
+        'meta_query'     => array(
+            'relation' => 'OR',
+            array('key' => '_specimen_sku', 'value' => $specimen_sku),
+            array('key' => '_statue_sku', 'value' => $specimen_sku),
+        ),
+    ));
+    if (!empty($matching_specimens)) {
+        $specimen_link = get_permalink($matching_specimens[0]->ID);
+    } else {
+        $specimen_link = home_url('/specimen/green-tara-mother-of-divine-liberation/');
+    }
 }
 ?>
 
@@ -56,18 +78,26 @@ if (!empty($attributes['imageUrl'])) {
     <!-- CTA Action Buttons -->
     <div class="flex flex-wrap items-center gap-4 mt-2">
       <button type="button"
-        data-action="add-to-selection"
+        data-action="add-to-cart"
         data-sku="<?php echo esc_attr($specimen_sku); ?>"
         onclick="addToCartByProdId('<?php echo esc_js($specimen_sku); ?>', this)"
         class="add-to-cart-btn px-6 py-3.5 bg-gradient-to-r from-gold to-copper hover:from-gold-bright hover:to-copper-bright text-white dark:text-patina-950 font-mono font-bold text-xs tracking-wider uppercase rounded-lg shadow-lg shadow-gold/20 hover:shadow-gold/40 transition-all transform hover:-translate-y-0.5 flex items-center gap-2 cursor-pointer">
-        <i data-lucide="plus" class="w-4 h-4"></i>
-        <?php echo esc_html($primary_btn_text); ?>
+        <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+        <span><?php echo esc_html($primary_btn_text); ?></span>
       </button>
-      <button onclick="openSpecimenModalByProdId('<?php echo esc_js($specimen_sku); ?>')"
-        class="px-6 py-3.5 bg-white dark:bg-patina-900 border border-gold/40 hover:border-gold text-slate-800 dark:text-parchment hover:text-gold font-mono font-semibold text-xs tracking-wider uppercase rounded-lg transition-colors flex items-center gap-2">
+
+      <button type="button"
+        onclick="if(typeof bookNowByProdId==='function'){bookNowByProdId('<?php echo esc_js($specimen_sku); ?>');}else{window.location.href='<?php echo esc_url(home_url('/contact/?inquiry=booking&sku=')); ?><?php echo esc_js($specimen_sku); ?>';}"
+        class="px-6 py-3.5 bg-white dark:bg-patina-900 border border-slate-300 dark:border-gold/40 hover:border-gold text-slate-800 dark:text-parchment hover:text-gold font-mono font-bold text-xs tracking-wider uppercase rounded-lg transition-colors flex items-center gap-2 shadow-sm">
+        <i data-lucide="message-square" class="w-4 h-4 text-copper"></i>
+        <span>Inquiry</span>
+      </button>
+
+      <a href="<?php echo esc_url($specimen_link); ?>"
+        class="px-5 py-3.5 bg-slate-100 dark:bg-patina-800/80 hover:bg-gold/10 border border-slate-200 dark:border-gold/20 text-slate-700 dark:text-slate-300 hover:text-gold font-mono font-medium text-xs tracking-wider uppercase rounded-lg transition-colors flex items-center gap-2 shadow-sm">
         <i data-lucide="scan" class="w-4 h-4"></i>
-        <?php echo esc_html($secondary_btn); ?>
-      </button>
+        <span><?php echo esc_html($secondary_btn); ?></span>
+      </a>
     </div>
   </div>
 
@@ -76,8 +106,10 @@ if (!empty($attributes['imageUrl'])) {
     <div
       class="relative bg-white dark:bg-patina-900 border border-gold/30 rounded-2xl p-4 shadow-2xl overflow-hidden group">
       <div class="relative w-full h-[460px] rounded-xl overflow-hidden bg-black flex items-center justify-center">
-        <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($title_highlight); ?>"
-          class="max-h-full max-w-full object-contain filter drop-shadow-2xl group-hover:scale-105 transition-transform duration-700 ease-out" />
+        <a href="<?php echo esc_url($specimen_link); ?>" class="w-full h-full flex items-center justify-center cursor-pointer" title="<?php echo esc_attr($title_highlight); ?> Specimen Inspection">
+          <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($title_highlight); ?>"
+            class="max-h-full max-w-full object-contain filter drop-shadow-2xl group-hover:scale-105 transition-transform duration-700 ease-out" />
+        </a>
 
         <!-- HUD Crosshairs Overlay -->
         <div class="absolute inset-0 border border-gold/20 pointer-events-none">

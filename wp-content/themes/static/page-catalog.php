@@ -117,18 +117,26 @@ get_header();
               <span class="font-semibold text-gold">99.8%</span>
             </div>
           </div>
-          <div class="flex items-center justify-between gap-2 pt-2">
-            <span class="font-mono font-bold text-lg text-gold">$14,800.00</span>
-            <div class="flex items-center gap-2">
+          <div class="flex flex-col gap-2.5 pt-2 border-t border-slate-100 dark:border-gold/10">
+            <div class="flex items-center justify-between">
+              <span class="font-mono font-bold text-xl text-gold">$14,800.00</span>
               <button onclick="typeof openSpecimenModalByProdId === 'function' && openSpecimenModalByProdId('SH-001')"
-                class="p-2.5 bg-slate-100 dark:bg-patina-800 hover:bg-gold/10 text-slate-700 dark:text-parchment hover:text-gold rounded-lg border border-slate-200 dark:border-gold/20 transition-colors shadow-sm"
+                class="p-2 bg-slate-100 dark:bg-patina-800 hover:bg-gold/10 text-slate-700 dark:text-parchment hover:text-gold rounded-lg border border-slate-200 dark:border-gold/20 transition-colors shadow-sm text-xs font-mono flex items-center gap-1"
                 title="Inspect Technical Specs">
-                <i data-lucide="scan" class="w-4 h-4"></i>
+                <i data-lucide="scan" class="w-3.5 h-3.5"></i>
+                <span class="hidden sm:inline text-[10px]">Specs</span>
               </button>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
               <button onclick="typeof addToCartByProdId === 'function' && addToCartByProdId('SH-001')"
-                class="px-4 py-2 bg-gradient-to-r from-gold to-copper hover:from-gold-bright hover:to-copper-bright text-white dark:text-patina-950 font-mono text-xs font-bold uppercase rounded-lg shadow-md hover:shadow-lg transition-all flex items-center gap-1.5">
-                <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
-                <span>Acquire</span>
+                class="add-to-cart-btn px-2.5 py-2.5 bg-gradient-to-r from-gold to-copper hover:from-gold-bright hover:to-copper-bright text-white dark:text-patina-950 font-mono text-[11px] font-bold uppercase tracking-wider rounded-lg shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer text-center">
+                <i data-lucide="shopping-bag" class="w-3.5 h-3.5 shrink-0"></i>
+                <span>Add to Cart</span>
+              </button>
+              <button onclick="typeof bookNowByProdId === 'function' ? bookNowByProdId('SH-001') : (window.location.href='<?php echo esc_url(home_url('/contact/?inquiry=booking&sku=SH-001')); ?>')"
+                class="px-2.5 py-2.5 bg-white dark:bg-patina-800 hover:bg-gold/10 text-slate-800 dark:text-parchment hover:text-gold border border-slate-300 dark:border-gold/30 hover:border-gold font-mono text-[11px] font-bold uppercase tracking-wider rounded-lg shadow-sm transition-all flex items-center justify-center gap-1.5 text-center">
+                <i data-lucide="message-square" class="w-3.5 h-3.5 shrink-0 text-copper"></i>
+                <span>Inquiry</span>
               </button>
             </div>
           </div>
@@ -173,18 +181,26 @@ get_header();
               <span class="font-semibold text-gold">99.9%</span>
             </div>
           </div>
-          <div class="flex items-center justify-between gap-2 pt-2">
-            <span class="font-mono font-bold text-lg text-gold">$16,500.00</span>
-            <div class="flex items-center gap-2">
+          <div class="flex flex-col gap-2.5 pt-2 border-t border-slate-100 dark:border-gold/10">
+            <div class="flex items-center justify-between">
+              <span class="font-mono font-bold text-xl text-gold">$16,500.00</span>
               <button onclick="typeof openSpecimenModalByProdId === 'function' && openSpecimenModalByProdId('SH-002')"
-                class="p-2.5 bg-slate-100 dark:bg-patina-800 hover:bg-gold/10 text-slate-700 dark:text-parchment hover:text-gold rounded-lg border border-slate-200 dark:border-gold/20 transition-colors shadow-sm"
+                class="p-2 bg-slate-100 dark:bg-patina-800 hover:bg-gold/10 text-slate-700 dark:text-parchment hover:text-gold rounded-lg border border-slate-200 dark:border-gold/20 transition-colors shadow-sm text-xs font-mono flex items-center gap-1"
                 title="Inspect Technical Specs">
-                <i data-lucide="scan" class="w-4 h-4"></i>
+                <i data-lucide="scan" class="w-3.5 h-3.5"></i>
+                <span class="hidden sm:inline text-[10px]">Specs</span>
               </button>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
               <button onclick="typeof addToCartByProdId === 'function' && addToCartByProdId('SH-002')"
-                class="px-4 py-2 bg-gradient-to-r from-gold to-copper hover:from-gold-bright hover:to-copper-bright text-white dark:text-patina-950 font-mono text-xs font-bold uppercase rounded-lg shadow-md hover:shadow-lg transition-all flex items-center gap-1.5">
-                <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
-                <span>Acquire</span>
+                class="add-to-cart-btn px-2.5 py-2.5 bg-gradient-to-r from-gold to-copper hover:from-gold-bright hover:to-copper-bright text-white dark:text-patina-950 font-mono text-[11px] font-bold uppercase tracking-wider rounded-lg shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer text-center">
+                <i data-lucide="shopping-bag" class="w-3.5 h-3.5 shrink-0"></i>
+                <span>Add to Cart</span>
+              </button>
+              <button onclick="typeof bookNowByProdId === 'function' ? bookNowByProdId('SH-002') : (window.location.href='<?php echo esc_url(home_url('/contact/?inquiry=booking&sku=SH-002')); ?>')"
+                class="px-2.5 py-2.5 bg-white dark:bg-patina-800 hover:bg-gold/10 text-slate-800 dark:text-parchment hover:text-gold border border-slate-300 dark:border-gold/30 hover:border-gold font-mono text-[11px] font-bold uppercase tracking-wider rounded-lg shadow-sm transition-all flex items-center justify-center gap-1.5 text-center">
+                <i data-lucide="message-square" class="w-3.5 h-3.5 shrink-0 text-copper"></i>
+                <span>Inquiry</span>
               </button>
             </div>
           </div>
@@ -229,18 +245,26 @@ get_header();
               <span class="font-semibold text-gold">99.7%</span>
             </div>
           </div>
-          <div class="flex items-center justify-between gap-2 pt-2">
-            <span class="font-mono font-bold text-lg text-gold">$19,500.00</span>
-            <div class="flex items-center gap-2">
+          <div class="flex flex-col gap-2.5 pt-2 border-t border-slate-100 dark:border-gold/10">
+            <div class="flex items-center justify-between">
+              <span class="font-mono font-bold text-xl text-gold">$19,500.00</span>
               <button onclick="typeof openSpecimenModalByProdId === 'function' && openSpecimenModalByProdId('SH-108')"
-                class="p-2.5 bg-slate-100 dark:bg-patina-800 hover:bg-gold/10 text-slate-700 dark:text-parchment hover:text-gold rounded-lg border border-slate-200 dark:border-gold/20 transition-colors shadow-sm"
+                class="p-2 bg-slate-100 dark:bg-patina-800 hover:bg-gold/10 text-slate-700 dark:text-parchment hover:text-gold rounded-lg border border-slate-200 dark:border-gold/20 transition-colors shadow-sm text-xs font-mono flex items-center gap-1"
                 title="Inspect Technical Specs">
-                <i data-lucide="scan" class="w-4 h-4"></i>
+                <i data-lucide="scan" class="w-3.5 h-3.5"></i>
+                <span class="hidden sm:inline text-[10px]">Specs</span>
               </button>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
               <button onclick="typeof addToCartByProdId === 'function' && addToCartByProdId('SH-108')"
-                class="px-4 py-2 bg-gradient-to-r from-gold to-copper hover:from-gold-bright hover:to-copper-bright text-white dark:text-patina-950 font-mono text-xs font-bold uppercase rounded-lg shadow-md hover:shadow-lg transition-all flex items-center gap-1.5">
-                <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
-                <span>Acquire</span>
+                class="add-to-cart-btn px-2.5 py-2.5 bg-gradient-to-r from-gold to-copper hover:from-gold-bright hover:to-copper-bright text-white dark:text-patina-950 font-mono text-[11px] font-bold uppercase tracking-wider rounded-lg shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer text-center">
+                <i data-lucide="shopping-bag" class="w-3.5 h-3.5 shrink-0"></i>
+                <span>Add to Cart</span>
+              </button>
+              <button onclick="typeof bookNowByProdId === 'function' ? bookNowByProdId('SH-108') : (window.location.href='<?php echo esc_url(home_url('/contact/?inquiry=booking&sku=SH-108')); ?>')"
+                class="px-2.5 py-2.5 bg-white dark:bg-patina-800 hover:bg-gold/10 text-slate-800 dark:text-parchment hover:text-gold border border-slate-300 dark:border-gold/30 hover:border-gold font-mono text-[11px] font-bold uppercase tracking-wider rounded-lg shadow-sm transition-all flex items-center justify-center gap-1.5 text-center">
+                <i data-lucide="message-square" class="w-3.5 h-3.5 shrink-0 text-copper"></i>
+                <span>Inquiry</span>
               </button>
             </div>
           </div>

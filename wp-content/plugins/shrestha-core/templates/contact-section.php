@@ -29,7 +29,7 @@ $submit_btn_text  = isset($attributes['submitBtnText']) && !empty($attributes['s
 <section class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-16">
 
   <!-- LEFT: Showroom & Concierge Information Card -->
-  <div class="lg:col-span-5 space-y-6">
+  <div class="lg:col-span-4 space-y-6">
     <div class="bg-white dark:bg-patina-900 border border-gold/30 rounded-2xl p-6 sm:p-8 shadow-xl">
       <h3 class="font-display text-2xl font-bold text-slate-900 dark:text-parchment mb-6">
         <?php echo esc_html($showroom_title); ?>
@@ -97,7 +97,7 @@ $submit_btn_text  = isset($attributes['submitBtnText']) && !empty($attributes['s
   </div>
 
   <!-- RIGHT: AJAX Commission Inquiry Form -->
-  <div class="lg:col-span-7">
+  <div class="lg:col-span-8">
     <div class="bg-white dark:bg-patina-900 border border-gold/30 rounded-2xl p-6 sm:p-10 shadow-2xl">
       <div class="mb-6">
         <?php if (!empty($form_kicker)): ?>

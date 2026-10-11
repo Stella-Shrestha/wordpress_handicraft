@@ -134,17 +134,27 @@ while (have_posts()): the_post();
           </div>
 
           <!-- Acquisition Action Buttons -->
-          <div class="flex flex-col sm:flex-row items-stretch gap-4 pt-2">
-            <button onclick="addToCartByProdId('<?php echo esc_js($sku); ?>')"
-              class="flex-1 py-4 bg-gradient-to-r from-gold to-copper hover:from-gold-bright hover:to-copper-bright text-white dark:text-patina-950 font-mono font-bold text-xs uppercase tracking-wider rounded-lg shadow-lg shadow-gold/20 hover:shadow-gold/40 transition-all flex items-center justify-center gap-2">
+          <div class="flex flex-col sm:flex-row items-stretch gap-3.5 pt-2">
+            <button type="button"
+              data-action="add-to-cart"
+              data-sku="<?php echo esc_attr($sku); ?>"
+              onclick="if(typeof addToCartByProdId==='function'){addToCartByProdId('<?php echo esc_js($sku); ?>', this);}else{alert('Specimen <?php echo esc_js($sku); ?> added to cart.');}"
+              class="add-to-cart-btn flex-1 py-4 bg-gradient-to-r from-gold to-copper hover:from-gold-bright hover:to-copper-bright text-white dark:text-patina-950 font-mono font-bold text-xs uppercase tracking-wider rounded-lg shadow-lg shadow-gold/20 hover:shadow-gold/40 transition-all flex items-center justify-center gap-2 cursor-pointer">
               <i data-lucide="shopping-bag" class="w-4 h-4"></i>
-              <span>Acquire This Sacred Specimen</span>
+              <span>Add to Cart</span>
             </button>
 
-            <a href="<?php echo esc_url(home_url('/contact/')); ?>"
-              class="px-6 py-4 bg-white dark:bg-patina-900 border border-gold/40 hover:border-gold text-slate-800 dark:text-parchment hover:text-gold font-mono font-semibold text-xs uppercase tracking-wider rounded-lg transition-colors flex items-center justify-center gap-2 shadow-sm">
+            <button type="button"
+              onclick="if(typeof bookNowByProdId==='function'){bookNowByProdId('<?php echo esc_js($sku); ?>');}else{window.location.href='<?php echo esc_url(home_url('/contact/?inquiry=booking&sku=')); ?><?php echo esc_js($sku); ?>';}"
+              class="px-6 py-4 bg-white dark:bg-patina-900 border border-slate-300 dark:border-gold/40 hover:border-gold text-slate-800 dark:text-parchment hover:text-gold font-mono font-bold text-xs uppercase tracking-wider rounded-lg transition-colors flex items-center justify-center gap-2 shadow-sm">
+              <i data-lucide="message-square" class="w-4 h-4 text-copper"></i>
+              <span>Inquiry</span>
+            </button>
+
+            <a href="<?php echo esc_url(home_url('/contact/?inquiry=commission&sku=' . urlencode($sku))); ?>"
+              class="px-5 py-4 bg-slate-100 dark:bg-patina-800/80 hover:bg-gold/10 border border-slate-200 dark:border-gold/20 text-slate-700 dark:text-slate-300 hover:text-gold font-mono font-semibold text-xs uppercase tracking-wider rounded-lg transition-colors flex items-center justify-center gap-2 shadow-sm">
               <i data-lucide="message-circle" class="w-4 h-4"></i>
-              <span>Commission Inquiries</span>
+              <span>Contact Curator</span>
             </a>
           </div>
 
@@ -162,7 +172,7 @@ while (have_posts()): the_post();
           </a>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           <?php
           $related = new WP_Query(array(
               'post_type'      => 'specimen',
@@ -176,18 +186,109 @@ while (have_posts()): the_post();
                   $rel_id    = get_the_ID();
                   $rel_sku   = get_post_meta($rel_id, '_specimen_sku', true) ?: ('SH-' . str_pad($rel_id, 3, '0', STR_PAD_LEFT));
                   $rel_price = floatval(get_post_meta($rel_id, '_specimen_price', true) ?: 3200);
-                  $rel_img   = get_the_post_thumbnail_url($rel_id, 'medium') ?: shrestha_asset(get_post_meta($rel_id, '_specimen_asset_img', true) ?: 'green_tara.jpg');
+
+                  // Dimensions & Alloy
+                  $rel_height = get_post_meta($rel_id, '_specimen_height', true) ?: '22.5 in (57.1 cm)';
+                  $rel_angula = get_post_meta($rel_id, '_specimen_angula', true) ?: '';
+                  if ($rel_angula && strpos($rel_height, 'Angula') === false) {
+                      $rel_height .= ' (' . $rel_angula . ')';
+                  }
+                  $rel_weight = get_post_meta($rel_id, '_specimen_weight', true) ?: '14.2 kg';
+
+                  $terms = get_the_terms($rel_id, 'alloy_type');
+                  $rel_alloy = (!empty($terms) && !is_wp_error($terms)) ? $terms[0]->name : (get_post_meta($rel_id, '_statue_alloy_desc', true) ?: 'Ashtadhatu (8-Metal)');
+
+                  // Badge & Grade
+                  $rel_badge = 'ASHTADHATU';
+                  if (stripos($rel_alloy, 'Gold') !== false || stripos($rel_alloy, '24K') !== false) {
+                      $rel_badge = '24K GOLD LEAF';
+                  } elseif (stripos($rel_alloy, 'Bronze') !== false || stripos($rel_alloy, 'Patina') !== false) {
+                      $rel_badge = 'PATINA BRONZE';
+                  } elseif (stripos($rel_alloy, 'Copper') !== false) {
+                      $rel_badge = 'COPPER REPOUSSÉ';
+                  }
+                  $rel_grade = 'SPECIMEN GRADE';
+
+                  // Image
+                  $rel_img = get_the_post_thumbnail_url($rel_id, 'large');
+                  if (!$rel_img) {
+                      $rel_asset = get_post_meta($rel_id, '_specimen_asset_img', true) ?: 'green_tara.jpg';
+                      $rel_img   = function_exists('shrestha_asset') ? shrestha_asset($rel_asset) : (get_template_directory_uri() . '/assets/' . $rel_asset);
+                  }
                   ?>
-                  <div class="bg-white dark:bg-patina-900 border border-slate-200 dark:border-gold/20 rounded-xl overflow-hidden p-4 shadow flex flex-col justify-between">
-                    <div class="h-48 bg-black rounded-lg flex items-center justify-center overflow-hidden mb-4">
-                      <img src="<?php echo esc_url($rel_img); ?>" alt="<?php the_title_attribute(); ?>" class="max-h-full max-w-full object-contain" />
+                  <div data-sku="<?php echo esc_attr($rel_sku); ?>" data-name="<?php the_title_attribute(); ?>" data-price="<?php echo esc_attr($rel_price); ?>" data-alloys="<?php echo esc_attr($rel_alloy); ?>"
+                    class="specimen-card bg-white dark:bg-patina-900 border border-slate-200/80 dark:border-gold/30 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col group">
+                    <div class="relative w-full h-[380px] sm:h-[430px] overflow-hidden bg-black flex items-center justify-center">
+                      <img src="<?php echo esc_url($rel_img); ?>" alt="<?php the_title_attribute(); ?>"
+                        class="w-full h-full object-contain sm:object-cover group-hover:scale-105 transition-transform duration-700" />
+                      <div
+                        class="absolute top-4 right-4 bg-black/90 backdrop-blur-md px-3 py-1 rounded-full border border-gold/40 text-gold font-mono text-[10px] tracking-wider uppercase font-bold shadow-md">
+                        <?php echo esc_html($rel_badge); ?>
+                      </div>
                     </div>
-                    <div>
-                      <span class="font-mono text-[10px] text-gold"><?php echo esc_html($rel_sku); ?></span>
-                      <h4 class="font-display font-bold text-base text-slate-900 dark:text-parchment mt-0.5">
-                        <a href="<?php the_permalink(); ?>" class="hover:text-gold"><?php the_title(); ?></a>
-                      </h4>
-                      <span class="font-mono font-bold text-sm text-gold block mt-2">$<?php echo number_format($rel_price, 2); ?></span>
+
+                    <div class="p-6 flex flex-col justify-between flex-1 gap-5 bg-white dark:bg-patina-900">
+                      <div class="flex flex-col gap-1.5">
+                        <div class="flex items-center justify-between">
+                          <span class="font-mono font-bold text-xl sm:text-2xl text-amber-600 dark:text-gold">
+                            $<?php echo number_format($rel_price, 2); ?>
+                          </span>
+                          <div class="flex items-center gap-0.5 text-amber-500">
+                            <i data-lucide="flame" class="w-3.5 h-3.5 fill-amber-500/20"></i>
+                            <i data-lucide="flame" class="w-3.5 h-3.5 fill-amber-500/20"></i>
+                            <i data-lucide="flame" class="w-3.5 h-3.5 fill-amber-500/20"></i>
+                          </div>
+                        </div>
+
+                        <h3
+                          class="font-sans font-bold text-xl sm:text-2xl text-slate-900 dark:text-parchment leading-tight pt-1">
+                          <a href="<?php the_permalink(); ?>" class="hover:text-gold transition-colors">
+                            <?php the_title(); ?>
+                          </a>
+                        </h3>
+                      </div>
+
+                      <div
+                        class="flex flex-col text-xs font-mono gap-2.5 py-3 border-y border-dashed border-slate-200 dark:border-slate-800">
+                        <div class="flex justify-between items-center text-[11px]">
+                          <span class="text-slate-500 dark:text-slate-400">Alloy Grade:</span>
+                          <span class="font-bold text-slate-900 dark:text-parchment"><?php echo esc_html($rel_alloy); ?></span>
+                        </div>
+                        <div class="flex justify-between items-center text-[11px]">
+                          <span class="text-slate-500 dark:text-slate-400">Height:</span>
+                          <span class="font-bold text-slate-900 dark:text-parchment"><?php echo esc_html($rel_height); ?></span>
+                        </div>
+                        <div class="flex justify-between items-center text-[11px]">
+                          <span class="text-slate-500 dark:text-slate-400">Raw Weight:</span>
+                          <span class="font-bold text-slate-900 dark:text-parchment"><?php echo esc_html($rel_weight); ?></span>
+                        </div>
+                      </div>
+
+                      <div class="flex flex-col gap-2 pt-1">
+                        <div class="grid grid-cols-2 gap-2">
+                          <button type="button"
+                            data-action="add-to-cart"
+                            data-sku="<?php echo esc_attr($rel_sku); ?>"
+                            onclick="if(typeof addToCartByProdId==='function'){addToCartByProdId('<?php echo esc_js($rel_sku); ?>', this);}else if(typeof window.addToCartByProdId==='function'){window.addToCartByProdId('<?php echo esc_js($rel_sku); ?>', this);}else{alert('Added to cart.');}"
+                            class="add-to-cart-btn px-2.5 py-2.5 bg-gradient-to-r from-gold to-copper hover:from-gold-bright hover:to-copper-bright text-white dark:text-patina-950 font-mono font-bold text-[11px] uppercase tracking-wider rounded-lg shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer text-center">
+                            <i data-lucide="shopping-bag" class="w-3.5 h-3.5 shrink-0"></i>
+                            <span>Add to Cart</span>
+                          </button>
+
+                          <button type="button"
+                            onclick="if(typeof bookNowByProdId==='function'){bookNowByProdId('<?php echo esc_js($rel_sku); ?>');}else{window.location.href='<?php echo esc_url(home_url('/contact/?inquiry=booking&sku=')); ?><?php echo esc_js($rel_sku); ?>';}"
+                            class="px-2.5 py-2.5 bg-white dark:bg-patina-800 hover:bg-gold/10 text-slate-800 dark:text-parchment hover:text-gold border border-slate-300 dark:border-gold/30 hover:border-gold font-mono font-bold text-[11px] uppercase tracking-wider rounded-lg shadow-sm transition-all flex items-center justify-center gap-1.5 text-center">
+                            <i data-lucide="message-square" class="w-3.5 h-3.5 shrink-0 text-copper"></i>
+                            <span>Inquiry</span>
+                          </button>
+                        </div>
+
+                        <a href="<?php the_permalink(); ?>"
+                          class="w-full py-2 bg-slate-50 dark:bg-patina-950 hover:bg-slate-100 dark:hover:bg-patina-800 text-slate-600 dark:text-slate-400 hover:text-gold border border-slate-200 dark:border-slate-800 rounded-lg text-center font-mono text-[10px] uppercase tracking-widest transition-colors flex items-center justify-center gap-1">
+                          <i data-lucide="scan" class="w-3 h-3"></i>
+                          <span>Inspect Spec</span>
+                        </a>
+                      </div>
                     </div>
                   </div>
                   <?php

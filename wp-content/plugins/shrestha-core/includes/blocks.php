@@ -29,7 +29,7 @@ function shrestha_core_register_blocks() {
             'titleSubtitle'    => array('type' => 'string', 'default' => 'Mother of Divine Liberation'),
             'description'      => array('type' => 'string', 'default' => 'Hand-cast using lost-wax iconometry (Cire Perdue) from 8-metal Ashtadhatu alloy. Adorned with 24K gold-leaf fire gilding and cold-chiseled facial symmetry, crafted according to 14th-century Sanskrit treatise canons in Patan, Nepal.'),
             'specimenSku'      => array('type' => 'string', 'default' => 'SH-001'),
-            'primaryBtnText'   => array('type' => 'string', 'default' => 'Acquire Hero Specimen'),
+            'primaryBtnText'   => array('type' => 'string', 'default' => 'Add to Cart'),
             'secondaryBtnText' => array('type' => 'string', 'default' => 'Inspect Technical Spec'),
             'symmetryText'     => array('type' => 'string', 'default' => 'ICONOMETRIC SYMMETRY: 99.8%'),
             'imageAsset'       => array('type' => 'string', 'default' => 'green_tara.jpg'),

@@ -167,33 +167,29 @@ if (empty($cards)) {
 
         <div class="p-6 flex flex-col justify-between flex-1 gap-5 bg-white dark:bg-patina-900">
           <div class="flex flex-col gap-1.5">
-            <div
-              class="flex items-center gap-1.5 font-mono text-[10px] text-slate-400 dark:text-slate-500 uppercase tracking-widest font-bold">
-              <span><?php echo esc_html($card['grade']); ?></span>
+            <div class="flex items-center justify-between">
+              <span class="font-mono font-bold text-xl sm:text-2xl text-amber-600 dark:text-gold">
+                $<?php echo esc_html(str_replace('$', '', $card['price'])); ?>
+              </span>
               <?php if (!empty($card['flames'])): ?>
                 <div class="flex items-center gap-0.5 text-amber-500">
                   <?php for ($f = 0; $f < intval($card['flames']); $f++): ?>
-                    <i data-lucide="flame" class="w-3 h-3 fill-amber-500/20"></i>
+                    <i data-lucide="flame" class="w-3.5 h-3.5 fill-amber-500/20"></i>
                   <?php endfor; ?>
                 </div>
               <?php endif; ?>
             </div>
 
-            <div class="flex items-baseline justify-between gap-3 pt-1">
-              <h3
-                class="font-sans font-bold text-xl sm:text-2xl text-slate-900 dark:text-parchment leading-tight truncate">
-                <?php if (!empty($card['linkUrl'])): ?>
-                  <a href="<?php echo esc_url($card['linkUrl']); ?>" class="hover:text-gold transition-colors">
-                    <?php echo esc_html($card['title']); ?>
-                  </a>
-                <?php else: ?>
+            <h3
+              class="font-sans font-bold text-xl sm:text-2xl text-slate-900 dark:text-parchment leading-tight pt-1">
+              <?php if (!empty($card['linkUrl'])): ?>
+                <a href="<?php echo esc_url($card['linkUrl']); ?>" class="hover:text-gold transition-colors">
                   <?php echo esc_html($card['title']); ?>
-                <?php endif; ?>
-              </h3>
-              <span class="font-mono font-bold text-xl sm:text-2xl text-amber-600 dark:text-gold shrink-0">
-                $<?php echo esc_html(str_replace('$', '', $card['price'])); ?>
-              </span>
-            </div>
+                </a>
+              <?php else: ?>
+                <?php echo esc_html($card['title']); ?>
+              <?php endif; ?>
+            </h3>
           </div>
 
           <div
@@ -212,25 +208,38 @@ if (empty($cards)) {
             </div>
           </div>
 
-          <div class="grid grid-cols-2 gap-3 pt-1">
+          <div class="flex flex-col gap-2 pt-1">
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button"
+                data-action="add-to-cart"
+                data-sku="<?php echo esc_attr($card['sku']); ?>"
+                onclick="if(typeof addToCartByProdId==='function'){addToCartByProdId('<?php echo esc_js($card['sku']); ?>', this);}else if(typeof window.addToCartByProdId==='function'){window.addToCartByProdId('<?php echo esc_js($card['sku']); ?>', this);}else{alert('<?php echo esc_js($card['title']); ?> added to cart.');}"
+                class="add-to-cart-btn px-2.5 py-2.5 bg-gradient-to-r from-gold to-copper hover:from-gold-bright hover:to-copper-bright text-white dark:text-patina-950 font-mono font-bold text-[11px] uppercase tracking-wider rounded-lg shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer text-center">
+                <i data-lucide="shopping-bag" class="w-3.5 h-3.5 shrink-0"></i>
+                <span>Add to Cart</span>
+              </button>
+
+              <button type="button"
+                onclick="if(typeof bookNowByProdId==='function'){bookNowByProdId('<?php echo esc_js($card['sku']); ?>');}else{window.location.href='<?php echo esc_url(home_url('/contact/?inquiry=booking&sku=')); ?><?php echo esc_js($card['sku']); ?>';}"
+                class="px-2.5 py-2.5 bg-white dark:bg-patina-800 hover:bg-gold/10 text-slate-800 dark:text-parchment hover:text-gold border border-slate-300 dark:border-gold/30 hover:border-gold font-mono font-bold text-[11px] uppercase tracking-wider rounded-lg shadow-sm transition-all flex items-center justify-center gap-1.5 text-center">
+                <i data-lucide="message-square" class="w-3.5 h-3.5 shrink-0 text-copper"></i>
+                <span>Inquiry</span>
+              </button>
+            </div>
+
             <?php if (!empty($card['linkUrl'])): ?>
               <a href="<?php echo esc_url($card['linkUrl']); ?>"
-                class="px-3 py-3 bg-white dark:bg-patina-900 border border-slate-200 dark:border-slate-700/80 hover:border-gold dark:hover:border-gold text-slate-900 dark:text-parchment hover:text-gold font-mono font-bold text-[11px] uppercase tracking-wider rounded-lg transition-colors shadow-sm text-center">
-                INSPECT SPEC
+                class="w-full py-2 bg-slate-50 dark:bg-patina-950 hover:bg-slate-100 dark:hover:bg-patina-800 text-slate-600 dark:text-slate-400 hover:text-gold border border-slate-200 dark:border-slate-800 rounded-lg text-center font-mono text-[10px] uppercase tracking-widest transition-colors flex items-center justify-center gap-1">
+                <i data-lucide="scan" class="w-3 h-3"></i>
+                <span>Inspect Spec</span>
               </a>
             <?php else: ?>
               <button onclick="if(typeof openSpecimenModalByProdId==='function'){openSpecimenModalByProdId('<?php echo esc_js($card['sku']); ?>')}else{alert('Viewing specimen <?php echo esc_js($card['sku']); ?>');}"
-                class="px-3 py-3 bg-white dark:bg-patina-900 border border-slate-200 dark:border-slate-700/80 hover:border-gold dark:hover:border-gold text-slate-900 dark:text-parchment hover:text-gold font-mono font-bold text-[11px] uppercase tracking-wider rounded-lg transition-colors shadow-sm text-center">
-                TRACK CASTING
+                class="w-full py-2 bg-slate-50 dark:bg-patina-950 hover:bg-slate-100 dark:hover:bg-patina-800 text-slate-600 dark:text-slate-400 hover:text-gold border border-slate-200 dark:border-slate-800 rounded-lg text-center font-mono text-[10px] uppercase tracking-widest transition-colors flex items-center justify-center gap-1">
+                <i data-lucide="scan" class="w-3 h-3"></i>
+                <span>Inspect Spec</span>
               </button>
             <?php endif; ?>
-            <button type="button"
-              data-action="add-to-selection"
-              data-sku="<?php echo esc_attr($card['sku']); ?>"
-              onclick="if(typeof addToCartByProdId==='function'){addToCartByProdId('<?php echo esc_js($card['sku']); ?>', this);}else if(typeof window.addToCartByProdId==='function'){window.addToCartByProdId('<?php echo esc_js($card['sku']); ?>', this);}else{alert('<?php echo esc_js($card['title']); ?> added to selection.');}"
-              class="add-to-cart-btn px-3 py-3 bg-[#0d131d] hover:bg-slate-800 dark:bg-patina-950 dark:hover:bg-patina-800 border border-transparent text-white font-mono font-bold text-[11px] uppercase tracking-wider rounded-lg transition-colors shadow text-center cursor-pointer">
-              ADD TO SELECTION
-            </button>
           </div>
         </div>
       </div>

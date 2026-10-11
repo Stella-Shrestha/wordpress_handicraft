@@ -405,14 +405,101 @@ if (!defined('ABSPATH')) {
           </div>
         </div>
 
-        <div class="flex items-center justify-between mt-auto pt-2">
+        <div class="flex items-center justify-between mt-auto pt-3 border-t border-slate-100 dark:border-slate-800 gap-3">
           <span id="modalPrice" class="font-mono font-bold text-xl text-gold">$0</span>
-          <button id="modalAcquireBtn"
-            class="px-5 py-2.5 bg-gradient-to-r from-gold to-copper text-white dark:text-patina-950 font-mono font-bold text-xs uppercase tracking-wider rounded-lg shadow">
-            Acquire Specimen
-          </button>
+          <div class="flex items-center gap-2">
+            <button id="modalBookBtn"
+              class="px-4 py-2.5 bg-white dark:bg-patina-800 hover:bg-gold/10 text-slate-800 dark:text-parchment hover:text-gold border border-slate-300 dark:border-gold/30 hover:border-gold font-mono font-bold text-xs uppercase tracking-wider rounded-lg shadow-sm transition-all flex items-center gap-1.5">
+              <i data-lucide="message-square" class="w-3.5 h-3.5 text-copper"></i>
+              <span>Inquiry</span>
+            </button>
+            <button id="modalAcquireBtn"
+              class="px-4 py-2.5 bg-gradient-to-r from-gold to-copper hover:from-gold-bright hover:to-copper-bright text-white dark:text-patina-950 font-mono font-bold text-xs uppercase tracking-wider rounded-lg shadow hover:shadow-gold/20 transition-all flex items-center gap-1.5">
+              <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
+              <span>Add to Cart</span>
+            </button>
+          </div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- ATELIER BOOKING & COMMISSION CONSULTATION MODAL -->
+  <div id="bookingModal" onclick="closeBookingOnOverlay(event)"
+    class="fixed inset-0 bg-black/80 backdrop-blur-md z-[200] hidden items-center justify-center p-4">
+    <div
+      class="bg-white dark:bg-patina-900 border border-gold/40 rounded-2xl max-w-lg w-full p-6 sm:p-8 relative shadow-2xl flex flex-col gap-5 max-h-[92vh] overflow-y-auto">
+      <button onclick="closeBookingModal()"
+        class="absolute top-4 right-4 text-slate-400 hover:text-slate-900 dark:hover:text-parchment transition-colors" aria-label="Close booking modal">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-gold/10 border border-gold/40 flex items-center justify-center text-gold shrink-0">
+          <i data-lucide="message-square" class="w-5 h-5"></i>
+        </div>
+        <div class="flex flex-col">
+          <h3 class="font-display font-bold text-lg text-slate-900 dark:text-parchment">Sacred Specimen Inquiry</h3>
+          <span class="font-mono text-[10px] text-gold tracking-wider uppercase">Direct Patan Foundry Coordination</span>
+        </div>
+      </div>
+
+      <div class="p-3 bg-slate-50 dark:bg-patina-950 border border-slate-200 dark:border-gold/20 rounded-xl flex items-center justify-between text-xs font-mono">
+        <div>
+          <span class="text-slate-400 text-[10px] block uppercase">Selected Specimen</span>
+          <span id="bookingModalDeityName" class="font-bold text-slate-900 dark:text-parchment">Green Tara Specimen</span>
+        </div>
+        <span id="bookingModalSku" class="px-2.5 py-1 bg-gold/10 text-gold border border-gold/30 rounded font-bold">SH-001</span>
+      </div>
+
+      <form id="bookingForm" onsubmit="handleBookingSubmit(event)" class="flex flex-col gap-4">
+        <input type="hidden" id="bookingSkuInput" name="sku" value="SH-001" />
+        <input type="hidden" id="bookingDeityInput" name="deity" value="Green Tara Specimen" />
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-mono text-[11px] text-slate-500 dark:text-slate-400 mb-1">Your Full Name *</label>
+            <input type="text" required placeholder="e.g. Tendhar Rinpoche / Alex Smith"
+              class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-patina-950 border border-slate-200 dark:border-slate-800 rounded-lg text-xs font-sans text-slate-900 dark:text-parchment focus:outline-none focus:border-gold" />
+          </div>
+          <div>
+            <label class="block font-mono text-[11px] text-slate-500 dark:text-slate-400 mb-1">Email Address *</label>
+            <input type="email" required placeholder="curator@institution.org"
+              class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-patina-950 border border-slate-200 dark:border-slate-800 rounded-lg text-xs font-sans text-slate-900 dark:text-parchment focus:outline-none focus:border-gold" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-mono text-[11px] text-slate-500 dark:text-slate-400 mb-1">WhatsApp / Phone *</label>
+            <input type="tel" required placeholder="+1 (555) 000-0000"
+              class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-patina-950 border border-slate-200 dark:border-slate-800 rounded-lg text-xs font-mono text-slate-900 dark:text-parchment focus:outline-none focus:border-gold" />
+          </div>
+          <div>
+            <label class="block font-mono text-[11px] text-slate-500 dark:text-slate-400 mb-1">Booking Purpose</label>
+            <select
+              class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-patina-950 border border-slate-200 dark:border-slate-800 rounded-lg text-xs font-sans text-slate-900 dark:text-parchment focus:outline-none focus:border-gold">
+              <option value="viewing">Private Atelier Viewing (Patan)</option>
+              <option value="commission">Custom Bespoke Casting Commission</option>
+              <option value="consecration">Monastic Consecration Blessing</option>
+              <option value="escrow">Immediate Escrow Reservation</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-mono text-[11px] text-slate-500 dark:text-slate-400 mb-1">Preferred Date / Commission Notes</label>
+          <textarea rows="3"
+            placeholder="Specify your preferred consultation date, temple dimension requirements, or special gilding requests..."
+            class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-patina-950 border border-slate-200 dark:border-slate-800 rounded-lg text-xs font-sans text-slate-900 dark:text-parchment focus:outline-none focus:border-gold"></textarea>
+        </div>
+
+        <button type="submit"
+          class="w-full py-3.5 bg-gradient-to-r from-gold to-copper hover:from-gold-bright hover:to-copper-bright text-white dark:text-patina-950 font-mono font-bold text-xs uppercase tracking-wider rounded-lg shadow-lg shadow-gold/20 hover:shadow-gold/40 transition-all flex items-center justify-center gap-2 mt-1">
+          <i data-lucide="send" class="w-4 h-4"></i>
+          <span>Submit Inquiry Request</span>
+        </button>
+      </form>
     </div>
   </div>
 

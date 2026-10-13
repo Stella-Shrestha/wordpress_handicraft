@@ -23,7 +23,7 @@ function shrestha_core_register_blocks() {
         'editor_style'    => 'shrestha-core-editor-css',
         'render_callback' => 'shrestha_core_render_hero_specimen',
         'attributes'      => array(
-            'badgeText'        => array('type' => 'string', 'default' => 'SPECIMEN #SH-001'),
+            'badgeText'        => array('type' => 'string', 'default' => '#SH-001'),
             'consecratedText'  => array('type' => 'string', 'default' => 'RITUAL CONSECRATED'),
             'titleHighlight'   => array('type' => 'string', 'default' => 'Green Tara'),
             'titleSubtitle'    => array('type' => 'string', 'default' => 'Mother of Divine Liberation'),

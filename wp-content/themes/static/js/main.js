@@ -455,6 +455,7 @@ function addToCartByProdId(prodId, btnEl) {
   const existing = cart.find(ci => String(ci.id).toLowerCase() === String(p.id).toLowerCase());
   if (existing) {
     existing.qty += 1;
+    existing.selected = true;
   } else {
     cart.push({
       id: p.id,
@@ -462,7 +463,8 @@ function addToCartByProdId(prodId, btnEl) {
       alloy: p.alloy || 'Ashtadhatu (8-Metal)',
       price: Number(p.price) || 0,
       img: getAssetUrl(p.img),
-      qty: 1
+      qty: 1,
+      selected: true
     });
   }
 
@@ -516,6 +518,33 @@ function decreaseQty(id) {
       cart = cart.filter(x => x.id !== id);
     }
     saveCart(cart);
+  }
+}
+
+function toggleCartItemSelection(id, isSelected) {
+  const cart = getCart();
+  const item = cart.find(x => String(x.id).toLowerCase() === String(id).toLowerCase());
+  if (item) {
+    item.selected = !!isSelected;
+    saveCart(cart);
+  }
+}
+
+function toggleSelectAllCart(selectAll) {
+  const cart = getCart();
+  cart.forEach(item => {
+    item.selected = !!selectAll;
+  });
+  saveCart(cart);
+}
+
+function removeSelectedCartItems() {
+  const cart = getCart();
+  const selectedCount = cart.filter(i => i.selected !== false).length;
+  if (selectedCount === 0) return;
+  if (confirm(`Remove ${selectedCount} selected item${selectedCount > 1 ? 's' : ''} from acquisition drawer?`)) {
+    const remaining = cart.filter(i => i.selected === false);
+    saveCart(remaining);
   }
 }
 
@@ -583,10 +612,17 @@ function updateCartUI() {
   });
 
   const bodyEl = document.getElementById('cartBody');
+  const toolbarEl = document.getElementById('cartToolbar');
+  const selectAllEl = document.getElementById('cartSelectAll');
+  const selectedCountEl = document.getElementById('cartSelectedCount');
+  const selectedSubtotalCountEl = document.getElementById('cartSelectedSubtotalCount');
+  const removeSelectedBtn = document.getElementById('removeSelectedBtn');
   const subtotalEl = document.getElementById('cartSubtotal');
   const totalEl = document.getElementById('cartTotal');
+  const checkoutBtn = document.getElementById('cartCheckoutBtn');
 
   if (cart.length === 0) {
+    if (toolbarEl) toolbarEl.style.display = 'none';
     if (bodyEl) {
       bodyEl.innerHTML = `
         <div class="text-center py-12 px-4 text-slate-400 dark:text-slate-500 font-mono text-sm">
@@ -596,31 +632,73 @@ function updateCartUI() {
     }
     if (subtotalEl) subtotalEl.innerText = '$0 USD';
     if (totalEl) totalEl.innerText = '$0 USD';
+    if (selectedSubtotalCountEl) selectedSubtotalCountEl.innerText = '0';
+    if (checkoutBtn) {
+      checkoutBtn.disabled = true;
+      checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
+      checkoutBtn.innerText = 'Acquisition Drawer Empty';
+    }
     return;
   }
 
-  let subtotal = 0;
+  if (toolbarEl) toolbarEl.style.display = 'flex';
+
+  const selectedItems = cart.filter(i => i.selected !== false);
+  const selectedCount = selectedItems.length;
+  const allSelected = cart.length > 0 && selectedCount === cart.length;
+
+  if (selectAllEl) {
+    selectAllEl.checked = allSelected;
+    selectAllEl.indeterminate = selectedCount > 0 && !allSelected;
+  }
+
+  if (selectedCountEl) {
+    selectedCountEl.innerText = `(${selectedCount} of ${cart.length} selected)`;
+  }
+  if (selectedSubtotalCountEl) {
+    selectedSubtotalCountEl.innerText = selectedCount;
+  }
+
+  if (removeSelectedBtn) {
+    if (selectedCount > 0) {
+      removeSelectedBtn.classList.remove('hidden');
+      removeSelectedBtn.innerText = `Remove Selected (${selectedCount})`;
+    } else {
+      removeSelectedBtn.classList.add('hidden');
+    }
+  }
+
+  let selectedSubtotal = 0;
   if (bodyEl) {
     bodyEl.innerHTML = cart.map(item => {
+      const isSelected = item.selected !== false;
       const itemTotal = item.price * item.qty;
-      subtotal += itemTotal;
+      if (isSelected) {
+        selectedSubtotal += itemTotal;
+      }
       const itemImg = getAssetUrl(item.img);
       return `
-        <div class="flex items-center gap-4 p-3 bg-white dark:bg-patina-900 border border-slate-200 dark:border-slate-800 rounded-lg relative">
-          <img class="w-16 h-16 object-cover rounded bg-black" src="${itemImg}" alt="${item.name}" />
-          <div class="flex-1 flex flex-col gap-1">
-            <div class="font-display font-semibold text-sm text-slate-900 dark:text-parchment">${item.name}</div>
-            <div class="font-mono text-xs text-slate-500 dark:text-slate-400">${item.alloy}</div>
+        <div class="flex items-center gap-3 p-3 bg-white dark:bg-patina-900 border ${isSelected ? 'border-gold/60 shadow-sm ring-1 ring-gold/20' : 'border-slate-200 dark:border-slate-800 opacity-60'} rounded-lg relative transition-all">
+          <input type="checkbox"
+            class="cart-item-checkbox w-4 h-4 rounded border-slate-300 dark:border-slate-700 text-amber-600 dark:text-gold accent-amber-600 dark:accent-gold cursor-pointer shrink-0"
+            data-id="${item.id}"
+            ${isSelected ? 'checked' : ''}
+            onchange="toggleCartItemSelection('${item.id}', this.checked)"
+            aria-label="Select ${item.name}" />
+          <img class="w-16 h-16 object-cover rounded bg-black shrink-0" src="${itemImg}" alt="${item.name}" />
+          <div class="flex-1 flex flex-col gap-1 min-w-0">
+            <div class="font-display font-semibold text-sm text-slate-900 dark:text-parchment truncate">${item.name}</div>
+            <div class="font-mono text-xs text-slate-500 dark:text-slate-400 truncate">${item.alloy}</div>
             <div class="flex items-center justify-between mt-1">
               <div class="flex items-center border border-slate-200 dark:border-slate-700 rounded bg-slate-50 dark:bg-patina-950">
-                <button onclick="decreaseQty('${item.id}')" class="px-2.5 py-0.5 text-xs text-slate-600 dark:text-slate-300 hover:text-gold font-bold">-</button>
+                <button onclick="decreaseQty('${item.id}')" class="px-2.5 py-0.5 text-xs text-slate-600 dark:text-slate-300 hover:text-gold font-bold" aria-label="Decrease quantity">-</button>
                 <span class="px-2 text-xs font-mono font-bold text-slate-900 dark:text-parchment">${item.qty}</span>
-                <button onclick="increaseQty('${item.id}')" class="px-2.5 py-0.5 text-xs text-slate-600 dark:text-slate-300 hover:text-gold font-bold">+</button>
+                <button onclick="increaseQty('${item.id}')" class="px-2.5 py-0.5 text-xs text-slate-600 dark:text-slate-300 hover:text-gold font-bold" aria-label="Increase quantity">+</button>
               </div>
-              <div class="font-mono font-bold text-sm text-gold-dark dark:text-gold">$${itemTotal.toLocaleString()} USD</div>
+              <div class="font-mono font-bold text-sm text-amber-600 dark:text-gold">$${itemTotal.toLocaleString()} USD</div>
             </div>
           </div>
-          <button onclick="removeFromCart('${item.id}')" class="text-slate-400 hover:text-red-500 text-xs p-1 transition-colors" title="Remove">
+          <button onclick="removeFromCart('${item.id}')" class="text-slate-400 hover:text-red-500 text-xs p-1 transition-colors shrink-0" title="Remove item" aria-label="Remove item">
             <i data-lucide="x" class="w-4 h-4"></i>
           </button>
         </div>
@@ -628,8 +706,21 @@ function updateCartUI() {
     }).join('');
   }
 
-  if (subtotalEl) subtotalEl.innerText = `$${subtotal.toLocaleString()} USD`;
-  if (totalEl) totalEl.innerText = `$${subtotal.toLocaleString()} USD`;
+  if (subtotalEl) subtotalEl.innerText = `$${selectedSubtotal.toLocaleString()} USD`;
+  if (totalEl) totalEl.innerText = `$${selectedSubtotal.toLocaleString()} USD`;
+
+  if (checkoutBtn) {
+    if (selectedCount === 0) {
+      checkoutBtn.disabled = true;
+      checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
+      checkoutBtn.innerText = 'Select Specimens to Acquire';
+    } else {
+      checkoutBtn.disabled = false;
+      checkoutBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+      checkoutBtn.innerText = `Initiate Escrow Acquisition (${selectedCount})`;
+    }
+  }
+
   renderIcons();
 }
 
@@ -792,9 +883,16 @@ function triggerCheckoutModal() {
     alert('Your acquisition drawer is empty.');
     return;
   }
-  const total = document.getElementById('cartTotal').innerText;
-  alert(`Escrow Protocol Initiated for total of ${total}.\n\nA Patan Atelier Concierge will issue your bank wire escrow contract & certified SPECTROMETRY assay via email.`);
-  saveCart([]);
+  const selectedItems = cart.filter(i => i.selected !== false);
+  if (selectedItems.length === 0) {
+    alert('Please select at least one statuary specimen to initiate escrow acquisition.');
+    return;
+  }
+  const total = document.getElementById('cartTotal')?.innerText || '$0 USD';
+  const count = selectedItems.length;
+  alert(`Escrow Protocol Initiated for ${count} selected acquisition${count > 1 ? 's' : ''} (Total: ${total}).\n\nA Patan Atelier Concierge will issue your bank wire escrow contract & certified SPECTROMETRY assay via email.`);
+  const remaining = cart.filter(i => i.selected === false);
+  saveCart(remaining);
   toggleCartDrawer();
 }
 
@@ -1063,23 +1161,18 @@ function renderCatalog() {
 
       <div class="p-6 flex flex-col justify-between flex-1 gap-5 bg-white dark:bg-patina-900">
         <div class="flex flex-col gap-1.5">
-          <div class="flex items-center gap-1.5 font-mono text-[10px] text-slate-400 dark:text-slate-500 uppercase tracking-widest font-bold">
-            <span>SPECIMEN #${p.id}</span>
-            <div class="flex items-center gap-0.5 text-amber-500">
-              <i data-lucide="flame" class="w-3 h-3 fill-amber-500/20"></i>
-              <i data-lucide="flame" class="w-3 h-3 fill-amber-500/20"></i>
-              <i data-lucide="flame" class="w-3 h-3 fill-amber-500/20"></i>
+          <div class="flex items-center justify-between">
+            <span class="font-mono font-bold text-xl sm:text-2xl text-amber-600 dark:text-gold">
+              $${p.price.toLocaleString()}
+            </span>
+            <div class="inline-flex items-center px-2.5 py-1 bg-white dark:bg-patina-900 border border-gold/30 rounded font-mono text-xs text-gold shadow-sm font-semibold tracking-wider">
+              <span>${p.id}</span>
             </div>
           </div>
 
-          <div class="flex items-baseline justify-between gap-3 pt-1">
-            <h3 class="font-sans font-bold text-xl sm:text-2xl text-slate-900 dark:text-parchment leading-tight">
-              ${p.name}
-            </h3>
-            <span class="font-mono font-bold text-xl sm:text-2xl text-amber-600 dark:text-gold shrink-0">
-              $${p.price.toLocaleString()}
-            </span>
-          </div>
+          <h3 class="font-sans font-bold text-xl sm:text-2xl text-slate-900 dark:text-parchment leading-tight pt-1">
+            ${p.name}
+          </h3>
         </div>
 
         <div class="flex flex-col text-xs font-mono gap-2.5 py-3 border-y border-dashed border-slate-200 dark:border-slate-800">
@@ -1359,6 +1452,9 @@ if (typeof window !== 'undefined') {
   window.closeSpecimenModal = closeSpecimenModal;
   window.closeSpecimenOnOverlay = closeSpecimenOnOverlay;
   window.triggerCheckoutModal = triggerCheckoutModal;
+  window.toggleCartItemSelection = toggleCartItemSelection;
+  window.toggleSelectAllCart = toggleSelectAllCart;
+  window.removeSelectedCartItems = removeSelectedCartItems;
   window.toggleMobileMenu = toggleMobileMenu;
   window.toggleTheme = toggleTheme;
   if (typeof filterCatalog === 'function') window.filterCatalog = filterCatalog;

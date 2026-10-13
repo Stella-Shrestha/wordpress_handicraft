@@ -222,10 +222,8 @@ get_header();
                 <span class="font-mono font-bold text-xl sm:text-2xl text-amber-600 dark:text-gold">
                   $14,800
                 </span>
-                <div class="flex items-center gap-0.5 text-amber-500">
-                  <i data-lucide="flame" class="w-3.5 h-3.5 fill-amber-500/20"></i>
-                  <i data-lucide="flame" class="w-3.5 h-3.5 fill-amber-500/20"></i>
-                  <i data-lucide="flame" class="w-3.5 h-3.5 fill-amber-500/20"></i>
+                <div class="inline-flex items-center px-2.5 py-1 bg-white dark:bg-patina-900 border border-gold/30 rounded font-mono text-xs text-gold shadow-sm font-semibold tracking-wider">
+                  <span>SH-001</span>
                 </div>
               </div>
 
@@ -295,10 +293,8 @@ get_header();
                 <span class="font-mono font-bold text-xl sm:text-2xl text-amber-600 dark:text-gold">
                   $19,500
                 </span>
-                <div class="flex items-center gap-0.5 text-amber-500">
-                  <i data-lucide="flame" class="w-3.5 h-3.5 fill-amber-500/20"></i>
-                  <i data-lucide="flame" class="w-3.5 h-3.5 fill-amber-500/20"></i>
-                  <i data-lucide="flame" class="w-3.5 h-3.5 fill-amber-500/20"></i>
+                <div class="inline-flex items-center px-2.5 py-1 bg-white dark:bg-patina-900 border border-gold/30 rounded font-mono text-xs text-gold shadow-sm font-semibold tracking-wider">
+                  <span>SH-108</span>
                 </div>
               </div>
 
@@ -368,10 +364,8 @@ get_header();
                 <span class="font-mono font-bold text-xl sm:text-2xl text-amber-600 dark:text-gold">
                   $12,400
                 </span>
-                <div class="flex items-center gap-0.5 text-amber-500">
-                  <i data-lucide="flame" class="w-3.5 h-3.5 fill-amber-500/20"></i>
-                  <i data-lucide="flame" class="w-3.5 h-3.5 fill-amber-500/20"></i>
-                  <i data-lucide="flame" class="w-3.5 h-3.5 fill-amber-500/20"></i>
+                <div class="inline-flex items-center px-2.5 py-1 bg-white dark:bg-patina-900 border border-gold/30 rounded font-mono text-xs text-gold shadow-sm font-semibold tracking-wider">
+                  <span>SH-204</span>
                 </div>
               </div>
 

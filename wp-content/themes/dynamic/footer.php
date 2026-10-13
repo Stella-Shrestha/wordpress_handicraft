@@ -294,6 +294,20 @@ if (!defined('ABSPATH')) {
         </button>
       </div>
 
+      <!-- SELECT ALL TOOLBAR -->
+      <div id="cartToolbar" class="px-5 py-3 border-b border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-patina-900/60 flex items-center justify-between">
+        <label class="flex items-center gap-2.5 cursor-pointer select-none">
+          <input type="checkbox" id="cartSelectAll" onchange="toggleSelectAllCart(this.checked)"
+            class="w-4 h-4 rounded border-slate-300 dark:border-slate-700 text-amber-600 dark:text-gold accent-amber-600 dark:accent-gold cursor-pointer" checked />
+          <span class="font-mono font-bold text-xs uppercase tracking-wider text-slate-700 dark:text-parchment">Select All</span>
+          <span id="cartSelectedCount" class="font-mono text-[11px] text-slate-400 dark:text-slate-500">(0 selected)</span>
+        </label>
+        <button type="button" onclick="removeSelectedCartItems()" id="removeSelectedBtn"
+          class="font-mono text-[11px] text-slate-400 hover:text-red-500 dark:hover:text-red-400 transition-colors cursor-pointer hidden">
+          Remove Selected
+        </button>
+      </div>
+
       <div id="cartBody" class="p-5 flex-1 overflow-y-auto flex flex-col gap-4">
         <!-- JS items rendered here -->
       </div>
@@ -301,7 +315,7 @@ if (!defined('ABSPATH')) {
       <div
         class="p-5 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-patina-900 flex flex-col gap-3">
         <div class="flex justify-between font-mono text-sm text-slate-500 dark:text-slate-400">
-          <span>Subtotal</span>
+          <span>Subtotal (<span id="cartSelectedSubtotalCount">0</span> selected)</span>
           <span id="cartSubtotal">$0 USD</span>
         </div>
         <div class="flex justify-between font-mono text-sm text-slate-500 dark:text-slate-400">
@@ -314,7 +328,7 @@ if (!defined('ABSPATH')) {
           <span id="cartTotal" class="text-gold">$0 USD</span>
         </div>
 
-        <button onclick="triggerCheckoutModal()"
+        <button onclick="triggerCheckoutModal()" id="cartCheckoutBtn"
           class="w-full py-3 bg-gradient-to-r from-gold to-copper text-white dark:text-patina-950 font-mono font-bold text-xs uppercase tracking-wider rounded-lg shadow-md hover:shadow-lg transition-all mt-2">
           Initiate Escrow Acquisition
         </button>

@@ -233,10 +233,11 @@ while (have_posts()): the_post();
                           <span class="font-mono font-bold text-xl sm:text-2xl text-amber-600 dark:text-gold">
                             $<?php echo number_format($rel_price, 2); ?>
                           </span>
-                          <div class="flex items-center gap-0.5 text-amber-500">
-                            <i data-lucide="flame" class="w-3.5 h-3.5 fill-amber-500/20"></i>
-                            <i data-lucide="flame" class="w-3.5 h-3.5 fill-amber-500/20"></i>
-                            <i data-lucide="flame" class="w-3.5 h-3.5 fill-amber-500/20"></i>
+                          <?php
+                          $rel_sku_display = !empty($rel_sku) ? ltrim(trim(str_ireplace('SPECIMEN', '', $rel_sku)), '# ') : 'SH-001';
+                          ?>
+                          <div class="inline-flex items-center px-2.5 py-1 bg-white dark:bg-patina-900 border border-gold/30 rounded font-mono text-xs text-gold shadow-sm font-semibold tracking-wider">
+                            <span><?php echo esc_html($rel_sku_display); ?></span>
                           </div>
                         </div>
 

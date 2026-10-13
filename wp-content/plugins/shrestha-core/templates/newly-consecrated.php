@@ -171,13 +171,13 @@ if (empty($cards)) {
               <span class="font-mono font-bold text-xl sm:text-2xl text-amber-600 dark:text-gold">
                 $<?php echo esc_html(str_replace('$', '', $card['price'])); ?>
               </span>
-              <?php if (!empty($card['flames'])): ?>
-                <div class="flex items-center gap-0.5 text-amber-500">
-                  <?php for ($f = 0; $f < intval($card['flames']); $f++): ?>
-                    <i data-lucide="flame" class="w-3.5 h-3.5 fill-amber-500/20"></i>
-                  <?php endfor; ?>
-                </div>
-              <?php endif; ?>
+              <?php
+              $card_sku = !empty($card['sku']) ? $card['sku'] : 'SH-001';
+              $card_sku = ltrim(trim(str_ireplace('SPECIMEN', '', $card_sku)), '# ');
+              ?>
+              <div class="inline-flex items-center px-2.5 py-1 bg-white dark:bg-patina-900 border border-gold/30 rounded font-mono text-xs text-gold shadow-sm font-semibold tracking-wider">
+                <span><?php echo esc_html($card_sku); ?></span>
+              </div>
             </div>
 
             <h3

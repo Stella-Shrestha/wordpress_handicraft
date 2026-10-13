@@ -707,9 +707,9 @@
       const rawPosts = (window.shresthaCoreData && Array.isArray(window.shresthaCoreData.availablePosts) && window.shresthaCoreData.availablePosts.length > 0)
         ? window.shresthaCoreData.availablePosts
         : [
-            { id: 20, title: 'Green Tara: Mother of Divine Liberation', subtitle: '22.5 in (57.1 cm) | 14.2 kg | $14,800 | Consecrated', sku: 'SH-001' },
-            { id: 21, title: 'Shakyamuni Buddha: Earth-Touching Mudra', subtitle: '24.0 in (61.0 cm) | 16.5 kg | $16,500 | Consecrated', sku: 'SH-002' },
-            { id: 22, title: 'Mahakala: Wrathful Guardian of Sacred Dharma', subtitle: '18.0 in (45.7 cm) | 18.6 kg | $19,500 | Consecrated', sku: 'SH-108' }
+            { id: 20, title: 'Green Tara: Mother of Divine Liberation', subtitle: '22.5 in (57.1 cm) | 14.2 kg | NRP 14,800 | Consecrated', sku: 'SH-001' },
+            { id: 21, title: 'Shakyamuni Buddha: Earth-Touching Mudra', subtitle: '24.0 in (61.0 cm) | 16.5 kg | NRP 16,500 | Consecrated', sku: 'SH-002' },
+            { id: 22, title: 'Mahakala: Wrathful Guardian of Sacred Dharma', subtitle: '18.0 in (45.7 cm) | 18.6 kg | NRP 19,500 | Consecrated', sku: 'SH-108' }
           ];
 
       // Map posts by ID for quick lookup

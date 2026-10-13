@@ -630,8 +630,8 @@ function updateCartUI() {
         </div>
       `;
     }
-    if (subtotalEl) subtotalEl.innerText = '$0 USD';
-    if (totalEl) totalEl.innerText = '$0 USD';
+    if (subtotalEl) subtotalEl.innerText = 'NRP 0';
+    if (totalEl) totalEl.innerText = 'NRP 0';
     if (selectedSubtotalCountEl) selectedSubtotalCountEl.innerText = '0';
     if (checkoutBtn) {
       checkoutBtn.disabled = true;
@@ -695,7 +695,7 @@ function updateCartUI() {
                 <span class="px-2 text-xs font-mono font-bold text-slate-900 dark:text-parchment">${item.qty}</span>
                 <button onclick="increaseQty('${item.id}')" class="px-2.5 py-0.5 text-xs text-slate-600 dark:text-slate-300 hover:text-gold font-bold" aria-label="Increase quantity">+</button>
               </div>
-              <div class="font-mono font-bold text-sm text-amber-600 dark:text-gold">$${itemTotal.toLocaleString()} USD</div>
+              <div class="font-mono font-bold text-sm text-amber-600 dark:text-gold">NRP ${itemTotal.toLocaleString()}</div>
             </div>
           </div>
           <button onclick="removeFromCart('${item.id}')" class="text-slate-400 hover:text-red-500 text-xs p-1 transition-colors shrink-0" title="Remove item" aria-label="Remove item">
@@ -706,8 +706,8 @@ function updateCartUI() {
     }).join('');
   }
 
-  if (subtotalEl) subtotalEl.innerText = `$${selectedSubtotal.toLocaleString()} USD`;
-  if (totalEl) totalEl.innerText = `$${selectedSubtotal.toLocaleString()} USD`;
+  if (subtotalEl) subtotalEl.innerText = `NRP ${selectedSubtotal.toLocaleString()}`;
+  if (totalEl) totalEl.innerText = `NRP ${selectedSubtotal.toLocaleString()}`;
 
   if (checkoutBtn) {
     if (selectedCount === 0) {
@@ -785,7 +785,7 @@ function openSpecimenModalByProdId(prodId) {
   if (modalAlloy) modalAlloy.innerText = p.alloy || 'Ashtadhatu (8-Metal)';
   if (modalHeight) modalHeight.innerText = p.height ? (p.angula ? `${p.height} (${p.angula})` : p.height) : '24.0 in (61 cm)';
   if (modalWeight) modalWeight.innerText = p.weight || '14.2 kg';
-  if (modalPrice) modalPrice.innerText = `$${Number(p.price).toLocaleString()} USD`;
+  if (modalPrice) modalPrice.innerText = `NRP ${Number(p.price).toLocaleString()}`;
 
   const acquireBtn = document.getElementById('modalAcquireBtn');
   if (acquireBtn) {
@@ -888,7 +888,7 @@ function triggerCheckoutModal() {
     alert('Please select at least one statuary specimen to initiate escrow acquisition.');
     return;
   }
-  const total = document.getElementById('cartTotal')?.innerText || '$0 USD';
+  const total = document.getElementById('cartTotal')?.innerText || 'NRP 0';
   const count = selectedItems.length;
   alert(`Escrow Protocol Initiated for ${count} selected acquisition${count > 1 ? 's' : ''} (Total: ${total}).\n\nA Patan Atelier Concierge will issue your bank wire escrow contract & certified SPECTROMETRY assay via email.`);
   const remaining = cart.filter(i => i.selected === false);
@@ -1163,7 +1163,7 @@ function renderCatalog() {
         <div class="flex flex-col gap-1.5">
           <div class="flex items-center justify-between">
             <span class="font-mono font-bold text-xl sm:text-2xl text-amber-600 dark:text-gold">
-              $${p.price.toLocaleString()}
+              NRP ${p.price.toLocaleString()}
             </span>
             <div class="inline-flex items-center px-2.5 py-1 bg-white dark:bg-patina-900 border border-gold/30 rounded font-mono text-xs text-gold shadow-sm font-semibold tracking-wider">
               <span>${p.id}</span>

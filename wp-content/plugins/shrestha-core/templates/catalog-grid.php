@@ -147,7 +147,7 @@ if ($columns === '4') {
 
                     <div class="flex flex-col gap-2.5 pt-2 border-t border-slate-100 dark:border-gold/10">
                       <div class="flex items-center justify-between">
-                        <span class="font-mono font-bold text-xl text-gold">$<?php echo number_format($price, 2); ?></span>
+                        <span class="font-mono font-bold text-xl text-gold">NRP <?php echo (floor($price) == $price ? number_format($price) : number_format($price, 2)); ?></span>
                         <button onclick="typeof openSpecimenModalByProdId === 'function' && openSpecimenModalByProdId('<?php echo esc_js($sku); ?>')"
                           class="p-2 bg-slate-100 dark:bg-patina-800 hover:bg-gold/10 text-slate-700 dark:text-parchment hover:text-gold rounded-lg border border-slate-200 dark:border-gold/20 transition-colors shadow-sm text-xs font-mono flex items-center gap-1"
                           title="Inspect Technical Specs">
@@ -266,7 +266,7 @@ if ($columns === '4') {
             </div>
             <div class="flex flex-col gap-2.5 pt-2 border-t border-slate-100 dark:border-gold/10">
               <div class="flex items-center justify-between">
-                <span class="font-mono font-bold text-xl text-gold">$<?php echo number_format($spec['price'], 2); ?></span>
+                <span class="font-mono font-bold text-xl text-gold">NRP <?php echo (floor($spec['price']) == $spec['price'] ? number_format($spec['price']) : number_format($spec['price'], 2)); ?></span>
                 <button onclick="typeof openSpecimenModalByProdId === 'function' && openSpecimenModalByProdId('<?php echo esc_js($spec['sku']); ?>')"
                   class="p-2 bg-slate-100 dark:bg-patina-800 hover:bg-gold/10 text-slate-700 dark:text-parchment hover:text-gold rounded-lg border border-slate-200 dark:border-gold/20 transition-colors shadow-sm text-xs font-mono flex items-center gap-1"
                   title="Inspect Technical Specs">

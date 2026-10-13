@@ -220,7 +220,7 @@ get_header();
             <div class="flex flex-col gap-1.5">
               <div class="flex items-center justify-between">
                 <span class="font-mono font-bold text-xl sm:text-2xl text-amber-600 dark:text-gold">
-                  $14,800
+                  NRP 14,800
                 </span>
                 <div class="inline-flex items-center px-2.5 py-1 bg-white dark:bg-patina-900 border border-gold/30 rounded font-mono text-xs text-gold shadow-sm font-semibold tracking-wider">
                   <span>SH-001</span>
@@ -291,7 +291,7 @@ get_header();
             <div class="flex flex-col gap-1.5">
               <div class="flex items-center justify-between">
                 <span class="font-mono font-bold text-xl sm:text-2xl text-amber-600 dark:text-gold">
-                  $19,500
+                  NRP 19,500
                 </span>
                 <div class="inline-flex items-center px-2.5 py-1 bg-white dark:bg-patina-900 border border-gold/30 rounded font-mono text-xs text-gold shadow-sm font-semibold tracking-wider">
                   <span>SH-108</span>
@@ -362,7 +362,7 @@ get_header();
             <div class="flex flex-col gap-1.5">
               <div class="flex items-center justify-between">
                 <span class="font-mono font-bold text-xl sm:text-2xl text-amber-600 dark:text-gold">
-                  $12,400
+                  NRP 12,400
                 </span>
                 <div class="inline-flex items-center px-2.5 py-1 bg-white dark:bg-patina-900 border border-gold/30 rounded font-mono text-xs text-gold shadow-sm font-semibold tracking-wider">
                   <span>SH-204</span>

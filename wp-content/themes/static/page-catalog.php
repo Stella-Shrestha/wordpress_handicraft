@@ -119,7 +119,7 @@ get_header();
           </div>
           <div class="flex flex-col gap-2.5 pt-2 border-t border-slate-100 dark:border-gold/10">
             <div class="flex items-center justify-between">
-              <span class="font-mono font-bold text-xl text-gold">$14,800.00</span>
+              <span class="font-mono font-bold text-xl text-gold">NRP 14,800</span>
               <button onclick="typeof openSpecimenModalByProdId === 'function' && openSpecimenModalByProdId('SH-001')"
                 class="p-2 bg-slate-100 dark:bg-patina-800 hover:bg-gold/10 text-slate-700 dark:text-parchment hover:text-gold rounded-lg border border-slate-200 dark:border-gold/20 transition-colors shadow-sm text-xs font-mono flex items-center gap-1"
                 title="Inspect Technical Specs">
@@ -183,7 +183,7 @@ get_header();
           </div>
           <div class="flex flex-col gap-2.5 pt-2 border-t border-slate-100 dark:border-gold/10">
             <div class="flex items-center justify-between">
-              <span class="font-mono font-bold text-xl text-gold">$16,500.00</span>
+              <span class="font-mono font-bold text-xl text-gold">NRP 16,500</span>
               <button onclick="typeof openSpecimenModalByProdId === 'function' && openSpecimenModalByProdId('SH-002')"
                 class="p-2 bg-slate-100 dark:bg-patina-800 hover:bg-gold/10 text-slate-700 dark:text-parchment hover:text-gold rounded-lg border border-slate-200 dark:border-gold/20 transition-colors shadow-sm text-xs font-mono flex items-center gap-1"
                 title="Inspect Technical Specs">
@@ -247,7 +247,7 @@ get_header();
           </div>
           <div class="flex flex-col gap-2.5 pt-2 border-t border-slate-100 dark:border-gold/10">
             <div class="flex items-center justify-between">
-              <span class="font-mono font-bold text-xl text-gold">$19,500.00</span>
+              <span class="font-mono font-bold text-xl text-gold">NRP 19,500</span>
               <button onclick="typeof openSpecimenModalByProdId === 'function' && openSpecimenModalByProdId('SH-108')"
                 class="p-2 bg-slate-100 dark:bg-patina-800 hover:bg-gold/10 text-slate-700 dark:text-parchment hover:text-gold rounded-lg border border-slate-200 dark:border-gold/20 transition-colors shadow-sm text-xs font-mono flex items-center gap-1"
                 title="Inspect Technical Specs">

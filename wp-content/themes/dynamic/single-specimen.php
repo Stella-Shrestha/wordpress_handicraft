@@ -88,8 +88,8 @@ while (have_posts()): the_post();
             </h1>
 
             <div class="flex items-baseline gap-4 mt-4">
-              <span class="font-mono text-3xl font-bold text-gold">$<?php echo number_format($price, 2); ?></span>
-              <span class="font-mono text-xs text-slate-400">USD • International Insured Freight Included</span>
+              <span class="font-mono text-3xl font-bold text-gold">NRP <?php echo (floor($price) == $price ? number_format($price) : number_format($price, 2)); ?></span>
+              <span class="font-mono text-xs text-slate-400">NRP • International Insured Freight Included</span>
             </div>
           </div>
 
@@ -231,7 +231,7 @@ while (have_posts()): the_post();
                       <div class="flex flex-col gap-1.5">
                         <div class="flex items-center justify-between">
                           <span class="font-mono font-bold text-xl sm:text-2xl text-amber-600 dark:text-gold">
-                            $<?php echo number_format($rel_price, 2); ?>
+                            NRP <?php echo (floor($rel_price) == $rel_price) ? number_format($rel_price) : number_format($rel_price, 2); ?>
                           </span>
                           <?php
                           $rel_sku_display = !empty($rel_sku) ? ltrim(trim(str_ireplace('SPECIMEN', '', $rel_sku)), '# ') : 'SH-001';

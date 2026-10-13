@@ -356,7 +356,7 @@ if (!defined('ABSPATH')) {
         class="p-5 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-patina-900 flex flex-col gap-3">
         <div class="flex justify-between font-mono text-sm text-slate-500 dark:text-slate-400">
           <span>Subtotal (<span id="cartSelectedSubtotalCount">0</span> selected)</span>
-          <span id="cartSubtotal">$0 USD</span>
+          <span id="cartSubtotal">NRP 0</span>
         </div>
         <div class="flex justify-between font-mono text-sm text-slate-500 dark:text-slate-400">
           <span>Escrow Insurance</span>
@@ -365,7 +365,7 @@ if (!defined('ABSPATH')) {
         <div
           class="flex justify-between font-mono text-base font-bold text-slate-900 dark:text-parchment pt-2 border-t border-dashed border-slate-300 dark:border-slate-700">
           <span>Total Escrow</span>
-          <span id="cartTotal" class="text-gold">$0 USD</span>
+          <span id="cartTotal" class="text-gold">NRP 0</span>
         </div>
 
         <button onclick="triggerCheckoutModal()" id="cartCheckoutBtn"
@@ -420,7 +420,7 @@ if (!defined('ABSPATH')) {
         </div>
 
         <div class="flex items-center justify-between mt-auto pt-3 border-t border-slate-100 dark:border-slate-800 gap-3">
-          <span id="modalPrice" class="font-mono font-bold text-xl text-gold">$0</span>
+          <span id="modalPrice" class="font-mono font-bold text-xl text-gold">NRP 0</span>
           <div class="flex items-center gap-2">
             <button id="modalBookBtn"
               class="px-4 py-2.5 bg-white dark:bg-patina-800 hover:bg-gold/10 text-slate-800 dark:text-parchment hover:text-gold border border-slate-300 dark:border-gold/30 hover:border-gold font-mono font-bold text-xs uppercase tracking-wider rounded-lg shadow-sm transition-all flex items-center gap-1.5">

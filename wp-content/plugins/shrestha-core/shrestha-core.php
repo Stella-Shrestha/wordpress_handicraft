@@ -103,7 +103,7 @@ function shrestha_core_register_editor_assets() {
         $meta_parts = array();
         if ($height) $meta_parts[] = $height;
         if ($weight) $meta_parts[] = $weight;
-        if ($price)  $meta_parts[] = '$' . $price;
+        if ($price)  $meta_parts[] = 'NRP ' . $price;
         if ($consec) $meta_parts[] = 'Consecrated';
 
         $available_posts[] = array(

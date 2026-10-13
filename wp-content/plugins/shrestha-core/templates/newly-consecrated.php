@@ -154,7 +154,7 @@ if (empty($cards)) {
   <!-- Dynamic Specimen Cards Grid -->
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-[1440px] mx-auto">
     <?php foreach ($cards as $card) : ?>
-      <div data-sku="<?php echo esc_attr($card['sku']); ?>" data-name="<?php echo esc_attr($card['title']); ?>" data-price="<?php echo esc_attr(str_replace('$', '', $card['price'])); ?>" data-alloys="<?php echo esc_attr($card['alloy']); ?>"
+      <div data-sku="<?php echo esc_attr($card['sku']); ?>" data-name="<?php echo esc_attr($card['title']); ?>" data-price="<?php echo esc_attr(str_replace(array('$', 'NRP', ' '), '', $card['price'])); ?>" data-alloys="<?php echo esc_attr($card['alloy']); ?>"
         class="specimen-card bg-white dark:bg-patina-900 border border-slate-200/80 dark:border-gold/30 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col group">
         <div class="relative w-full h-[380px] sm:h-[430px] overflow-hidden bg-black flex items-center justify-center">
           <img src="<?php echo esc_url($card['img']); ?>" alt="<?php echo esc_attr($card['title']); ?>"
@@ -169,7 +169,7 @@ if (empty($cards)) {
           <div class="flex flex-col gap-1.5">
             <div class="flex items-center justify-between">
               <span class="font-mono font-bold text-xl sm:text-2xl text-amber-600 dark:text-gold">
-                $<?php echo esc_html(str_replace('$', '', $card['price'])); ?>
+                NRP <?php echo esc_html(str_replace(array('$', 'NRP', ' '), '', $card['price'])); ?>
               </span>
               <?php
               $card_sku = !empty($card['sku']) ? $card['sku'] : 'SH-001';

@@ -165,9 +165,16 @@ if ($columns === '4') {
                           <i data-lucide="shopping-bag" class="w-3.5 h-3.5 shrink-0"></i>
                           <span>Add to Cart</span>
                         </button>
+                        <?php
+                        $grid_wa_url = function_exists('shrestha_get_whatsapp_inquiry_url') 
+                            ? shrestha_get_whatsapp_inquiry_url($sku, get_the_title()) 
+                            : 'https://wa.me/9779841234567?text=' . rawurlencode('Namaste! I would like to inquire about acquiring "' . get_the_title() . '" (SKU: ' . $sku . '). Please share details.');
+                        ?>
                         <button type="button"
-                          onclick="typeof bookNowByProdId === 'function' ? bookNowByProdId('<?php echo esc_js($sku); ?>') : (window.location.href='<?php echo esc_url(home_url('/contact/?inquiry=booking&sku=')); ?><?php echo esc_js($sku); ?>')"
-                          class="px-2.5 py-2.5 bg-white dark:bg-patina-800 hover:bg-gold/10 text-slate-800 dark:text-parchment hover:text-gold border border-slate-300 dark:border-gold/30 hover:border-gold font-mono text-[11px] font-bold uppercase tracking-wider rounded-lg shadow-sm transition-all flex items-center justify-center gap-1.5 text-center">
+                          data-action="inquiry"
+                          data-sku="<?php echo esc_attr($sku); ?>"
+                          onclick="if(typeof openWhatsAppInquiry==='function'){openWhatsAppInquiry('<?php echo esc_js($sku); ?>');}else if(typeof bookNowByProdId==='function'){bookNowByProdId('<?php echo esc_js($sku); ?>');}else{window.open('<?php echo esc_url($grid_wa_url); ?>', '_blank');}"
+                          class="inquiry-btn px-2.5 py-2.5 bg-white dark:bg-patina-800 hover:bg-gold/10 text-slate-800 dark:text-parchment hover:text-gold border border-slate-300 dark:border-gold/30 hover:border-gold font-mono text-[11px] font-bold uppercase tracking-wider rounded-lg shadow-sm transition-all flex items-center justify-center gap-1.5 text-center">
                           <i data-lucide="message-square" class="w-3.5 h-3.5 shrink-0 text-copper"></i>
                           <span>Inquiry</span>
                         </button>
@@ -284,9 +291,16 @@ if ($columns === '4') {
                   <i data-lucide="shopping-bag" class="w-3.5 h-3.5 shrink-0"></i>
                   <span>Add to Cart</span>
                 </button>
+                <?php
+                $spec_wa_url = function_exists('shrestha_get_whatsapp_inquiry_url') 
+                    ? shrestha_get_whatsapp_inquiry_url($spec['sku'], $spec['title']) 
+                    : 'https://wa.me/9779841234567?text=' . rawurlencode('Namaste! I would like to inquire about acquiring "' . $spec['title'] . '" (SKU: ' . $spec['sku'] . '). Please share details.');
+                ?>
                 <button type="button"
-                  onclick="typeof bookNowByProdId === 'function' ? bookNowByProdId('<?php echo esc_js($spec['sku']); ?>') : (window.location.href='<?php echo esc_url(home_url('/contact/?inquiry=booking&sku=')); ?><?php echo esc_js($spec['sku']); ?>')"
-                  class="px-2.5 py-2.5 bg-white dark:bg-patina-800 hover:bg-gold/10 text-slate-800 dark:text-parchment hover:text-gold border border-slate-300 dark:border-gold/30 hover:border-gold font-mono text-[11px] font-bold uppercase tracking-wider rounded-lg shadow-sm transition-all flex items-center justify-center gap-1.5 text-center">
+                  data-action="inquiry"
+                  data-sku="<?php echo esc_attr($spec['sku']); ?>"
+                  onclick="if(typeof openWhatsAppInquiry==='function'){openWhatsAppInquiry('<?php echo esc_js($spec['sku']); ?>');}else if(typeof bookNowByProdId==='function'){bookNowByProdId('<?php echo esc_js($spec['sku']); ?>');}else{window.open('<?php echo esc_url($spec_wa_url); ?>', '_blank');}"
+                  class="inquiry-btn px-2.5 py-2.5 bg-white dark:bg-patina-800 hover:bg-gold/10 text-slate-800 dark:text-parchment hover:text-gold border border-slate-300 dark:border-gold/30 hover:border-gold font-mono text-[11px] font-bold uppercase tracking-wider rounded-lg shadow-sm transition-all flex items-center justify-center gap-1.5 text-center">
                   <i data-lucide="message-square" class="w-3.5 h-3.5 shrink-0 text-copper"></i>
                   <span>Inquiry</span>
                 </button>

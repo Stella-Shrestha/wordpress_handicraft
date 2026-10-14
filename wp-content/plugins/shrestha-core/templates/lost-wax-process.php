@@ -55,16 +55,6 @@ $default_steps = array(
     )
 );
 $steps = (!empty($attributes['steps']) && is_array($attributes['steps'])) ? $attributes['steps'] : $default_steps;
-
-// Default Features / Guarantees
-$default_features = array(
-    array('icon' => 'globe',        'title' => 'Worldwide',                   'subtitle' => 'Secure Shipping'),
-    array('icon' => 'ruler',        'title' => 'Custom Dimensions',           'subtitle' => 'On Request'),
-    array('icon' => 'shield-check', 'title' => 'Lifetime Care',               'subtitle' => '& Maintenance'),
-    array('icon' => 'flame',        'title' => 'Monastic Blessing',           'subtitle' => 'Available'),
-    array('icon' => 'award',        'title' => 'Certificate of Authenticity', 'subtitle' => 'Included')
-);
-$features = (!empty($attributes['features']) && is_array($attributes['features'])) ? $attributes['features'] : $default_features;
 ?>
 
 <!-- THE FOUNDRY METHOD SECTION -->
@@ -108,7 +98,7 @@ $features = (!empty($attributes['features']) && is_array($attributes['features']
           <div class="flex flex-col gap-1 <?php echo esc_attr($padding_class . ' ' . $border_class); ?>">
             <div class="flex items-center gap-1.5">
               <i data-lucide="<?php echo esc_attr($s_icon); ?>" class="w-4 h-4 text-gold shrink-0"></i>
-              <span class="font-display font-bold text-lg sm:text-xl text-slate-900 dark:text-parchment"><?php echo esc_html($s_val); ?></span>
+              <span class="counter-number font-display font-bold text-lg sm:text-xl text-slate-900 dark:text-parchment" data-counter="true"><?php echo esc_html($s_val); ?></span>
             </div>
             <span class="font-mono text-[10px] text-slate-500 dark:text-slate-400 leading-tight">
               <?php echo nl2br(esc_html($s_label)); ?>
@@ -158,32 +148,6 @@ $features = (!empty($attributes['features']) && is_array($attributes['features']
       </div>
 
     </div>
-
-    <!-- Bottom Features / Guarantees Bar -->
-    <?php if (!empty($features)): 
-      $grid_cols_class = count($features) <= 3 ? 'sm:grid-cols-3' : (count($features) == 4 ? 'sm:grid-cols-2 lg:grid-cols-4' : 'sm:grid-cols-3 lg:grid-cols-5');
-    ?>
-    <div
-      class="bg-white dark:bg-patina-900 border border-slate-200 dark:border-gold/30 rounded-2xl p-5 shadow-xl dark:shadow-2xl grid grid-cols-1 <?php echo esc_attr($grid_cols_class); ?> gap-4 divide-y sm:divide-y-0 sm:divide-x divide-slate-200 dark:divide-slate-800/80 transition-colors duration-300">
-
-      <?php foreach ($features as $feat): 
-        $f_icon  = !empty($feat['icon']) ? $feat['icon'] : 'globe';
-        $f_title = !empty($feat['title']) ? $feat['title'] : '';
-        $f_sub   = !empty($feat['subtitle']) ? $feat['subtitle'] : '';
-      ?>
-      <div class="flex items-center gap-3 px-2 py-1">
-        <div class="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold shrink-0">
-          <i data-lucide="<?php echo esc_attr($f_icon); ?>" class="w-5 h-5"></i>
-        </div>
-        <div class="font-mono leading-snug text-slate-900 dark:text-parchment">
-          <strong class="block text-base font-bold"><?php echo esc_html($f_title); ?></strong>
-          <span class="text-xs text-slate-500 dark:text-slate-400"><?php echo esc_html($f_sub); ?></span>
-        </div>
-      </div>
-      <?php endforeach; ?>
-
-    </div>
-    <?php endif; ?>
 
   </div>
 </section>

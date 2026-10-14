@@ -144,9 +144,16 @@ while (have_posts()): the_post();
               <span>Add to Cart</span>
             </button>
 
+            <?php
+            $specimen_wa_url = function_exists('shrestha_get_whatsapp_inquiry_url') 
+                ? shrestha_get_whatsapp_inquiry_url($sku, get_the_title()) 
+                : 'https://wa.me/9779841234567?text=' . rawurlencode('Namaste! I would like to inquire about acquiring "' . get_the_title() . '" (SKU: ' . $sku . '). Please share details.');
+            ?>
             <button type="button"
-              onclick="if(typeof bookNowByProdId==='function'){bookNowByProdId('<?php echo esc_js($sku); ?>');}else{window.location.href='<?php echo esc_url(home_url('/contact/?inquiry=booking&sku=')); ?><?php echo esc_js($sku); ?>';}"
-              class="px-6 py-4 bg-white dark:bg-patina-900 border border-slate-300 dark:border-gold/40 hover:border-gold text-slate-800 dark:text-parchment hover:text-gold font-mono font-bold text-xs uppercase tracking-wider rounded-lg transition-colors flex items-center justify-center gap-2 shadow-sm">
+              data-action="inquiry"
+              data-sku="<?php echo esc_attr($sku); ?>"
+              onclick="if(typeof openWhatsAppInquiry==='function'){openWhatsAppInquiry('<?php echo esc_js($sku); ?>');}else if(typeof bookNowByProdId==='function'){bookNowByProdId('<?php echo esc_js($sku); ?>');}else{window.open('<?php echo esc_url($specimen_wa_url); ?>', '_blank');}"
+              class="inquiry-btn px-6 py-4 bg-white dark:bg-patina-900 border border-slate-300 dark:border-gold/40 hover:border-gold text-slate-800 dark:text-parchment hover:text-gold font-mono font-bold text-xs uppercase tracking-wider rounded-lg transition-colors flex items-center justify-center gap-2 shadow-sm">
               <i data-lucide="message-square" class="w-4 h-4 text-copper"></i>
               <span>Inquiry</span>
             </button>
@@ -276,9 +283,16 @@ while (have_posts()): the_post();
                             <span>Add to Cart</span>
                           </button>
 
+                          <?php
+                          $rel_wa_url = function_exists('shrestha_get_whatsapp_inquiry_url') 
+                              ? shrestha_get_whatsapp_inquiry_url($rel_sku, get_the_title()) 
+                              : 'https://wa.me/9779841234567?text=' . rawurlencode('Namaste! I would like to inquire about acquiring "' . get_the_title() . '" (SKU: ' . $rel_sku . '). Please share details.');
+                          ?>
                           <button type="button"
-                            onclick="if(typeof bookNowByProdId==='function'){bookNowByProdId('<?php echo esc_js($rel_sku); ?>');}else{window.location.href='<?php echo esc_url(home_url('/contact/?inquiry=booking&sku=')); ?><?php echo esc_js($rel_sku); ?>';}"
-                            class="px-2.5 py-2.5 bg-white dark:bg-patina-800 hover:bg-gold/10 text-slate-800 dark:text-parchment hover:text-gold border border-slate-300 dark:border-gold/30 hover:border-gold font-mono font-bold text-[11px] uppercase tracking-wider rounded-lg shadow-sm transition-all flex items-center justify-center gap-1.5 text-center">
+                            data-action="inquiry"
+                            data-sku="<?php echo esc_attr($rel_sku); ?>"
+                            onclick="if(typeof openWhatsAppInquiry==='function'){openWhatsAppInquiry('<?php echo esc_js($rel_sku); ?>');}else if(typeof bookNowByProdId==='function'){bookNowByProdId('<?php echo esc_js($rel_sku); ?>');}else{window.open('<?php echo esc_url($rel_wa_url); ?>', '_blank');}"
+                            class="inquiry-btn px-2.5 py-2.5 bg-white dark:bg-patina-800 hover:bg-gold/10 text-slate-800 dark:text-parchment hover:text-gold border border-slate-300 dark:border-gold/30 hover:border-gold font-mono font-bold text-[11px] uppercase tracking-wider rounded-lg shadow-sm transition-all flex items-center justify-center gap-1.5 text-center">
                             <i data-lucide="message-square" class="w-3.5 h-3.5 shrink-0 text-copper"></i>
                             <span>Inquiry</span>
                           </button>

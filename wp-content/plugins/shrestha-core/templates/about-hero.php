@@ -78,17 +78,17 @@ $hud_text = isset($attributes['hudText']) ? $attributes['hudText'] : 'ICONOMETRI
       <!-- Bottom Hero Stats Summary Row -->
       <div class="border-t border-slate-200 dark:border-gold/20 pt-6 mt-4 grid grid-cols-3 gap-4 max-w-lg">
         <div>
-          <span class="font-display text-2xl font-bold text-gold"><?php echo esc_html($stat1_val); ?></span>
+          <span class="counter-number font-display text-2xl font-bold text-gold" data-counter="true"><?php echo esc_html($stat1_val); ?></span>
           <span
             class="block font-mono text-[10px] text-slate-500 dark:text-slate-400 tracking-widest uppercase mt-0.5"><?php echo esc_html($stat1_lbl); ?></span>
         </div>
         <div>
-          <span class="font-display text-2xl font-bold text-gold"><?php echo esc_html($stat2_val); ?></span>
+          <span class="counter-number font-display text-2xl font-bold text-gold" data-counter="true"><?php echo esc_html($stat2_val); ?></span>
           <span
             class="block font-mono text-[10px] text-slate-500 dark:text-slate-400 tracking-widest uppercase mt-0.5"><?php echo esc_html($stat2_lbl); ?></span>
         </div>
         <div>
-          <span class="font-display text-2xl font-bold text-gold"><?php echo esc_html($stat3_val); ?></span>
+          <span class="counter-number font-display text-2xl font-bold text-gold" data-counter="true"><?php echo esc_html($stat3_val); ?></span>
           <span
             class="block font-mono text-[10px] text-slate-500 dark:text-slate-400 tracking-widest uppercase mt-0.5"><?php echo esc_html($stat3_lbl); ?></span>
         </div>

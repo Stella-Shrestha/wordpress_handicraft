@@ -344,6 +344,44 @@ function shrestha_asset($relative_path) {
 }
 
 /**
+ * Helper to retrieve site brand logo URL
+ */
+function shrestha_logo_url() {
+    $upload_dir = wp_upload_dir();
+    $logo_upload_path = $upload_dir['basedir'] . '/logo.jpg';
+    if (file_exists($logo_upload_path)) {
+        return esc_url($upload_dir['baseurl'] . '/logo.jpg');
+    }
+    if (file_exists(WP_CONTENT_DIR . '/uploads/logo.jpg')) {
+        return esc_url(content_url('/uploads/logo.jpg'));
+    }
+    if (file_exists(get_template_directory() . '/assets/logo.jpg')) {
+        return esc_url(get_template_directory_uri() . '/assets/logo.jpg');
+    }
+    return '';
+}
+
+/**
+ * Helper to retrieve WhatsApp Direct Inquiry URL
+ */
+function shrestha_get_whatsapp_inquiry_url($sku = '', $title = '') {
+    $raw_phone = get_theme_mod('shrestha_whatsapp', '+977 984 123 4567');
+    $clean_phone = preg_replace('/[^0-9]/', '', $raw_phone);
+    if (strlen($clean_phone) === 10 && strpos($clean_phone, '98') === 0) {
+        $clean_phone = '977' . $clean_phone;
+    }
+    if (empty($clean_phone)) {
+        $clean_phone = '9779841234567';
+    }
+    
+    $specimen_text = !empty($title) ? '"' . trim($title) . '"' : (!empty($sku) ? 'Specimen #' . $sku : 'Sacred Specimen');
+    $sku_text = !empty($sku) ? ' (SKU: ' . $sku . ')' : '';
+    $message = 'Namaste! I would like to inquire about acquiring ' . $specimen_text . $sku_text . '. Please share availability, crafting timeline, and pricing details.';
+    
+    return 'https://wa.me/' . $clean_phone . '?text=' . rawurlencode($message);
+}
+
+/**
  * Register Custom Post Types and Taxonomies
  */
 function shrestha_register_post_types() {

@@ -219,9 +219,16 @@ if (empty($cards)) {
                 <span>Add to Cart</span>
               </button>
 
+              <?php
+              $card_wa_url = function_exists('shrestha_get_whatsapp_inquiry_url') 
+                  ? shrestha_get_whatsapp_inquiry_url($card['sku'], $card['title']) 
+                  : 'https://wa.me/9779841234567?text=' . rawurlencode('Namaste! I would like to inquire about acquiring "' . $card['title'] . '" (SKU: ' . $card['sku'] . '). Please share details.');
+              ?>
               <button type="button"
-                onclick="if(typeof bookNowByProdId==='function'){bookNowByProdId('<?php echo esc_js($card['sku']); ?>');}else{window.location.href='<?php echo esc_url(home_url('/contact/?inquiry=booking&sku=')); ?><?php echo esc_js($card['sku']); ?>';}"
-                class="px-2.5 py-2.5 bg-white dark:bg-patina-800 hover:bg-gold/10 text-slate-800 dark:text-parchment hover:text-gold border border-slate-300 dark:border-gold/30 hover:border-gold font-mono font-bold text-[11px] uppercase tracking-wider rounded-lg shadow-sm transition-all flex items-center justify-center gap-1.5 text-center">
+                data-action="inquiry"
+                data-sku="<?php echo esc_attr($card['sku']); ?>"
+                onclick="if(typeof openWhatsAppInquiry==='function'){openWhatsAppInquiry('<?php echo esc_js($card['sku']); ?>');}else if(typeof bookNowByProdId==='function'){bookNowByProdId('<?php echo esc_js($card['sku']); ?>');}else{window.open('<?php echo esc_url($card_wa_url); ?>', '_blank');}"
+                class="inquiry-btn px-2.5 py-2.5 bg-white dark:bg-patina-800 hover:bg-gold/10 text-slate-800 dark:text-parchment hover:text-gold border border-slate-300 dark:border-gold/30 hover:border-gold font-mono font-bold text-[11px] uppercase tracking-wider rounded-lg shadow-sm transition-all flex items-center justify-center gap-1.5 text-center">
                 <i data-lucide="message-square" class="w-3.5 h-3.5 shrink-0 text-copper"></i>
                 <span>Inquiry</span>
               </button>

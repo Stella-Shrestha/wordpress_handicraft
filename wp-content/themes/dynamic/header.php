@@ -40,16 +40,23 @@ if (!defined('ABSPATH')) {
     <div class="max-w-[1584px] mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-4">
 
       <!-- Brand Logo -->
-      <a href="<?php echo esc_url(home_url('/')); ?>" class="flex items-center gap-3 group">
+      <a href="<?php echo esc_url(home_url('/')); ?>" class="flex items-center gap-3 sm:gap-3.5 group">
+        <?php
+        $site_logo = function_exists('shrestha_logo_url') ? shrestha_logo_url() : content_url('/uploads/logo.jpg');
+        ?>
         <div
-          class="w-10 h-10 rounded-lg bg-patina-100 dark:bg-patina-900 border border-gold/40 flex items-center justify-center text-gold shadow-sm group-hover:border-gold transition-colors">
-          <i data-lucide="flame" class="w-5 h-5"></i>
+          class="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-xl overflow-hidden bg-white border border-gold/40 flex items-center justify-center text-gold shadow-sm group-hover:border-gold transition-all shrink-0">
+          <?php if (!empty($site_logo)): ?>
+            <img src="<?php echo esc_url($site_logo); ?>" alt="<?php bloginfo('name'); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+          <?php else: ?>
+            <i data-lucide="flame" class="w-6 h-6"></i>
+          <?php endif; ?>
         </div>
         <div class="flex flex-col">
           <span
-            class="font-display font-bold text-base tracking-wider uppercase text-slate-900 dark:text-parchment">Shrestha
+            class="font-display font-bold text-base sm:text-lg tracking-wider uppercase text-slate-900 dark:text-parchment leading-tight">Shrestha
             Handicraft</span>
-          <span class="font-mono text-[10px] text-gold tracking-widest uppercase">Sacred Metallurgy • Patan</span>
+          <span class="font-mono text-[10px] sm:text-xs text-gold tracking-widest uppercase mt-0.5">Sacred Metallurgy • Patan</span>
         </div>
       </a>
 

@@ -56,15 +56,25 @@ $submit_btn_text  = isset($attributes['submitBtnText']) && !empty($attributes['s
           </div>
         </div>
 
-        <div class="flex items-start gap-4">
-          <div class="w-10 h-10 rounded-lg bg-gold/10 border border-gold/30 flex items-center justify-center text-gold shrink-0">
+        <?php
+        $wa_clean_contact = preg_replace('/[^0-9]/', '', $whatsapp);
+        if (strlen($wa_clean_contact) === 10 && strpos($wa_clean_contact, '98') === 0) {
+            $wa_clean_contact = '977' . $wa_clean_contact;
+        }
+        if (empty($wa_clean_contact)) {
+            $wa_clean_contact = '9779841234567';
+        }
+        $contact_wa_link = 'https://wa.me/' . $wa_clean_contact . '?text=' . rawurlencode('Namaste! I would like to inquire about your sacred handicraft statues and atelier collection.');
+        ?>
+        <a href="<?php echo esc_url($contact_wa_link); ?>" target="_blank" rel="noopener noreferrer" class="flex items-start gap-4 group hover:opacity-90 transition-opacity">
+          <div class="w-10 h-10 rounded-lg bg-gold/10 border border-gold/30 group-hover:border-gold group-hover:bg-gold/20 flex items-center justify-center text-gold shrink-0 transition-colors">
             <i data-lucide="message-circle" class="w-5 h-5"></i>
           </div>
           <div>
             <span class="font-mono text-xs text-gold uppercase block">WhatsApp Concierge</span>
-            <p class="text-slate-700 dark:text-slate-300 font-mono mt-0.5"><?php echo esc_html($whatsapp); ?></p>
+            <p class="text-slate-700 dark:text-slate-300 group-hover:text-gold font-mono mt-0.5 transition-colors"><?php echo esc_html($whatsapp); ?> <span class="text-[10px] text-emerald-500 font-sans block sm:inline ml-0 sm:ml-1 font-semibold">• Tap to Chat</span></p>
           </div>
-        </div>
+        </a>
 
         <div class="flex items-start gap-4">
           <div class="w-10 h-10 rounded-lg bg-gold/10 border border-gold/30 flex items-center justify-center text-gold shrink-0">

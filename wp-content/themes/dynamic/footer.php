@@ -44,9 +44,16 @@ if (!defined('ABSPATH')) {
         <!-- Column 1: Brand Info & Social Icons -->
         <div class="sm:col-span-2 lg:col-span-4 flex flex-col gap-5">
           <div class="flex items-center gap-3">
+            <?php
+            $footer_logo = function_exists('shrestha_logo_url') ? shrestha_logo_url() : content_url('/uploads/logo.jpg');
+            ?>
             <div
-              class="w-10 h-10 rounded-full bg-gold/10 border border-gold/40 flex items-center justify-center text-gold">
-              <i data-lucide="flame" class="w-5 h-5"></i>
+              class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden bg-white/10 border border-gold/40 flex items-center justify-center text-gold shrink-0">
+              <?php if (!empty($footer_logo)): ?>
+                <img src="<?php echo esc_url($footer_logo); ?>" alt="Shrestha Handicraft" class="w-full h-full object-cover" />
+              <?php else: ?>
+                <i data-lucide="flame" class="w-6 h-6"></i>
+              <?php endif; ?>
             </div>
             <div class="flex flex-col">
               <span
@@ -472,6 +479,18 @@ if (!defined('ABSPATH')) {
           class="w-full py-3.5 bg-gradient-to-r from-gold to-copper hover:from-gold-bright hover:to-copper-bright text-white dark:text-patina-950 font-mono font-bold text-xs uppercase tracking-wider rounded-lg shadow-lg shadow-gold/20 hover:shadow-gold/40 transition-all flex items-center justify-center gap-2 mt-1">
           <i data-lucide="send" class="w-4 h-4"></i>
           <span>Submit Inquiry Request</span>
+        </button>
+
+        <div class="relative flex py-0.5 items-center">
+          <div class="flex-grow border-t border-slate-200 dark:border-slate-800"></div>
+          <span class="flex-shrink mx-3 text-[10px] font-mono text-slate-400 uppercase tracking-widest">or instant chat</span>
+          <div class="flex-grow border-t border-slate-200 dark:border-slate-800"></div>
+        </div>
+
+        <button type="button" onclick="openWhatsAppFromBookingModal()"
+          class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-mono font-bold text-xs uppercase tracking-wider rounded-lg shadow transition-all flex items-center justify-center gap-2">
+          <i data-lucide="message-circle" class="w-4 h-4"></i>
+          <span>Chat on WhatsApp Concierge</span>
         </button>
       </form>
     </div>

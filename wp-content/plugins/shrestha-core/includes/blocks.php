@@ -260,6 +260,16 @@ function shrestha_core_register_blocks() {
                     ),
                 ),
             ),
+            'features'      => array(
+                'type'    => 'array',
+                'default' => array(
+                    array('icon' => 'globe',        'title' => 'Worldwide',                   'subtitle' => 'Secure Shipping'),
+                    array('icon' => 'ruler',        'title' => 'Custom Dimensions',           'subtitle' => 'On Request'),
+                    array('icon' => 'shield-check', 'title' => 'Lifetime Care',               'subtitle' => '& Maintenance'),
+                    array('icon' => 'flame',        'title' => 'Monastic Blessing',           'subtitle' => 'Available'),
+                    array('icon' => 'award',        'title' => 'Certificate of Authenticity', 'subtitle' => 'Included')
+                ),
+            ),
         ),
     ));
 

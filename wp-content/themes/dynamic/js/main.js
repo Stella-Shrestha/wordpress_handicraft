@@ -815,11 +815,21 @@ function closeSpecimenModal() {
   }
 }
 
-// 5b. BOOK NOW & ATELIER RESERVATION MODAL
-function bookNowByProdId(prodId) {
+// 5b. ATELIER WHATSAPP CONCIERGE & INQUIRY
+function openWhatsAppInquiry(prodId) {
   if (!prodId) prodId = 'SH-001';
   let p = PRODUCTS.find(x => x.id === prodId || (x.id && x.id.toLowerCase() === String(prodId).toLowerCase()));
 
+  // 1. Check window.shresthaData.specimens if available from WordPress
+  if (!p && typeof window.shresthaData !== 'undefined' && window.shresthaData.specimens) {
+    const sp = window.shresthaData.specimens[prodId] || 
+               Object.values(window.shresthaData.specimens).find(s => s.sku === prodId || s.id == prodId);
+    if (sp) {
+      p = { id: sp.sku || String(sp.id), name: sp.name, alloy: sp.alloy, price: sp.price };
+    }
+  }
+
+  // 2. Check DOM cards for data attributes or text
   if (!p) {
     const card = document.querySelector(`[data-sku="${prodId}"]`) || 
                  document.querySelector(`.specimen-card[data-sku="${prodId}"]`);
@@ -828,29 +838,56 @@ function bookNowByProdId(prodId) {
       const cardAlloy = card.getAttribute('data-alloys') || card.querySelector('.font-mono')?.innerText?.trim() || 'Ashtadhatu (8-Metal)';
       p = { id: String(prodId), name: cardTitle, alloy: cardAlloy };
     } else {
-      p = { id: String(prodId), name: `Sacred Specimen #${prodId}`, alloy: 'Ashtadhatu (8-Metal)' };
+      const pageTitle = document.querySelector('h1')?.innerText?.trim();
+      p = { id: String(prodId), name: pageTitle || `Sacred Specimen #${prodId}`, alloy: 'Ashtadhatu (8-Metal)' };
     }
   }
 
-  const bookingModal = document.getElementById('bookingModal');
-  if (bookingModal) {
-    const skuInput = document.getElementById('bookingSkuInput');
-    const deityInput = document.getElementById('bookingDeityInput');
-    const titleSpan = document.getElementById('bookingModalDeityName');
-    const skuSpan = document.getElementById('bookingModalSku');
-    
-    if (skuInput) skuInput.value = p.id;
-    if (deityInput) deityInput.value = p.name;
-    if (titleSpan) titleSpan.innerText = p.name;
-    if (skuSpan) skuSpan.innerText = p.id;
-    
-    bookingModal.classList.remove('hidden');
-    bookingModal.classList.add('flex');
-    if (typeof renderIcons === 'function') renderIcons();
-  } else {
-    var siteUrl = (typeof window.shresthaData !== 'undefined' && window.shresthaData.siteUrl) ? window.shresthaData.siteUrl : '';
-    window.location.href = (siteUrl ? siteUrl.replace(/\/$/, '') : '') + '/contact/?inquiry=booking&sku=' + encodeURIComponent(p.id);
+  // Retrieve configured WhatsApp Concierge number
+  let rawPhone = (typeof window.shresthaData !== 'undefined' && window.shresthaData.customizer && window.shresthaData.customizer.whatsapp)
+    ? window.shresthaData.customizer.whatsapp
+    : '+977 984 123 4567';
+  let cleanPhone = String(rawPhone).replace(/[^0-9]/g, '');
+  if (cleanPhone.length === 10 && cleanPhone.startsWith('98')) {
+    cleanPhone = '977' + cleanPhone;
   }
+  if (!cleanPhone) cleanPhone = '9779841234567';
+
+  const deityName = p.name ? p.name.replace(/\s+/g, ' ').trim() : `Specimen #${p.id}`;
+  const sku = p.id || prodId;
+  const message = `Namaste! I would like to inquire about acquiring "${deityName}" (SKU: ${sku}). Please share availability, crafting timeline, and pricing details.`;
+  const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
+
+  // Also prefill booking modal fields if modal element is present
+  const skuInput = document.getElementById('bookingSkuInput');
+  const deityInput = document.getElementById('bookingDeityInput');
+  const titleSpan = document.getElementById('bookingModalDeityName');
+  const skuSpan = document.getElementById('bookingModalSku');
+  if (skuInput) skuInput.value = sku;
+  if (deityInput) deityInput.value = deityName;
+  if (titleSpan) titleSpan.innerText = deityName;
+  if (skuSpan) skuSpan.innerText = sku;
+
+  // Feedback to user
+  if (typeof showToast === 'function') {
+    showToast(`Opening WhatsApp Concierge for "${deityName}"...`);
+  }
+
+  // Open WhatsApp in a new tab
+  const waWin = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+  if (!waWin || waWin.closed || typeof waWin.closed === 'undefined') {
+    window.location.href = whatsappUrl;
+  }
+}
+
+function bookNowByProdId(prodId) {
+  openWhatsAppInquiry(prodId);
+}
+
+function openWhatsAppFromBookingModal() {
+  const sku = document.getElementById('bookingSkuInput')?.value || 'SH-001';
+  openWhatsAppInquiry(sku);
+  closeBookingModal();
 }
 
 function closeBookingModal() {
@@ -904,195 +941,157 @@ function initReviewsSlider() {
   const track = document.getElementById('reviewsTrack');
   if (!track) return;
 
-  const cards = track.children;
-  const totalCards = cards.length;
-  if (totalCards === 0) return;
+  const slides = track.querySelectorAll('.review-slide');
+  const totalSlides = slides.length || track.children.length;
+  if (totalSlides === 0) return;
 
   const prevBtn = document.getElementById('prevReviewBtn');
   const nextBtn = document.getElementById('nextReviewBtn');
   const dotsContainer = document.getElementById('reviewDots');
-  const counterEl = document.getElementById('reviewCounter');
-  const autoplayBtn = document.getElementById('autoplayReviewBtn');
-  const mobileIndicators = document.querySelectorAll('.review-indicator');
+  const sliderContainer = document.getElementById('reviewsSliderContainer');
 
-  function getCardsPerView() {
-    if (window.innerWidth >= 1024) return 3;
-    if (window.innerWidth >= 768) return 2;
-    return 1;
-  }
-
-  function getMaxIndex() {
-    const cardsPerView = getCardsPerView();
-    return Math.max(0, totalCards - cardsPerView);
+  function getSlideStepWidth() {
+    if (slides[0]) {
+      const rect = slides[0].getBoundingClientRect();
+      if (rect.width > 0) return rect.width;
+    }
+    if (sliderContainer) {
+      return sliderContainer.clientWidth;
+    }
+    return 0;
   }
 
   function updateSliderPosition() {
-    const cardsPerView = getCardsPerView();
-    const maxIdx = getMaxIndex();
-    if (reviewCurrentIndex > maxIdx) reviewCurrentIndex = maxIdx;
-    if (reviewCurrentIndex < 0) reviewCurrentIndex = 0;
+    if (reviewCurrentIndex < 0) reviewCurrentIndex = totalSlides - 1;
+    if (reviewCurrentIndex >= totalSlides) reviewCurrentIndex = 0;
 
-    const percentage = (100 / cardsPerView) * reviewCurrentIndex;
-    track.style.transform = `translateX(-${percentage}%)`;
+    const stepWidth = sliderContainer ? sliderContainer.clientWidth : (slides[0] ? slides[0].clientWidth : 0);
+    const targetOffset = reviewCurrentIndex * stepWidth;
 
-    if (counterEl) {
-      const currentFormatted = String(reviewCurrentIndex + 1).padStart(2, '0');
-      const totalFormatted = String(totalCards).padStart(2, '0');
-      counterEl.innerText = `${currentFormatted} / ${totalFormatted}`;
-    }
+    track.style.transform = `translateX(-${targetOffset}px)`;
 
-    if (prevBtn) {
-      prevBtn.style.opacity = (maxIdx === 0) ? '0.4' : '1';
-      prevBtn.style.pointerEvents = (maxIdx === 0) ? 'none' : 'auto';
-    }
-    if (nextBtn) {
-      nextBtn.style.opacity = (maxIdx === 0) ? '0.4' : '1';
-      nextBtn.style.pointerEvents = (maxIdx === 0) ? 'none' : 'auto';
-    }
-
+    // Synchronize Dot Indicators
     if (dotsContainer) {
-      dotsContainer.innerHTML = '';
-      const numDots = maxIdx + 1;
-      for (let i = 0; i < numDots; i++) {
-        const dot = document.createElement('button');
-        dot.className = `h-2 rounded-full transition-all duration-300 ${i === reviewCurrentIndex
-            ? 'w-7 bg-gold shadow-sm'
-            : 'w-2 bg-slate-300 dark:bg-slate-700 hover:bg-gold/50'
-          }`;
-        dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
-        dot.onclick = () => {
-          reviewCurrentIndex = i;
-          updateSliderPosition();
-        };
-        dotsContainer.appendChild(dot);
-      }
-    }
-
-    if (mobileIndicators && mobileIndicators.length > 0) {
-      mobileIndicators.forEach((ind, i) => {
-        if (i === reviewCurrentIndex) {
-          ind.classList.add('bg-gold', 'w-7');
-          ind.classList.remove('bg-slate-300', 'dark:bg-slate-700', 'w-2.5');
+      const dots = dotsContainer.querySelectorAll('.review-dot-btn');
+      dots.forEach((dot, idx) => {
+        if (idx === reviewCurrentIndex) {
+          dot.className = 'review-dot-btn transition-all duration-300 w-7 sm:w-8 h-2 sm:h-2.5 bg-slate-900 dark:bg-gold rounded-full shadow-sm';
+          dot.setAttribute('aria-current', 'true');
         } else {
-          ind.classList.remove('bg-gold', 'w-7');
-          ind.classList.add('bg-slate-300', 'dark:bg-slate-700', 'w-2.5');
+          dot.className = 'review-dot-btn transition-all duration-300 w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full border border-slate-300 dark:border-slate-600 bg-transparent hover:border-slate-500';
+          dot.removeAttribute('aria-current');
         }
       });
     }
   }
 
-  if (mobileIndicators && mobileIndicators.length > 0) {
-    mobileIndicators.forEach((ind, i) => {
-      ind.onclick = (e) => {
-        e.preventDefault();
-        const maxIdx = getMaxIndex();
-        reviewCurrentIndex = Math.min(i, maxIdx);
+  // Bind Dot Click Handlers
+  if (dotsContainer) {
+    let dots = dotsContainer.querySelectorAll('.review-dot-btn');
+    if (dots.length === 0) {
+      dotsContainer.innerHTML = '';
+      for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement('button');
+        dot.className = (i === 0)
+          ? 'review-dot-btn transition-all duration-300 w-7 sm:w-8 h-2 sm:h-2.5 bg-slate-900 dark:bg-gold rounded-full shadow-sm'
+          : 'review-dot-btn transition-all duration-300 w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full border border-slate-300 dark:border-slate-600 bg-transparent hover:border-slate-500';
+        dot.setAttribute('aria-label', `Go to review ${i + 1}`);
+        dotsContainer.appendChild(dot);
+      }
+      dots = dotsContainer.querySelectorAll('.review-dot-btn');
+    }
+
+    dots.forEach((dot, idx) => {
+      dot.onclick = (e) => {
+        if (e) e.preventDefault();
+        reviewCurrentIndex = idx;
         updateSliderPosition();
+        resetAutoplay();
       };
     });
   }
 
+  // Prev Button Click
   if (prevBtn) {
     prevBtn.onclick = (e) => {
       if (e) e.preventDefault();
-      const maxIdx = getMaxIndex();
-      if (maxIdx <= 0) return;
-      if (reviewCurrentIndex > 0) {
-        reviewCurrentIndex--;
-      } else {
-        reviewCurrentIndex = maxIdx;
-      }
+      reviewCurrentIndex = (reviewCurrentIndex > 0) ? reviewCurrentIndex - 1 : totalSlides - 1;
       updateSliderPosition();
+      resetAutoplay();
     };
   }
 
+  // Next Button Click
   if (nextBtn) {
     nextBtn.onclick = (e) => {
       if (e) e.preventDefault();
-      const maxIdx = getMaxIndex();
-      if (maxIdx <= 0) return;
-      if (reviewCurrentIndex < maxIdx) {
-        reviewCurrentIndex++;
-      } else {
-        reviewCurrentIndex = 0;
-      }
+      reviewCurrentIndex = (reviewCurrentIndex < totalSlides - 1) ? reviewCurrentIndex + 1 : 0;
       updateSliderPosition();
+      resetAutoplay();
     };
   }
 
-  let isAutoplay = true;
+  // Autoplay (5.5s interval)
   function startAutoplay() {
     stopAutoplay();
-    const maxIdx = getMaxIndex();
-    if (maxIdx <= 0) return;
+    if (totalSlides <= 1) return;
     reviewAutoplayInterval = setInterval(() => {
-      const max = getMaxIndex();
-      if (max <= 0) return;
-      reviewCurrentIndex = (reviewCurrentIndex >= max) ? 0 : reviewCurrentIndex + 1;
+      reviewCurrentIndex = (reviewCurrentIndex < totalSlides - 1) ? reviewCurrentIndex + 1 : 0;
       updateSliderPosition();
-    }, 4500);
+    }, 5500);
   }
 
   function stopAutoplay() {
-    if (reviewAutoplayInterval) clearInterval(reviewAutoplayInterval);
+    if (reviewAutoplayInterval) {
+      clearInterval(reviewAutoplayInterval);
+      reviewAutoplayInterval = null;
+    }
   }
 
-  if (autoplayBtn) {
-    autoplayBtn.onclick = () => {
-      isAutoplay = !isAutoplay;
-      if (isAutoplay) {
-        startAutoplay();
-        autoplayBtn.innerHTML = `<i data-lucide="pause" class="w-4 h-4"></i>`;
-        autoplayBtn.setAttribute('title', 'Pause Autoplay');
-      } else {
-        stopAutoplay();
-        autoplayBtn.innerHTML = `<i data-lucide="play" class="w-4 h-4"></i>`;
-        autoplayBtn.setAttribute('title', 'Start Autoplay');
-      }
-      renderIcons();
-    };
+  function resetAutoplay() {
+    stopAutoplay();
+    startAutoplay();
   }
 
-  // Touch Swipe Support
-  let startX = 0;
-  let isDragging = false;
+  if (sliderContainer) {
+    sliderContainer.addEventListener('mouseenter', stopAutoplay);
+    sliderContainer.addEventListener('mouseleave', startAutoplay);
+  }
+
+  // Mobile Touch Swipe
+  let touchStartX = 0;
+  let isSwiping = false;
 
   track.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-    isDragging = true;
+    touchStartX = e.touches[0].clientX;
+    isSwiping = true;
     stopAutoplay();
   }, { passive: true });
 
   track.addEventListener('touchend', (e) => {
-    if (!isDragging) return;
-    isDragging = false;
-    const endX = e.changedTouches[0].clientX;
-    const diffX = startX - endX;
-    const maxIdx = getMaxIndex();
+    if (!isSwiping) return;
+    isSwiping = false;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diffX = touchStartX - touchEndX;
 
-    if (Math.abs(diffX) > 40 && maxIdx > 0) {
+    if (Math.abs(diffX) > 40 && totalSlides > 1) {
       if (diffX > 0) {
-        reviewCurrentIndex = (reviewCurrentIndex < maxIdx) ? reviewCurrentIndex + 1 : 0;
+        reviewCurrentIndex = (reviewCurrentIndex < totalSlides - 1) ? reviewCurrentIndex + 1 : 0;
       } else {
-        reviewCurrentIndex = (reviewCurrentIndex > 0) ? reviewCurrentIndex - 1 : maxIdx;
+        reviewCurrentIndex = (reviewCurrentIndex > 0) ? reviewCurrentIndex - 1 : totalSlides - 1;
       }
       updateSliderPosition();
     }
-    if (isAutoplay) startAutoplay();
+    startAutoplay();
   }, { passive: true });
 
-  const sliderContainer = document.getElementById('reviewsSliderContainer');
-  if (sliderContainer) {
-    sliderContainer.addEventListener('mouseenter', stopAutoplay);
-    sliderContainer.addEventListener('mouseleave', () => {
-      if (isAutoplay) startAutoplay();
-    });
-  }
-
   window.addEventListener('resize', updateSliderPosition);
+  setTimeout(updateSliderPosition, 100);
   updateSliderPosition();
-  if (isAutoplay) startAutoplay();
+  startAutoplay();
 }
+
+window.initReviewsSlider = initReviewsSlider;
 
 // 8. PATRON REVIEW MODAL HANDLERS
 function openReviewModal() {
@@ -1328,46 +1327,117 @@ function renderIcons() {
   }
 }
 
-// 11. INTERACTIVE METRICS NUMBER COUNTER ANIMATION ENGINE
+// 11. INTERACTIVE METRICS NUMBER COUNTER ANIMATION ENGINE (COUNT INCREASE)
 function initAnimatedCounters() {
   const counterElements = document.querySelectorAll('.counter-number, [data-counter], [data-target]');
   if (!counterElements || counterElements.length === 0) return;
+
+  const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
 
   const animateCount = (el) => {
     if (el.dataset.hasAnimated === 'true') return;
     el.dataset.hasAnimated = 'true';
 
-    const rawTarget = el.getAttribute('data-target') || el.innerText.replace(/[^0-9.-]/g, '') || '0';
-    const target = parseFloat(rawTarget);
-    const start = parseFloat(el.getAttribute('data-start') || '0');
-    const prefix = el.getAttribute('data-prefix') || '';
-    const suffix = el.getAttribute('data-suffix') || '';
-    const duration = parseInt(el.getAttribute('data-duration') || '1600', 10);
-    const decimals = parseInt(el.getAttribute('data-decimals') || '0', 10);
+    // Store original text
+    const rawText = (el.getAttribute('data-original-text') || el.innerText || '').trim();
+    if (!el.getAttribute('data-original-text')) {
+      el.setAttribute('data-original-text', rawText);
+    }
+
+    const customDuration = parseInt(el.getAttribute('data-duration') || '1800', 10);
+
+    // 1. Check for Range Pattern (e.g. "4-8 WEEKS", "4-8 Weeks", "4 - 8 WEEKS")
+    const rangeMatch = rawText.match(/^([^\d]*)(\d+(?:\.\d+)?)\s*[-–—]\s*(\d+(?:\.\d+)?)(.*)$/i);
+    if (rangeMatch) {
+      const prefix = rangeMatch[1] || '';
+      const targetLow = parseFloat(rangeMatch[2]);
+      const targetHigh = parseFloat(rangeMatch[3]);
+      const suffix = rangeMatch[4] || '';
+      const startLow = parseFloat(el.getAttribute('data-start-low') || '0');
+      const startHigh = parseFloat(el.getAttribute('data-start-high') || '0');
+
+      const startTime = performance.now();
+      const updateRange = (currentTime) => {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / customDuration, 1);
+        const eased = easeOutCubic(progress);
+
+        const currentLow = Math.round(startLow + (targetLow - startLow) * eased);
+        const currentHigh = Math.round(startHigh + (targetHigh - startHigh) * eased);
+
+        el.textContent = `${prefix}${currentLow}-${currentHigh}${suffix}`;
+
+        if (progress < 1) {
+          requestAnimationFrame(updateRange);
+        } else {
+          el.textContent = rawText;
+        }
+      };
+      requestAnimationFrame(updateRange);
+      return;
+    }
+
+    // 2. Check for Single Number Pattern (e.g. "600+", "30+", "100%", "1982", "12,400", "99.8%")
+    let prefix = el.getAttribute('data-prefix') || '';
+    let suffix = el.getAttribute('data-suffix') || '';
+    let target = null;
+    let hasComma = false;
+    let decimals = parseInt(el.getAttribute('data-decimals') || '0', 10);
+    let start = parseFloat(el.getAttribute('data-start') || '0');
+
+    if (el.hasAttribute('data-target')) {
+      target = parseFloat(el.getAttribute('data-target'));
+    } else {
+      const match = rawText.match(/^([^\d]*)(\d+(?:,\d+)*(?:\.\d+)?)(.*)$/);
+      if (match) {
+        if (!prefix) prefix = match[1] || '';
+        const numStr = match[2];
+        hasComma = numStr.includes(',');
+        if (numStr.includes('.') && decimals === 0) {
+          decimals = numStr.split('.')[1].length;
+        }
+        target = parseFloat(numStr.replace(/,/g, ''));
+        if (!suffix) suffix = match[3] || '';
+      }
+    }
+
+    if (target === null || isNaN(target)) {
+      return;
+    }
+
+    // Smart baseline for historical years (e.g. 1982) if data-start is not explicitly set
+    if (!el.hasAttribute('data-start') && target >= 1900 && target <= 2099) {
+      start = 1900;
+    }
 
     const startTime = performance.now();
-    const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
 
-    const updateCounter = (currentTime) => {
+    const formatNumber = (val) => {
+      let rounded = decimals > 0 ? val.toFixed(decimals) : Math.round(val).toString();
+      if (hasComma) {
+        const parts = rounded.split('.');
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return parts.join('.');
+      }
+      return rounded;
+    };
+
+    const updateSingle = (currentTime) => {
       const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const easedProgress = easeOutCubic(progress);
+      const progress = Math.min(elapsed / customDuration, 1);
+      const eased = easeOutCubic(progress);
 
-      const current = start + (target - start) * easedProgress;
-      const formattedNumber = decimals > 0 
-        ? current.toFixed(decimals) 
-        : Math.round(current).toString();
-
-      el.textContent = `${prefix}${formattedNumber}${suffix}`;
+      const current = start + (target - start) * eased;
+      el.textContent = `${prefix}${formatNumber(current)}${suffix}`;
 
       if (progress < 1) {
-        requestAnimationFrame(updateCounter);
+        requestAnimationFrame(updateSingle);
       } else {
-        el.textContent = `${prefix}${decimals > 0 ? target.toFixed(decimals) : target}${suffix}`;
+        el.textContent = rawText;
       }
     };
 
-    requestAnimationFrame(updateCounter);
+    requestAnimationFrame(updateSingle);
   };
 
   if ('IntersectionObserver' in window) {
@@ -1379,8 +1449,8 @@ function initAnimatedCounters() {
         }
       });
     }, {
-      threshold: 0.15,
-      rootMargin: '0px 0px -30px 0px'
+      threshold: 0.1,
+      rootMargin: '0px 0px -20px 0px'
     });
 
     counterElements.forEach(el => observer.observe(el));
@@ -1429,13 +1499,32 @@ document.addEventListener('click', (e) => {
       addToCartByProdId(sku, btn);
     }
   }
+
+  // Global delegated click listener for Inquiry buttons
+  const isInquiryBtn = btn.id === 'modalBookBtn' ||
+                       btn.classList.contains('inquiry-btn') ||
+                       btn.getAttribute('data-action') === 'inquiry' ||
+                       btnText === 'INQUIRY' || 
+                       btnText.startsWith('INQUIRY');
+
+  if (isInquiryBtn) {
+    const onclickAttr = btn.getAttribute('onclick') || '';
+    if (!onclickAttr || (!onclickAttr.includes('bookNowByProdId') && !onclickAttr.includes('openWhatsAppInquiry'))) {
+      e.preventDefault();
+      const card = btn.closest('.specimen-card') || btn.closest('[data-sku]');
+      const sku = btn.getAttribute('data-sku') || card?.getAttribute('data-sku') || 'SH-001';
+      openWhatsAppInquiry(sku);
+    }
+  }
 });
 
 // Expose functions globally for inline HTML onclick handlers
 if (typeof window !== 'undefined') {
   window.addToCartByProdId = addToCartByProdId;
-  window.bookNowByProdId = bookNowByProdId;
-  window.inquireByProdId = bookNowByProdId;
+  window.openWhatsAppInquiry = openWhatsAppInquiry;
+  window.bookNowByProdId = openWhatsAppInquiry;
+  window.inquireByProdId = openWhatsAppInquiry;
+  window.openWhatsAppFromBookingModal = openWhatsAppFromBookingModal;
   window.closeBookingModal = closeBookingModal;
   window.closeBookingOnOverlay = closeBookingOnOverlay;
   window.handleBookingSubmit = handleBookingSubmit;
@@ -1469,5 +1558,6 @@ if (typeof window !== 'undefined') {
   if (typeof trackLedgerQuickOrder === 'function') window.trackLedgerQuickOrder = trackLedgerQuickOrder;
   if (typeof renderIcons === 'function') window.renderIcons = renderIcons;
   if (typeof getAssetUrl === 'function') window.getAssetUrl = getAssetUrl;
+  window.initAnimatedCounters = initAnimatedCounters;
   window.PRODUCTS = PRODUCTS;
 }

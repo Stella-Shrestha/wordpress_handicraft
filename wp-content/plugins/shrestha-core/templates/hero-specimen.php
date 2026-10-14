@@ -86,9 +86,16 @@ if (!empty($attributes['inspectUrl'])) {
         <span><?php echo esc_html($primary_btn_text); ?></span>
       </button>
 
+      <?php
+      $hero_wa_url = function_exists('shrestha_get_whatsapp_inquiry_url') 
+          ? shrestha_get_whatsapp_inquiry_url($specimen_sku, $specimen_title) 
+          : 'https://wa.me/9779841234567?text=' . rawurlencode('Namaste! I would like to inquire about acquiring "' . $specimen_title . '" (SKU: ' . $specimen_sku . '). Please share details.');
+      ?>
       <button type="button"
-        onclick="if(typeof bookNowByProdId==='function'){bookNowByProdId('<?php echo esc_js($specimen_sku); ?>');}else{window.location.href='<?php echo esc_url(home_url('/contact/?inquiry=booking&sku=')); ?><?php echo esc_js($specimen_sku); ?>';}"
-        class="px-6 py-3.5 bg-white dark:bg-patina-900 border border-slate-300 dark:border-gold/40 hover:border-gold text-slate-800 dark:text-parchment hover:text-gold font-mono font-bold text-xs tracking-wider uppercase rounded-lg transition-colors flex items-center gap-2 shadow-sm">
+        data-action="inquiry"
+        data-sku="<?php echo esc_attr($specimen_sku); ?>"
+        onclick="if(typeof openWhatsAppInquiry==='function'){openWhatsAppInquiry('<?php echo esc_js($specimen_sku); ?>');}else if(typeof bookNowByProdId==='function'){bookNowByProdId('<?php echo esc_js($specimen_sku); ?>');}else{window.open('<?php echo esc_url($hero_wa_url); ?>', '_blank');}"
+        class="inquiry-btn px-6 py-3.5 bg-white dark:bg-patina-900 border border-slate-300 dark:border-gold/40 hover:border-gold text-slate-800 dark:text-parchment hover:text-gold font-mono font-bold text-xs tracking-wider uppercase rounded-lg transition-colors flex items-center gap-2 shadow-sm">
         <i data-lucide="message-square" class="w-4 h-4 text-copper"></i>
         <span>Inquiry</span>
       </button>

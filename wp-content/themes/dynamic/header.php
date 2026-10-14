@@ -124,11 +124,11 @@ if (!defined('ABSPATH')) {
           <i data-lucide="sun" class="w-5 h-5"></i>
         </button>
 
-        <!-- Acquisitions Cart Button -->
+        <!-- Cart Button -->
         <button onclick="toggleCartDrawer()"
           class="flex items-center gap-2.5 px-4 py-2 bg-gradient-to-r from-gold/15 to-copper/15 hover:from-gold/25 hover:to-copper/25 border border-gold rounded-lg text-gold font-mono text-xs font-bold tracking-wider transition-all shadow-sm hover:shadow-gold/20">
           <i data-lucide="shopping-bag" class="w-4 h-4"></i>
-          <span>ACQUISITIONS</span>
+          <span>CART</span>
           <span id="cartCount"
             class="cartCount w-5 h-5 rounded-full bg-copper text-white text-[11px] font-bold flex items-center justify-center">0</span>
         </button>
@@ -196,14 +196,14 @@ if (!defined('ABSPATH')) {
         <!-- Section Divider -->
         <div class="h-px bg-slate-200 dark:bg-slate-800 my-0.5"></div>
 
-        <!-- Acquisitions Section inside Drawer -->
+        <!-- Cart Section inside Drawer -->
         <div class="flex flex-col gap-2">
-          <span class="font-mono text-[10px] text-gold tracking-widest uppercase font-semibold px-1">ACQUISITIONS</span>
+          <span class="font-mono text-[10px] text-gold tracking-widest uppercase font-semibold px-1">SHOPPING CART</span>
           <button onclick="toggleCartDrawer(); toggleMobileMenu();"
             class="w-full flex items-center justify-between px-4 py-3 bg-gradient-to-r from-gold/15 to-copper/15 hover:from-gold/25 hover:to-copper/25 border border-gold rounded-xl text-gold font-mono text-xs font-bold tracking-wider transition-all shadow-sm hover:shadow-gold/20">
             <div class="flex items-center gap-2.5">
               <i data-lucide="shopping-bag" class="w-4 h-4"></i>
-              <span>VIEW ACQUISITIONS</span>
+              <span>VIEW CART</span>
             </div>
             <span id="mobileCartCount"
               class="cartCount w-6 h-6 rounded-full bg-copper text-white text-xs font-bold flex items-center justify-center shadow-sm">0</span>

@@ -295,8 +295,8 @@ if (!defined('ABSPATH')) {
     <div
       class="w-full max-w-md h-full bg-white dark:bg-patina-950 border-l border-slate-200 dark:border-gold/30 flex flex-col shadow-2xl">
       <div class="p-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
-        <h3 class="font-display font-bold text-lg text-slate-900 dark:text-parchment">Selected Acquisitions</h3>
-        <button onclick="toggleCartDrawer()" class="text-slate-500 hover:text-slate-900 dark:hover:text-parchment" aria-label="Close acquisitions drawer">
+        <h3 class="font-display font-bold text-lg text-slate-900 dark:text-parchment">Shopping Cart</h3>
+        <button onclick="toggleCartDrawer()" class="text-slate-500 hover:text-slate-900 dark:hover:text-parchment" aria-label="Close cart">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
@@ -325,19 +325,23 @@ if (!defined('ABSPATH')) {
           <span>Subtotal (<span id="cartSelectedSubtotalCount">0</span> selected)</span>
           <span id="cartSubtotal">NRP 0</span>
         </div>
-        <div class="flex justify-between font-mono text-sm text-slate-500 dark:text-slate-400">
-          <span>Escrow Insurance</span>
-          <span class="text-emerald-500 font-semibold">INCLUDED</span>
+        <div class="flex justify-between items-center font-mono text-sm text-slate-500 dark:text-slate-400">
+          <span>Shipping</span>
+          <span class="text-xs text-amber-600 dark:text-gold font-medium">Discussed during checkout</span>
         </div>
         <div
-          class="flex justify-between font-mono text-base font-bold text-slate-900 dark:text-parchment pt-2 border-t border-dashed border-slate-300 dark:border-slate-700">
-          <span>Total Escrow</span>
+          class="flex justify-between items-baseline font-mono text-base font-bold text-slate-900 dark:text-parchment pt-2 border-t border-dashed border-slate-300 dark:border-slate-700">
+          <div class="flex flex-col">
+            <span>Total</span>
+            <span class="text-[10px] font-normal text-slate-400 dark:text-slate-500">Excluding shipping</span>
+          </div>
           <span id="cartTotal" class="text-gold">NRP 0</span>
         </div>
 
-        <button onclick="triggerCheckoutModal()" id="cartCheckoutBtn"
-          class="w-full py-3 bg-gradient-to-r from-gold to-copper text-white dark:text-patina-950 font-mono font-bold text-xs uppercase tracking-wider rounded-lg shadow-md hover:shadow-lg transition-all mt-2">
-          Initiate Escrow Acquisition
+        <button onclick="checkoutViaWhatsApp()" id="cartCheckoutBtn"
+          class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-500 active:scale-[0.99] text-white font-mono font-bold text-xs uppercase tracking-wider rounded-lg shadow-md hover:shadow-lg transition-all mt-2 flex items-center justify-center gap-2 cursor-pointer">
+          <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2zm0 18.06c-1.49 0-2.95-.4-4.22-1.16l-.3-.18-3.13.82.84-3.05-.2-.31c-.83-1.32-1.27-2.86-1.27-4.45 0-4.51 3.67-8.18 8.18-8.18 2.19 0 4.24.85 5.79 2.4 1.55 1.55 2.4 3.6 2.4 5.79 0 4.51-3.67 8.18-8.18 8.18zm4.49-6.13c-.25-.12-1.46-.72-1.69-.8-.23-.08-.39-.12-.56.12-.17.25-.65.8-.8 1-.14.2-.29.22-.54.1-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43s-.56-1.34-.76-1.84c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.07s.89 2.4 1.01 2.57c.12.17 1.75 2.67 4.24 3.75.59.26 1.05.41 1.41.53.6.19 1.14.16 1.57.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.29z"/></svg>
+          <span>Order via WhatsApp</span>
         </button>
       </div>
     </div>
@@ -463,7 +467,7 @@ if (!defined('ABSPATH')) {
               <option value="viewing">Private Atelier Viewing (Patan)</option>
               <option value="commission">Custom Bespoke Casting Commission</option>
               <option value="consecration">Monastic Consecration Blessing</option>
-              <option value="escrow">Immediate Escrow Reservation</option>
+              <option value="escrow">Immediate Order / Reservation</option>
             </select>
           </div>
         </div>

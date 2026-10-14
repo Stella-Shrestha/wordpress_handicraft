@@ -145,7 +145,7 @@ if (empty($testimonials)) {
 ?>
 
 <!-- VENERATED PATRON REVIEWS & TESTIMONIALS SECTION -->
-<section id="reviews" class="py-[52px] lg:py-[110px] relative overflow-hidden transition-colors duration-300 bg-[#FAF8F5] dark:bg-patina-950">
+<section id="reviews" class="pb-[52px] lg:pb-[110px] relative overflow-hidden transition-colors duration-300 bg-[#FAF8F5] dark:bg-patina-950 bg-grid-pattern">
 
   <!-- Subtle Ambient Glow -->
   <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-gold/10 dark:bg-gold/5 blur-[140px] rounded-full pointer-events-none"></div>
@@ -172,8 +172,8 @@ if (empty($testimonials)) {
           <?php echo wp_kses_post(wpautop($subtitle)); ?>
         </div>
 
-        <!-- Rating Row & Features List matching border-t stats hierarchy -->
-        <div class="flex flex-col gap-4 pt-4 border-t border-slate-200 dark:border-slate-800">
+        <!-- Rating Row matching border-t stats hierarchy -->
+        <div class="pt-4 border-t border-slate-200 dark:border-slate-800">
           <!-- Rating Row: 5 Gold Stars + 4.9/5 Score (Theme Styled) -->
           <div class="flex items-center gap-4 sm:gap-5">
             <div class="flex items-center gap-1 text-amber-400 dark:text-gold shrink-0">
@@ -190,29 +190,6 @@ if (empty($testimonials)) {
             </div>
             <span class="text-[11px] text-slate-500 dark:text-slate-400 font-sans">· Authentic patron reviews</span>
           </div>
-
-          <!-- 5-ITEM GUARANTEES & TRUST FEATURES LIST (Clean list without grid, bg, padding) -->
-          <?php if (!empty($features)): ?>
-          <div class="flex flex-col divide-y divide-slate-100 dark:divide-slate-800/60 pt-1">
-            <?php foreach ($features as $feat): 
-              $f_icon  = !empty($feat['icon']) ? $feat['icon'] : 'globe';
-              $f_title = !empty($feat['title']) ? $feat['title'] : '';
-              $f_sub   = !empty($feat['subtitle']) ? $feat['subtitle'] : '';
-            ?>
-            <div class="flex items-center justify-between py-2 group">
-              <div class="flex items-center gap-2.5">
-                <i data-lucide="<?php echo esc_attr($f_icon); ?>" class="w-4 h-4 text-gold shrink-0"></i>
-                <strong class="text-xs font-semibold text-slate-900 dark:text-parchment font-display tracking-wide uppercase">
-                  <?php echo esc_html($f_title); ?>
-                </strong>
-              </div>
-              <span class="text-[11px] text-slate-500 dark:text-slate-400 font-mono">
-                <?php echo esc_html($f_sub); ?>
-              </span>
-            </div>
-            <?php endforeach; ?>
-          </div>
-          <?php endif; ?>
         </div>
 
       </div>
@@ -221,12 +198,12 @@ if (empty($testimonials)) {
       <div class="w-full lg:w-[52%] xl:w-[54%] flex flex-col justify-center relative">
 
         <!-- Card Wrapper with Overlapping Quotation Marks (z-index) -->
-        <div class="relative pt-2 pb-2">
+        <div class="relative pt-6 sm:pt-7 pb-6 sm:pb-7">
 
           <!-- Top-Left Giant Quotation Mark overlapping card -->
-          <div class="absolute -top-5 sm:-top-6 left-6 sm:left-6 z-20 select-none text-slate-900 dark:text-gold pointer-events-none drop-shadow-sm" aria-hidden="true">
-            <svg class="w-10 h-10 sm:w-12 sm:h-12 fill-current" viewBox="0 0 24 24">
-              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+          <div class="absolute top-1 sm:top-1.5 left-6 z-20 select-none text-slate-900 dark:text-gold pointer-events-none drop-shadow-sm" aria-hidden="true">
+            <svg class="w-10 h-10 sm:w-11 sm:h-11 fill-current -scale-x-100" style="transform: scaleX(-1);" viewBox="0 0 24 24">
+              <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.57-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z"/>
             </svg>
           </div>
 
@@ -269,7 +246,7 @@ if (empty($testimonials)) {
 
                   <!-- Review Quote -->
                   <p class="text-slate-700 dark:text-slate-200 text-sm sm:text-base lg:text-lg font-sans leading-relaxed tracking-normal font-normal">
-                    &ldquo;<?php echo esc_html($t_quote); ?>&rdquo;
+                    <?php echo esc_html($t_quote); ?>
                   </p>
                 </div>
 
@@ -310,8 +287,8 @@ if (empty($testimonials)) {
           </div>
 
           <!-- Bottom-Right Giant Quotation Mark overlapping card -->
-          <div class="absolute -bottom-5 sm:-bottom-6 right-6 sm:right-6 z-20 select-none text-slate-900 dark:text-gold pointer-events-none drop-shadow-sm" aria-hidden="true">
-            <svg class="w-10 h-10 sm:w-12 sm:h-12 fill-current" viewBox="0 0 24 24">
+          <div class="absolute bottom-1 sm:bottom-1.5 right-6 z-20 select-none text-slate-900 dark:text-gold pointer-events-none drop-shadow-sm" aria-hidden="true">
+            <svg class="w-10 h-10 sm:w-11 sm:h-11 fill-current" viewBox="0 0 24 24">
               <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.57-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z"/>
             </svg>
           </div>
@@ -319,7 +296,7 @@ if (empty($testimonials)) {
         </div>
 
         <!-- Bottom Slider Controls: < .... > -->
-        <div class="flex items-center justify-center gap-3 sm:gap-4 mt-4 px-1">
+        <div class="flex items-center justify-center gap-3 sm:gap-4 mt-6 sm:mt-7 px-1">
           <!-- Circular Prev Button (<) -->
           <button
             type="button"

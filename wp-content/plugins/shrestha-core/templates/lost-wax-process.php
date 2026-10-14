@@ -55,11 +55,21 @@ $default_steps = array(
     )
 );
 $steps = (!empty($attributes['steps']) && is_array($attributes['steps'])) ? $attributes['steps'] : $default_steps;
+
+// Default Features / Guarantees
+$default_features = array(
+    array('icon' => 'globe',        'title' => 'Worldwide',                   'subtitle' => 'Secure Shipping'),
+    array('icon' => 'ruler',        'title' => 'Custom Dimensions',           'subtitle' => 'On Request'),
+    array('icon' => 'shield-check', 'title' => 'Lifetime Care',               'subtitle' => '& Maintenance'),
+    array('icon' => 'flame',        'title' => 'Monastic Blessing',           'subtitle' => 'Available'),
+    array('icon' => 'award',        'title' => 'Certificate of Authenticity', 'subtitle' => 'Included')
+);
+$features = (!empty($attributes['features']) && is_array($attributes['features'])) ? $attributes['features'] : $default_features;
 ?>
 
 <!-- THE FOUNDRY METHOD SECTION -->
 <section
-  class="bg-patina-50 dark:bg-[#0B0C0E] text-slate-800 dark:text-parchment py-[52px] lg:py-[110px] transition-colors duration-300">
+  class="bg-patina-50 dark:bg-[#0B0C0E] bg-grid-pattern text-slate-800 dark:text-parchment pb-[52px] lg:pb-[110px] transition-colors duration-300">
   <!-- MAIN CONTAINER: w-[1584px] with mx-auto -->
   <div class="w-full max-w-[1584px] mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -148,6 +158,34 @@ $steps = (!empty($attributes['steps']) && is_array($attributes['steps'])) ? $att
       </div>
 
     </div>
+
+    <!-- HORIZONTAL FEATURES & TRUST GUARANTEES BAR -->
+    <?php if (!empty($features)): ?>
+    <div
+      class="mt-12 lg:mt-16 bg-white dark:bg-patina-900 border border-slate-200/90 dark:border-gold/25 rounded-2xl p-4 sm:p-5 lg:p-6 shadow-md dark:shadow-2xl flex flex-col sm:flex-row items-stretch justify-between divide-y sm:divide-y-0 sm:divide-x divide-slate-200 dark:divide-slate-800/80 transition-colors duration-300">
+
+      <?php foreach ($features as $feat): 
+        $f_icon  = !empty($feat['icon']) ? $feat['icon'] : 'globe';
+        $f_title = !empty($feat['title']) ? $feat['title'] : '';
+        $f_sub   = !empty($feat['subtitle']) ? $feat['subtitle'] : '';
+      ?>
+      <div class="flex-1 flex items-center gap-3.5 px-3 py-3 sm:px-4 sm:py-2 first:pt-1 last:pb-1 sm:first:pt-2 sm:last:pb-2">
+        <div class="w-10 h-10 rounded-full bg-amber-500/10 dark:bg-gold/15 flex items-center justify-center text-amber-700 dark:text-gold shrink-0">
+          <i data-lucide="<?php echo esc_attr($f_icon); ?>" class="w-4 h-4 text-amber-700 dark:text-gold"></i>
+        </div>
+        <div class="leading-tight">
+          <strong class="block text-xs sm:text-sm font-bold text-slate-900 dark:text-parchment font-display tracking-tight">
+            <?php echo esc_html($f_title); ?>
+          </strong>
+          <span class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-sans mt-0.5 block">
+            <?php echo esc_html($f_sub); ?>
+          </span>
+        </div>
+      </div>
+      <?php endforeach; ?>
+
+    </div>
+    <?php endif; ?>
 
   </div>
 </section>

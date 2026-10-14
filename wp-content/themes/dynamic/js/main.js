@@ -349,7 +349,7 @@ function showToast(message) {
   toast.innerHTML = `
     <span class="w-2.5 h-2.5 rounded-full bg-gold animate-ping shrink-0"></span>
     <div class="flex flex-col">
-      <span class="font-bold text-gold text-[10px] uppercase tracking-wider">Acquisition Drawer Updated</span>
+      <span class="font-bold text-gold text-[10px] uppercase tracking-wider">Cart Updated</span>
       <span class="text-slate-200 text-xs">${message}</span>
     </div>
   `;
@@ -482,7 +482,7 @@ function addToCartByProdId(prodId, btnEl) {
   }
 
   // Toast confirmation
-  showToast(`${p.name} added to acquisitions.`);
+  showToast(`${p.name} added to cart.`);
 
   // Open Acquisition Drawer
   const overlay = document.getElementById('cartOverlay');
@@ -542,7 +542,7 @@ function removeSelectedCartItems() {
   const cart = getCart();
   const selectedCount = cart.filter(i => i.selected !== false).length;
   if (selectedCount === 0) return;
-  if (confirm(`Remove ${selectedCount} selected item${selectedCount > 1 ? 's' : ''} from acquisition drawer?`)) {
+  if (confirm(`Remove ${selectedCount} selected item${selectedCount > 1 ? 's' : ''} from your cart?`)) {
     const remaining = cart.filter(i => i.selected === false);
     saveCart(remaining);
   }
@@ -626,7 +626,7 @@ function updateCartUI() {
     if (bodyEl) {
       bodyEl.innerHTML = `
         <div class="text-center py-12 px-4 text-slate-400 dark:text-slate-500 font-mono text-sm">
-          NO STATUARY SPECIMENS IN ACQUISITION DRAWER.
+          Your shopping cart is empty.
         </div>
       `;
     }
@@ -636,7 +636,10 @@ function updateCartUI() {
     if (checkoutBtn) {
       checkoutBtn.disabled = true;
       checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
-      checkoutBtn.innerText = 'Acquisition Drawer Empty';
+      checkoutBtn.innerHTML = `
+        <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2zm0 18.06c-1.49 0-2.95-.4-4.22-1.16l-.3-.18-3.13.82.84-3.05-.2-.31c-.83-1.32-1.27-2.86-1.27-4.45 0-4.51 3.67-8.18 8.18-8.18 2.19 0 4.24.85 5.79 2.4 1.55 1.55 2.4 3.6 2.4 5.79 0 4.51-3.67 8.18-8.18 8.18zm4.49-6.13c-.25-.12-1.46-.72-1.69-.8-.23-.08-.39-.12-.56.12-.17.25-.65.8-.8 1-.14.2-.29.22-.54.1-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43s-.56-1.34-.76-1.84c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.07s.89 2.4 1.01 2.57c.12.17 1.75 2.67 4.24 3.75.59.26 1.05.41 1.41.53.6.19 1.14.16 1.57.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.29z"/></svg>
+        <span>Your Cart is Empty</span>
+      `;
     }
     return;
   }
@@ -713,11 +716,17 @@ function updateCartUI() {
     if (selectedCount === 0) {
       checkoutBtn.disabled = true;
       checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
-      checkoutBtn.innerText = 'Select Specimens to Acquire';
+      checkoutBtn.innerHTML = `
+        <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2zm0 18.06c-1.49 0-2.95-.4-4.22-1.16l-.3-.18-3.13.82.84-3.05-.2-.31c-.83-1.32-1.27-2.86-1.27-4.45 0-4.51 3.67-8.18 8.18-8.18 2.19 0 4.24.85 5.79 2.4 1.55 1.55 2.4 3.6 2.4 5.79 0 4.51-3.67 8.18-8.18 8.18zm4.49-6.13c-.25-.12-1.46-.72-1.69-.8-.23-.08-.39-.12-.56.12-.17.25-.65.8-.8 1-.14.2-.29.22-.54.1-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43s-.56-1.34-.76-1.84c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.07s.89 2.4 1.01 2.57c.12.17 1.75 2.67 4.24 3.75.59.26 1.05.41 1.41.53.6.19 1.14.16 1.57.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.29z"/></svg>
+        <span>Select Items to Order</span>
+      `;
     } else {
       checkoutBtn.disabled = false;
       checkoutBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-      checkoutBtn.innerText = `Initiate Escrow Acquisition (${selectedCount})`;
+      checkoutBtn.innerHTML = `
+        <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2zm0 18.06c-1.49 0-2.95-.4-4.22-1.16l-.3-.18-3.13.82.84-3.05-.2-.31c-.83-1.32-1.27-2.86-1.27-4.45 0-4.51 3.67-8.18 8.18-8.18 2.19 0 4.24.85 5.79 2.4 1.55 1.55 2.4 3.6 2.4 5.79 0 4.51-3.67 8.18-8.18 8.18zm4.49-6.13c-.25-.12-1.46-.72-1.69-.8-.23-.08-.39-.12-.56.12-.17.25-.65.8-.8 1-.14.2-.29.22-.54.1-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43s-.56-1.34-.76-1.84c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.07s.89 2.4 1.01 2.57c.12.17 1.75 2.67 4.24 3.75.59.26 1.05.41 1.41.53.6.19 1.14.16 1.57.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.29z"/></svg>
+        <span>Order via WhatsApp (${selectedCount})</span>
+      `;
     }
   }
 
@@ -913,24 +922,61 @@ function handleBookingSubmit(e) {
   closeBookingModal();
 }
 
-// 6. CHECKOUT MODAL MOCK
-function triggerCheckoutModal() {
+// 6. WHATSAPP CHECKOUT ORDER DISPATCH
+function checkoutViaWhatsApp() {
   const cart = getCart();
   if (cart.length === 0) {
-    alert('Your acquisition drawer is empty.');
+    showToast('Your cart is empty.');
     return;
   }
   const selectedItems = cart.filter(i => i.selected !== false);
   if (selectedItems.length === 0) {
-    alert('Please select at least one statuary specimen to initiate escrow acquisition.');
+    showToast('Please select at least one item to order via WhatsApp.');
     return;
   }
-  const total = document.getElementById('cartTotal')?.innerText || 'NRP 0';
-  const count = selectedItems.length;
-  alert(`Escrow Protocol Initiated for ${count} selected acquisition${count > 1 ? 's' : ''} (Total: ${total}).\n\nA Patan Atelier Concierge will issue your bank wire escrow contract & certified SPECTROMETRY assay via email.`);
-  const remaining = cart.filter(i => i.selected === false);
-  saveCart(remaining);
-  toggleCartDrawer();
+
+  // Retrieve configured WhatsApp Concierge phone number
+  let rawPhone = (typeof window.shresthaData !== 'undefined' && window.shresthaData.customizer && window.shresthaData.customizer.whatsapp)
+    ? window.shresthaData.customizer.whatsapp
+    : '+977 984 123 4567';
+  let cleanPhone = String(rawPhone).replace(/[^0-9]/g, '');
+  if (cleanPhone.length === 10 && cleanPhone.startsWith('98')) {
+    cleanPhone = '977' + cleanPhone;
+  }
+  if (!cleanPhone) cleanPhone = '9779841234567';
+
+  // Construct item list with SKU, quantity, individual prices & line totals
+  const itemsList = selectedItems.map((item, idx) => {
+    const sku = item.id ? ` (SKU: ${item.id})` : '';
+    const itemPrice = Number(item.price) || 0;
+    const itemTotal = (itemPrice * (item.qty || 1)).toLocaleString();
+    return `${idx + 1}. *${item.name}*${sku}\n   • Quantity: ${item.qty}\n   • Price: NRP ${itemPrice.toLocaleString()} × ${item.qty} = NRP ${itemTotal}`;
+  }).join('\n\n');
+
+  const subtotal = selectedItems.reduce((sum, i) => sum + ((Number(i.price) || 0) * (i.qty || 1)), 0);
+
+  // Formatted WhatsApp message displaying full checkout details
+  const message = `Namaste! I would like to place an order from your website:
+
+━━━━━━━━━━━━━━━━━━━━━
+*ITEMS TO CHECKOUT:*
+━━━━━━━━━━━━━━━━━━━━━
+${itemsList}
+
+━━━━━━━━━━━━━━━━━━━━━
+*Subtotal:* NRP ${subtotal.toLocaleString()}
+*Shipping:* Discussed during checkout (varies by location)
+━━━━━━━━━━━━━━━━━━━━━
+
+Please confirm availability, crafting timeline, and share payment details & shipping options for my delivery location. Thank you!`;
+
+  const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
+  showToast('Opening WhatsApp with your order details...');
+  window.open(whatsappUrl, '_blank');
+}
+
+function triggerCheckoutModal() {
+  checkoutViaWhatsApp();
 }
 
 // 7. PATRON REVIEWS SLIDER ENGINE
@@ -1541,6 +1587,7 @@ if (typeof window !== 'undefined') {
   window.closeSpecimenModal = closeSpecimenModal;
   window.closeSpecimenOnOverlay = closeSpecimenOnOverlay;
   window.triggerCheckoutModal = triggerCheckoutModal;
+  window.checkoutViaWhatsApp = checkoutViaWhatsApp;
   window.toggleCartItemSelection = toggleCartItemSelection;
   window.toggleSelectAllCart = toggleSelectAllCart;
   window.removeSelectedCartItems = removeSelectedCartItems;

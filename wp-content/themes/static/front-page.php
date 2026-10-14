@@ -12,12 +12,14 @@ get_header();
   <!-- MAIN HERO & CONTENT -->
   <main class="w-full">
 
-    <!-- Hero Section -->
-    <div
-      class="grid grid-cols-1 max-w-[1584px] mx-auto px-4 sm:px-6 lg:px-8 lg:py-[110px] py-[52px] lg:grid-cols-12 gap-10 items-center">
+    <!-- MAIN HERO CONTAINER: w-[1584px] with mx-auto -->
+    <div class="w-full max-w-[1584px] mx-auto px-4 sm:px-6 lg:px-8 lg:py-[110px] py-[52px]">
 
-      <!-- Hero Left Column -->
-      <div class="lg:col-span-7 flex flex-col gap-6">
+      <!-- 2 DIVS WITH JUSTIFY-BETWEEN (REPLACING 12-GRID) -->
+      <div class="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-14 xl:gap-16 w-full">
+
+        <!-- Hero Left Column -->
+        <div class="w-full lg:w-[56%] xl:w-[58%] flex flex-col gap-6">
         <div
           class="inline-flex items-center gap-2 px-3 py-1 bg-white dark:bg-patina-900 border border-gold/30 rounded font-mono text-xs text-gold w-fit shadow-sm">
           <span>SPECIMEN #SH-001</span>
@@ -64,66 +66,68 @@ get_header();
         </div>
       </div>
 
-      <!-- Hero Right Column (Visual Card) -->
-      <div class="lg:col-span-5 relative">
-        <div
-          class="relative bg-white dark:bg-patina-900 border border-gold/30 rounded-2xl p-4 shadow-2xl overflow-hidden group">
-          <div class="relative w-full h-[460px] rounded-xl overflow-hidden bg-black flex items-center justify-center">
-            <a href="<?php echo esc_url(home_url('/specimen/green-tara-mother-of-divine-liberation/')); ?>" class="w-full h-full flex items-center justify-center cursor-pointer" title="Green Tara Specimen Inspection">
-              <img src="<?php echo shrestha_asset('green_tara.jpg'); ?>" alt="Green Tara Statue"
-                class="max-h-full max-w-full object-contain filter drop-shadow-2xl group-hover:scale-105 transition-transform duration-700 ease-out" />
-            </a>
+        <!-- Hero Right Column (Visual Card) -->
+        <div class="w-full lg:w-[40%] xl:w-[38%] relative">
+          <div
+            class="relative bg-white dark:bg-patina-900 border border-gold/30 rounded-2xl p-4 shadow-2xl overflow-hidden group">
+            <div class="relative w-full h-[460px] rounded-xl overflow-hidden bg-black flex items-center justify-center">
+              <a href="<?php echo esc_url(home_url('/specimen/green-tara-mother-of-divine-liberation/')); ?>" class="w-full h-full flex items-center justify-center cursor-pointer" title="Green Tara Specimen Inspection">
+                <img src="<?php echo shrestha_asset('green_tara.jpg'); ?>" alt="Green Tara Statue"
+                  class="max-h-full max-w-full object-contain filter drop-shadow-2xl group-hover:scale-105 transition-transform duration-700 ease-out" />
+              </a>
 
-            <!-- HUD Crosshairs Overlay -->
-            <div class="absolute inset-0 border border-gold/20 pointer-events-none">
-              <div class="absolute top-3 left-3 w-3 h-3 border-t-2 border-l-2 border-gold"></div>
-              <div class="absolute top-3 right-3 w-3 h-3 border-t-2 border-r-2 border-gold"></div>
-              <div class="absolute bottom-3 left-3 w-3 h-3 border-b-2 border-l-2 border-gold"></div>
-              <div class="absolute bottom-3 right-3 w-3 h-3 border-b-2 border-r-2 border-gold"></div>
-              <div class="absolute bottom-3 left-3 right-3 text-center">
-                <span
-                  class="bg-black/80 text-gold font-mono text-[10px] px-2.5 py-1 rounded border border-gold/30">ICONOMETRIC
-                  SYMMETRY: 99.8%</span>
+              <!-- HUD Crosshairs Overlay -->
+              <div class="absolute inset-0 border border-gold/20 pointer-events-none">
+                <div class="absolute top-3 left-3 w-3 h-3 border-t-2 border-l-2 border-gold"></div>
+                <div class="absolute top-3 right-3 w-3 h-3 border-t-2 border-r-2 border-gold"></div>
+                <div class="absolute bottom-3 left-3 w-3 h-3 border-b-2 border-l-2 border-gold"></div>
+                <div class="absolute bottom-3 right-3 w-3 h-3 border-b-2 border-r-2 border-gold"></div>
+                <div class="absolute bottom-3 left-3 right-3 text-center">
+                  <span
+                    class="bg-black/80 text-gold font-mono text-[10px] px-2.5 py-1 rounded border border-gold/30">ICONOMETRIC
+                    SYMMETRY: 99.8%</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- Floating Non-Stop Rotating Circular Text Stamp Seal Badge -->
-        <div
-          class="absolute -right-3 sm:-right-6 top-1/2 -translate-y-1/2 z-20 w-36 h-36 sm:w-44 sm:h-44 rounded-full shadow-2xl transition-transform hover:scale-105 pointer-events-auto flex items-center justify-center">
-          <svg viewBox="0 0 200 200" width="100%" height="100%"
-            class="w-full h-full filter drop-shadow-xl overflow-visible" xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink">
-            <defs>
-              <path id="rotatingStampTextPath" d="M 100, 100 m -74, 0 a 74,74 0 1,1 148,0 a 74,74 0 1,1 -148,0" />
-            </defs>
+          <!-- Floating Non-Stop Rotating Circular Text Stamp Seal Badge -->
+          <div
+            class="absolute -right-3 sm:-right-6 top-1/2 -translate-y-1/2 z-20 w-36 h-36 sm:w-44 sm:h-44 rounded-full shadow-2xl transition-transform hover:scale-105 pointer-events-auto flex items-center justify-center">
+            <svg viewBox="0 0 200 200" width="100%" height="100%"
+              class="w-full h-full filter drop-shadow-xl overflow-visible" xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink">
+              <defs>
+                <path id="rotatingStampTextPath" d="M 100, 100 m -74, 0 a 74,74 0 1,1 148,0 a 74,74 0 1,1 -148,0" />
+              </defs>
 
-            <!-- Base Outer Background & Outer Border Rings -->
-            <circle cx="100" cy="100" r="95" fill="#FAF7F2" stroke="#B86B4B" stroke-width="2.5" />
-            <circle cx="100" cy="100" r="90" fill="none" stroke="#B86B4B" stroke-width="1" />
-            <circle cx="100" cy="100" r="58" fill="none" stroke="#B86B4B" stroke-width="1.5" stroke-dasharray="2 3" />
+              <!-- Base Outer Background & Outer Border Rings -->
+              <circle cx="100" cy="100" r="95" fill="#FAF7F2" stroke="#B86B4B" stroke-width="2.5" />
+              <circle cx="100" cy="100" r="90" fill="none" stroke="#B86B4B" stroke-width="1" />
+              <circle cx="100" cy="100" r="58" fill="none" stroke="#B86B4B" stroke-width="1.5" stroke-dasharray="2 3" />
 
-            <!-- Twin Mountain Peak Line Art -->
-            <path d="M 64 114 L 80 90 L 92 107 L 115 94 L 138 114" stroke="#B86B4B" stroke-width="3" fill="none"
-              stroke-linecap="round" stroke-linejoin="round" />
+              <!-- Twin Mountain Peak Line Art -->
+              <path d="M 64 114 L 80 90 L 92 107 L 115 94 L 138 114" stroke="#B86B4B" stroke-width="3" fill="none"
+                stroke-linecap="round" stroke-linejoin="round" />
 
-            <text x="100" y="133" text-anchor="middle" font-family="'Cinzel', serif" font-style="italic" font-size="12"
-              font-weight="600" fill="#B86B4B">
-              Verified
-            </text>
-
-            <!-- NONSTOP CONTINUOUS ROTATING TEXT RING -->
-            <g class="animate-[spin_18s_linear_infinite]" style="transform-origin: 100px 100px;">
-              <text font-family="'Plus Jakarta Sans', 'Space Grotesk', sans-serif" font-size="9.5" font-weight="600"
-                fill="#B86B4B" letter-spacing="2.2">
-                <textPath xlink:href="#rotatingStampTextPath" href="#rotatingStampTextPath" startOffset="0%">
-                  NEPAL • EST. TOURISM AUTHO • OFFICIALLY REGISTERED •
-                </textPath>
+              <text x="100" y="133" text-anchor="middle" font-family="'Cinzel', serif" font-style="italic" font-size="12"
+                font-weight="600" fill="#B86B4B">
+                Verified
               </text>
-            </g>
-          </svg>
+
+              <!-- NONSTOP CONTINUOUS ROTATING TEXT RING -->
+              <g class="animate-[spin_18s_linear_infinite]" style="transform-origin: 100px 100px;">
+                <text font-family="'Plus Jakarta Sans', 'Space Grotesk', sans-serif" font-size="9.5" font-weight="600"
+                  fill="#B86B4B" letter-spacing="2.2">
+                  <textPath xlink:href="#rotatingStampTextPath" href="#rotatingStampTextPath" startOffset="0%">
+                    NEPAL • EST. TOURISM AUTHO • OFFICIALLY REGISTERED •
+                  </textPath>
+                </text>
+              </g>
+            </svg>
+          </div>
         </div>
+
       </div>
     </div>
 
@@ -431,13 +435,14 @@ get_header();
 
     <!-- THE FOUNDRY METHOD SECTION -->
     <section
-      class="bg-patina-50 dark:bg-[#0B0C0E] text-slate-800 dark:text-parchment pb-[52px] lg:pb-[110px] transition-colors duration-300">
+      class="bg-patina-50 dark:bg-[#0B0C0E] text-slate-800 dark:text-parchment py-[52px] lg:py-[110px] transition-colors duration-300">
       <div class="max-w-[1584px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-12 lg:gap-24">
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+        <!-- 2 DIVS WITH JUSTIFY-BETWEEN (REPLACING 12-GRID) -->
+        <div class="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-14 xl:gap-16 w-full">
 
-          <!-- Left Column: Our Process -->
-          <div class="lg:col-span-5 flex flex-col gap-6">
+          <!-- Left Column: Our Process & Stats -->
+          <div class="w-full lg:w-[44%] xl:w-[42%] flex flex-col gap-6">
             <div
               class="flex items-center gap-2.5 font-mono text-xs text-gold tracking-[0.25em] uppercase font-semibold">
               <i data-lucide="flame" class="w-4 h-4 text-gold"></i>
@@ -455,30 +460,30 @@ get_header();
               treatises such as the Sāmāṅgara Sūtradhāra.
             </p>
 
-            <div class="grid grid-cols-3 gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
-              <div class="flex flex-col gap-1 pr-3 border-r border-slate-200 dark:border-slate-800">
+            <div class="flex items-center justify-between gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
+              <div class="flex-1 flex flex-col gap-1 pr-3 border-r border-slate-200 dark:border-slate-800">
                 <div class="flex items-center gap-1.5">
                   <i data-lucide="sparkles" class="w-4 h-4 text-gold shrink-0"></i>
-                  <span class="font-display font-bold text-lg sm:text-xl text-slate-900 dark:text-parchment">600+</span>
+                  <span class="counter-number font-display font-bold text-lg sm:text-xl text-slate-900 dark:text-parchment" data-counter="true">600+</span>
                 </div>
                 <span class="font-mono text-[10px] text-slate-500 dark:text-slate-400 leading-tight">Sacred
                   Icons<br />Crafted</span>
               </div>
 
-              <div class="flex flex-col gap-1 px-3 border-r border-slate-200 dark:border-slate-800">
+              <div class="flex-1 flex flex-col gap-1 px-3 border-r border-slate-200 dark:border-slate-800">
                 <div class="flex items-center gap-1.5">
                   <i data-lucide="users" class="w-4 h-4 text-gold shrink-0"></i>
-                  <span class="font-display font-bold text-lg sm:text-xl text-slate-900 dark:text-parchment">30+</span>
+                  <span class="counter-number font-display font-bold text-lg sm:text-xl text-slate-900 dark:text-parchment" data-counter="true">30+</span>
                 </div>
                 <span class="font-mono text-[10px] text-slate-500 dark:text-slate-400 leading-tight">Master
                   Artisans<br />&amp;
                   Specialists</span>
               </div>
 
-              <div class="flex flex-col gap-1 pl-3">
+              <div class="flex-1 flex flex-col gap-1 pl-3">
                 <div class="flex items-center gap-1.5">
                   <i data-lucide="clock" class="w-4 h-4 text-gold shrink-0"></i>
-                  <span class="font-display font-bold text-lg sm:text-xl text-slate-900 dark:text-parchment">4-8
+                  <span class="counter-number font-display font-bold text-lg sm:text-xl text-slate-900 dark:text-parchment" data-counter="true">4-8
                     Weeks</span>
                 </div>
                 <span class="font-mono text-[10px] text-slate-500 dark:text-slate-400 leading-tight">Typical
@@ -489,9 +494,8 @@ get_header();
 
           <!-- Right Column: Step List -->
           <div
-            class="lg:col-span-7 bg-white dark:bg-patina-900 border border-slate-200 dark:border-gold/20 rounded-2xl p-5 sm:p-6 shadow-xl dark:shadow-2xl transition-colors duration-300">
-            <div class="grid grid-cols-1 md:grid-cols-10 gap-6 items-center">
-              <div class="md:col-span-10 flex flex-col divide-y divide-slate-200 dark:divide-slate-800/80">
+            class="w-full lg:w-[52%] xl:w-[54%] bg-white dark:bg-patina-900 border border-slate-200 dark:border-gold/20 rounded-2xl p-5 sm:p-7 shadow-xl dark:shadow-2xl transition-colors duration-300">
+            <div class="flex flex-col divide-y divide-slate-200 dark:divide-slate-800/80">
 
                 <!-- Step 01 -->
                 <div class="py-3.5 flex items-center justify-between gap-4">
@@ -579,15 +583,14 @@ get_header();
 
               </div>
             </div>
-          </div>
 
         </div>
 
         <!-- Bottom Features Bar -->
         <div
-          class="bg-white dark:bg-patina-900 border border-slate-200 dark:border-gold/30 rounded-2xl p-5 shadow-xl dark:shadow-2xl grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-4 divide-y sm:divide-y-0 sm:divide-x divide-slate-200 dark:divide-slate-800/80 transition-colors duration-300">
+          class="bg-white dark:bg-patina-900 border border-slate-200 dark:border-gold/30 rounded-2xl p-5 shadow-xl dark:shadow-2xl flex flex-col sm:flex-row items-stretch justify-between gap-4 divide-y sm:divide-y-0 sm:divide-x divide-slate-200 dark:divide-slate-800/80 transition-colors duration-300">
 
-          <div class="flex items-center gap-3 px-2 py-1">
+          <div class="flex-1 flex items-center gap-3 px-2 py-1">
             <div class="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold shrink-0">
               <i data-lucide="globe" class="w-5 h-5"></i>
             </div>
@@ -597,7 +600,7 @@ get_header();
             </div>
           </div>
 
-          <div class="flex items-center gap-3 px-2 py-1">
+          <div class="flex-1 flex items-center gap-3 px-2 py-1">
             <div class="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold shrink-0">
               <i data-lucide="ruler" class="w-5 h-5"></i>
             </div>
@@ -607,7 +610,7 @@ get_header();
             </div>
           </div>
 
-          <div class="flex items-center gap-3 px-2 py-1">
+          <div class="flex-1 flex items-center gap-3 px-2 py-1">
             <div class="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold shrink-0">
               <i data-lucide="shield-check" class="w-5 h-5"></i>
             </div>
@@ -617,7 +620,7 @@ get_header();
             </div>
           </div>
 
-          <div class="flex items-center gap-3 px-2 py-1">
+          <div class="flex-1 flex items-center gap-3 px-2 py-1">
             <div class="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold shrink-0">
               <i data-lucide="flame" class="w-5 h-5"></i>
             </div>
@@ -627,7 +630,7 @@ get_header();
             </div>
           </div>
 
-          <div class="flex items-center gap-3 px-2 py-1">
+          <div class="flex-1 flex items-center gap-3 px-2 py-1">
             <div class="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold shrink-0">
               <i data-lucide="award" class="w-5 h-5"></i>
             </div>

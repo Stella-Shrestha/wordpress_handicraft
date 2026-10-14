@@ -145,118 +145,181 @@ if (empty($testimonials)) {
 ?>
 
 <!-- VENERATED PATRON REVIEWS & TESTIMONIALS SECTION -->
-<section id="reviews" class="py-16 lg:py-24 relative overflow-hidden transition-colors duration-300 bg-[#FBFBFC] dark:bg-[#0E1013]">
+<section id="reviews" class="py-[52px] lg:py-[110px] relative overflow-hidden transition-colors duration-300 bg-[#FAF8F5] dark:bg-patina-950">
 
   <!-- Subtle Ambient Glow -->
-  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gold/10 dark:bg-gold/5 blur-[120px] rounded-full pointer-events-none"></div>
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-gold/10 dark:bg-gold/5 blur-[140px] rounded-full pointer-events-none"></div>
 
-  <div class="max-w-[1584px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+  <!-- MAIN CONTAINER: w-[1584px] with mx-auto -->
+  <div class="w-full max-w-[1584px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
-    <!-- TOP GRID: 2 COLUMNS (LEFT: CONTENT + 5 FEATURES LIST, RIGHT: TESTIMONIALS SLIDER) -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+    <!-- 2 DIVS WITH JUSTIFY-BETWEEN (REPLACING 12-GRID) -->
+    <div class="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-14 xl:gap-16 w-full">
 
-      <!-- LEFT COLUMN: Heading, Subtitle, 5 Stars + Rating, 5 FEATURES LIST, CTA Buttons -->
-      <div class="lg:col-span-6 flex flex-col justify-center">
-        <h2 class="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-slate-900 dark:text-parchment tracking-tight leading-tight">
+      <!-- LEFT DIV: Content, Heading, Rating, 5 Features List -->
+      <div class="w-full lg:w-[44%] xl:w-[42%] flex flex-col gap-6">
+        <!-- Atelier Kicker Matching Foundry Method -->
+        <div class="flex items-center gap-2.5 font-mono text-xs text-gold tracking-[0.25em] uppercase font-semibold">
+          <i data-lucide="award" class="w-4 h-4 text-gold"></i>
+          <span>PATRON CONSECRATIONS &amp; PROVENANCE</span>
+        </div>
+
+        <h2 class="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-slate-900 dark:text-parchment uppercase tracking-tight leading-tight">
           <?php echo esc_html($title); ?>
         </h2>
 
-        <div class="text-slate-600 dark:text-slate-400 text-sm sm:text-base font-sans leading-relaxed mt-3">
+        <div class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm font-sans leading-relaxed max-w-md">
           <?php echo wp_kses_post(wpautop($subtitle)); ?>
         </div>
 
-        <!-- Rating Row: 5 Gold Stars + 4.9/5 Score -->
-        <div class="flex items-center gap-4 sm:gap-6 my-5">
-          <div class="flex items-center gap-1 text-amber-400 dark:text-gold shrink-0">
-            <?php for ($s = 0; $s < 5; $s++): ?>
-              <svg class="w-5 h-5 sm:w-6 sm:h-6 fill-current" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-              </svg>
-            <?php endfor; ?>
-          </div>
-          <div class="flex flex-col">
-            <span class="text-xl sm:text-2xl font-display font-extrabold text-slate-900 dark:text-parchment leading-none">4.9/5</span>
-            <span class="text-xs text-slate-500 dark:text-slate-400 mt-1 font-sans">Based on authentic patron reviews.</span>
-          </div>
-        </div>
-
-        <!-- 5-ITEM GUARANTEES & TRUST FEATURES LIST (IMAGE) -->
-        <?php if (!empty($features)): ?>
-        <div class="grid grid-cols-2 gap-2.5 mt-4">
-          <?php foreach ($features as $feat): 
-            $f_icon  = !empty($feat['icon']) ? $feat['icon'] : 'globe';
-            $f_title = !empty($feat['title']) ? $feat['title'] : '';
-            $f_sub   = !empty($feat['subtitle']) ? $feat['subtitle'] : '';
-          ?>
-          <div class="flex items-center gap-3.5 py-1">
-            <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#FAF5EE] dark:bg-gold/10 flex items-center justify-center text-[#B88746] dark:text-gold shrink-0 border border-[#F3E8D8] dark:border-gold/20">
-              <i data-lucide="<?php echo esc_attr($f_icon); ?>" class="w-4 h-4"></i>
+        <!-- Rating Row & Features List matching border-t stats hierarchy -->
+        <div class="flex flex-col gap-4 pt-4 border-t border-slate-200 dark:border-slate-800">
+          <!-- Rating Row: 5 Gold Stars + 4.9/5 Score (Theme Styled) -->
+          <div class="flex items-center gap-4 sm:gap-5">
+            <div class="flex items-center gap-1 text-amber-400 dark:text-gold shrink-0">
+              <?php for ($s = 0; $s < 5; $s++): ?>
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                </svg>
+              <?php endfor; ?>
             </div>
-            <div class="leading-tight">
-              <strong class="block text-xs sm:text-sm font-bold text-slate-900 dark:text-parchment font-display tracking-wide uppercase">
-                <?php echo esc_html($f_title); ?>
-              </strong>
-              <span class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-sans mt-0.5 block">
+            <div class="h-4 w-px bg-slate-200 dark:bg-gold/20"></div>
+            <div class="flex items-baseline gap-1.5">
+              <span class="text-lg sm:text-xl font-display font-bold text-slate-900 dark:text-parchment leading-none">4.9</span>
+              <span class="text-xs font-mono font-semibold text-slate-400 dark:text-slate-500">/ 5.0</span>
+            </div>
+            <span class="text-[11px] text-slate-500 dark:text-slate-400 font-sans">· Authentic patron reviews</span>
+          </div>
+
+          <!-- 5-ITEM GUARANTEES & TRUST FEATURES LIST (Clean list without grid, bg, padding) -->
+          <?php if (!empty($features)): ?>
+          <div class="flex flex-col divide-y divide-slate-100 dark:divide-slate-800/60 pt-1">
+            <?php foreach ($features as $feat): 
+              $f_icon  = !empty($feat['icon']) ? $feat['icon'] : 'globe';
+              $f_title = !empty($feat['title']) ? $feat['title'] : '';
+              $f_sub   = !empty($feat['subtitle']) ? $feat['subtitle'] : '';
+            ?>
+            <div class="flex items-center justify-between py-2 group">
+              <div class="flex items-center gap-2.5">
+                <i data-lucide="<?php echo esc_attr($f_icon); ?>" class="w-4 h-4 text-gold shrink-0"></i>
+                <strong class="text-xs font-semibold text-slate-900 dark:text-parchment font-display tracking-wide uppercase">
+                  <?php echo esc_html($f_title); ?>
+                </strong>
+              </div>
+              <span class="text-[11px] text-slate-500 dark:text-slate-400 font-mono">
                 <?php echo esc_html($f_sub); ?>
               </span>
             </div>
+            <?php endforeach; ?>
           </div>
-          <?php endforeach; ?>
+          <?php endif; ?>
         </div>
-        <?php endif; ?>
 
       </div>
 
-      <!-- RIGHT COLUMN: Quotation Marks, Testimonial Card Slider & Controls -->
-      <div class="lg:col-span-6 flex flex-col justify-center relative">
+      <!-- RIGHT DIV: Quotation Marks, Testimonial Card Slider & Controls -->
+      <div class="w-full lg:w-[52%] xl:w-[54%] flex flex-col justify-center relative">
 
-        <!-- Top-Left Giant Quotation Mark (Image 1) -->
-        <div class="mb-2 select-none text-slate-900 dark:text-gold inline-block self-start" aria-hidden="true">
-          <svg class="w-10 h-10 sm:w-12 sm:h-12 fill-current" viewBox="0 0 24 24">
-            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
-          </svg>
-        </div>
+        <!-- Card Wrapper with Overlapping Quotation Marks (z-index) -->
+        <div class="relative pt-2 pb-2">
 
-        <!-- Featured Card Box -->
-        <div id="reviewsSliderContainer" class="bg-white dark:bg-patina-900 border border-slate-100 dark:border-gold/20 rounded-2xl sm:rounded-3xl shadow-[0_10px_35px_-5px_rgba(0,0,0,0.06)] dark:shadow-2xl overflow-hidden relative min-h-[260px] sm:min-h-[280px]">
-          <div id="reviewsTrack" class="flex transition-transform duration-500 ease-out w-full">
-            <?php foreach ($testimonials as $t): 
-              $t_quote = !empty($t['quote']) ? trim($t['quote'], '"\'') : '';
-              $t_name  = !empty($t['name']) ? $t['name'] : 'Venerated Patron';
-              $t_role  = !empty($t['role']) ? $t['role'] : '';
-              $author_display = strtoupper($t_name . ($t_role ? ', ' . $t_role : ''));
-            ?>
-            <div class="review-slide min-w-full w-full shrink-0 p-7 sm:p-10 lg:p-12 flex flex-col justify-between">
-              <!-- Review Quote -->
-              <p class="text-slate-700 dark:text-slate-300 text-sm sm:text-base lg:text-lg font-sans leading-relaxed">
-                <?php echo esc_html($t_quote); ?>
-              </p>
-
-              <!-- Author Line (Image 1 Style: Uppercase Bold Blue/Gold Font) -->
-              <div class="mt-8 pt-4 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 dark:border-slate-800">
-                <span class="text-[#0275B8] dark:text-gold font-sans font-bold text-xs sm:text-sm tracking-wider uppercase">
-                  <?php echo esc_html($author_display); ?>
-                </span>
-                <?php if (!empty($t['seal'])): ?>
-                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
-                  <i data-lucide="shield-check" class="w-3 h-3"></i> <?php echo esc_html($t['seal']); ?>
-                </span>
-                <?php endif; ?>
-              </div>
-            </div>
-            <?php endforeach; ?>
+          <!-- Top-Left Giant Quotation Mark overlapping card -->
+          <div class="absolute -top-5 sm:-top-6 left-6 sm:left-6 z-20 select-none text-slate-900 dark:text-gold pointer-events-none drop-shadow-sm" aria-hidden="true">
+            <svg class="w-10 h-10 sm:w-12 sm:h-12 fill-current" viewBox="0 0 24 24">
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+            </svg>
           </div>
-        </div>
 
-        <!-- Bottom-Right Giant Quotation Mark (Image 1) -->
-        <div class="flex justify-end mt-2 select-none text-slate-900 dark:text-gold" aria-hidden="true">
-          <svg class="w-10 h-10 sm:w-12 sm:h-12 fill-current" viewBox="0 0 24 24">
-            <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.57-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z"/>
-          </svg>
+          <!-- Featured Card Box -->
+          <div id="reviewsSliderContainer" class="relative z-10 bg-white dark:bg-patina-900 border border-slate-200 dark:border-gold/20 rounded-2xl shadow-xl dark:shadow-2xl overflow-hidden min-h-[300px] sm:min-h-[320px]">
+            <div id="reviewsTrack" class="flex transition-transform duration-500 ease-out w-full items-stretch">
+              <?php foreach ($testimonials as $t): 
+                $t_quote    = !empty($t['quote']) ? trim($t['quote'], '"\'') : '';
+                $t_name     = !empty($t['name']) ? $t['name'] : 'Venerated Patron';
+                $t_role     = !empty($t['role']) ? $t['role'] : 'Sacred Art Collector';
+                $t_seal     = !empty($t['seal']) ? $t['seal'] : 'Verified Consecration';
+                $t_specimen = !empty($t['specimen']) ? $t['specimen'] : '';
+                $t_stars    = !empty($t['stars']) ? intval($t['stars']) : 5;
+                $t_thumb    = !empty($t['thumb']) ? $t['thumb'] : '';
+                $t_initials = !empty($t['initials']) ? $t['initials'] : '';
+                if (empty($t_initials)) {
+                    $w = preg_split('/\s+/', trim($t_name));
+                    $t_initials = (isset($w[0][0]) ? strtoupper($w[0][0]) : '') . (isset($w[1][0]) ? strtoupper($w[1][0]) : '');
+                }
+                if (empty($t_initials)) $t_initials = 'SA';
+              ?>
+              <div class="review-slide min-w-full w-full shrink-0 p-6 sm:p-9 lg:p-11 flex flex-col justify-between">
+                <div>
+                  <!-- Review Top Bar: 5 Gold Stars & Specimen Tag -->
+                  <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                    <div class="flex items-center gap-1 text-amber-400 dark:text-gold shrink-0">
+                      <?php for ($s = 0; $s < $t_stars; $s++): ?>
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                        </svg>
+                      <?php endfor; ?>
+                    </div>
+                    <?php if (!empty($t_specimen)): ?>
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-mono font-medium text-copper dark:text-gold bg-gold/10 dark:bg-gold/15 border border-gold/25">
+                      <i data-lucide="gem" class="w-3 h-3 text-gold"></i>
+                      <span><?php echo esc_html($t_specimen); ?></span>
+                    </span>
+                    <?php endif; ?>
+                  </div>
+
+                  <!-- Review Quote -->
+                  <p class="text-slate-700 dark:text-slate-200 text-sm sm:text-base lg:text-lg font-sans leading-relaxed tracking-normal font-normal">
+                    &ldquo;<?php echo esc_html($t_quote); ?>&rdquo;
+                  </p>
+                </div>
+
+                <!-- Reviewer Profile Section (Matching Theme) -->
+                <div class="pt-5 mt-6 border-t border-slate-100 dark:border-gold/15 flex flex-wrap items-center justify-between gap-3">
+                  <!-- Profile Left: Avatar Medallion + Name + Title -->
+                  <div class="flex items-center gap-3.5">
+                    <?php if (!empty($t_thumb)): ?>
+                      <img src="<?php echo esc_url($t_thumb); ?>" alt="<?php echo esc_attr($t_name); ?>" class="w-11 h-11 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-gold/40 shadow-sm shrink-0" />
+                    <?php else: ?>
+                      <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#B88746]/20 via-gold/15 to-[#8A5A2B]/20 dark:from-gold/25 dark:to-copper/25 border-2 border-gold/40 dark:border-gold/50 flex items-center justify-center font-display font-bold text-xs sm:text-sm text-copper dark:text-gold shadow-sm shrink-0 tracking-wider">
+                        <?php echo esc_html($t_initials); ?>
+                      </div>
+                    <?php endif; ?>
+                    
+                    <div class="flex flex-col">
+                      <h4 class="font-display font-bold text-sm sm:text-base text-slate-900 dark:text-parchment leading-snug">
+                        <?php echo esc_html($t_name); ?>
+                      </h4>
+                      <span class="text-xs text-slate-500 dark:text-slate-400 font-sans mt-0.5 flex items-center gap-1">
+                        <i data-lucide="map-pin" class="w-3 h-3 text-copper dark:text-gold shrink-0"></i>
+                        <span><?php echo esc_html($t_role); ?></span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Profile Right: Verified Consecration / Provenance Seal -->
+                  <?php if (!empty($t_seal)): ?>
+                  <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-mono font-bold tracking-wider uppercase bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30 shrink-0">
+                    <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                    <span><?php echo esc_html($t_seal); ?></span>
+                  </div>
+                  <?php endif; ?>
+                </div>
+              </div>
+              <?php endforeach; ?>
+            </div>
+          </div>
+
+          <!-- Bottom-Right Giant Quotation Mark overlapping card -->
+          <div class="absolute -bottom-5 sm:-bottom-6 right-6 sm:right-6 z-20 select-none text-slate-900 dark:text-gold pointer-events-none drop-shadow-sm" aria-hidden="true">
+            <svg class="w-10 h-10 sm:w-12 sm:h-12 fill-current" viewBox="0 0 24 24">
+              <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.57-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z"/>
+            </svg>
+          </div>
+
         </div>
 
         <!-- Bottom Slider Controls: < .... > -->
-        <div class="flex items-center justify-center gap-4 sm:gap-6 mt-4">
+        <div class="flex items-center justify-center gap-3 sm:gap-4 mt-4 px-1">
           <!-- Circular Prev Button (<) -->
           <button
             type="button"

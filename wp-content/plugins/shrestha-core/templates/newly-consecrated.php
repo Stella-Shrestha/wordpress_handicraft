@@ -158,7 +158,7 @@ if (empty($cards)) {
         class="specimen-card bg-white dark:bg-patina-900 border border-slate-200/80 dark:border-gold/30 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col group">
         <div class="relative w-full h-[380px] sm:h-[430px] overflow-hidden bg-black flex items-center justify-center">
           <img src="<?php echo esc_url($card['img']); ?>" alt="<?php echo esc_attr($card['title']); ?>"
-            class="w-full h-full object-contain sm:object-cover group-hover:scale-105 transition-transform duration-700" />
+            class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700" />
           <div
             class="absolute top-4 right-4 bg-black/90 backdrop-blur-md px-3 py-1 rounded-full border border-gold/40 text-gold font-mono text-[10px] tracking-wider uppercase font-bold shadow-md">
             <?php echo esc_html($card['badge']); ?>

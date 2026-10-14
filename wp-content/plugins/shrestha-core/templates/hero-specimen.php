@@ -52,64 +52,69 @@ if (!empty($attributes['inspectUrl'])) {
 }
 ?>
 
-<div class="grid grid-cols-1 max-w-[1584px] mx-auto px-4 sm:px-6 lg:px-8 lg:py-[110px] py-[52px] lg:grid-cols-12 gap-10 items-center">
+<!-- MAIN HERO CONTAINER: w-[1584px] with mx-auto -->
+<div class="w-full max-w-[1584px] mx-auto px-4 sm:px-6 lg:px-8 lg:py-[110px] py-[52px]">
 
-  <!-- Hero Left Column -->
-  <div class="lg:col-span-7 flex flex-col gap-6">
-    <div
-      class="inline-flex items-center gap-2 px-3 py-1 bg-white dark:bg-patina-900 border border-gold/30 rounded font-mono text-xs text-gold w-fit shadow-sm">
-      <span><?php echo esc_html($badge_text); ?></span>
-      <span>•</span>
-      <span class="text-emerald-500 font-semibold flex items-center gap-1">
-        <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> <?php echo esc_html($consecrated_text); ?>
-      </span>
+  <!-- 2 DIVS WITH JUSTIFY-BETWEEN (REPLACING 12-GRID) -->
+  <div class="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-14 xl:gap-16 w-full">
+
+    <!-- Hero Left Column -->
+    <div class="w-full lg:w-[56%] xl:w-[58%] flex flex-col gap-6">
+      <div
+        class="inline-flex items-center gap-2 px-3 py-1 bg-white dark:bg-patina-900 border border-gold/30 rounded font-mono text-xs text-gold w-fit shadow-sm">
+        <span><?php echo esc_html($badge_text); ?></span>
+        <span>•</span>
+        <span class="text-emerald-500 font-semibold flex items-center gap-1">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> <?php echo esc_html($consecrated_text); ?>
+        </span>
+      </div>
+
+      <h1
+        class="font-display text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-none text-slate-900 dark:text-parchment">
+        <span class="bg-gradient-to-r from-gold-bright via-gold to-copper bg-clip-text text-transparent"><?php echo esc_html($title_highlight); ?></span><br />
+        <?php echo esc_html($title_subtitle); ?>
+      </h1>
+
+      <div class="text-slate-600 dark:text-slate-400 text-base leading-relaxed space-y-3">
+        <?php echo wp_kses_post(wpautop($description)); ?>
+      </div>
+
+      <!-- CTA Action Buttons -->
+      <div class="flex flex-wrap items-center gap-4 mt-2">
+        <button type="button"
+          data-action="add-to-cart"
+          data-sku="<?php echo esc_attr($specimen_sku); ?>"
+          onclick="addToCartByProdId('<?php echo esc_js($specimen_sku); ?>', this)"
+          class="add-to-cart-btn px-6 py-3.5 bg-gradient-to-r from-gold to-copper hover:from-gold-bright hover:to-copper-bright text-white dark:text-patina-950 font-mono font-bold text-xs tracking-wider uppercase rounded-lg shadow-lg shadow-gold/20 hover:shadow-gold/40 transition-all transform hover:-translate-y-0.5 flex items-center gap-2 cursor-pointer">
+          <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+          <span><?php echo esc_html($primary_btn_text); ?></span>
+        </button>
+
+        <?php
+        $specimen_title = trim($title_highlight . ' ' . $title_subtitle);
+        $hero_wa_url = function_exists('shrestha_get_whatsapp_inquiry_url') 
+            ? shrestha_get_whatsapp_inquiry_url($specimen_sku, $specimen_title) 
+            : 'https://wa.me/9779841234567?text=' . rawurlencode('Namaste! I would like to inquire about acquiring "' . $specimen_title . '" (SKU: ' . $specimen_sku . '). Please share details.');
+        ?>
+        <button type="button"
+          data-action="inquiry"
+          data-sku="<?php echo esc_attr($specimen_sku); ?>"
+          onclick="if(typeof openWhatsAppInquiry==='function'){openWhatsAppInquiry('<?php echo esc_js($specimen_sku); ?>');}else if(typeof bookNowByProdId==='function'){bookNowByProdId('<?php echo esc_js($specimen_sku); ?>');}else{window.open('<?php echo esc_url($hero_wa_url); ?>', '_blank');}"
+          class="inquiry-btn px-6 py-3.5 bg-white dark:bg-patina-900 border border-slate-300 dark:border-gold/40 hover:border-gold text-slate-800 dark:text-parchment hover:text-gold font-mono font-bold text-xs tracking-wider uppercase rounded-lg transition-colors flex items-center gap-2 shadow-sm">
+          <i data-lucide="message-square" class="w-4 h-4 text-copper"></i>
+          <span>Inquiry</span>
+        </button>
+
+        <a href="<?php echo esc_url($specimen_link); ?>"
+          class="px-5 py-3.5 bg-slate-100 dark:bg-patina-800/80 hover:bg-gold/10 border border-slate-200 dark:border-gold/20 text-slate-700 dark:text-slate-300 hover:text-gold font-mono font-medium text-xs tracking-wider uppercase rounded-lg transition-colors flex items-center gap-2 shadow-sm">
+          <i data-lucide="scan" class="w-4 h-4"></i>
+          <span><?php echo esc_html($secondary_btn); ?></span>
+        </a>
+      </div>
     </div>
 
-    <h1
-      class="font-display text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-none text-slate-900 dark:text-parchment">
-      <span class="bg-gradient-to-r from-gold-bright via-gold to-copper bg-clip-text text-transparent"><?php echo esc_html($title_highlight); ?></span><br />
-      <?php echo esc_html($title_subtitle); ?>
-    </h1>
-
-    <div class="text-slate-600 dark:text-slate-400 text-base leading-relaxed space-y-3">
-      <?php echo wp_kses_post(wpautop($description)); ?>
-    </div>
-
-    <!-- CTA Action Buttons -->
-    <div class="flex flex-wrap items-center gap-4 mt-2">
-      <button type="button"
-        data-action="add-to-cart"
-        data-sku="<?php echo esc_attr($specimen_sku); ?>"
-        onclick="addToCartByProdId('<?php echo esc_js($specimen_sku); ?>', this)"
-        class="add-to-cart-btn px-6 py-3.5 bg-gradient-to-r from-gold to-copper hover:from-gold-bright hover:to-copper-bright text-white dark:text-patina-950 font-mono font-bold text-xs tracking-wider uppercase rounded-lg shadow-lg shadow-gold/20 hover:shadow-gold/40 transition-all transform hover:-translate-y-0.5 flex items-center gap-2 cursor-pointer">
-        <i data-lucide="shopping-bag" class="w-4 h-4"></i>
-        <span><?php echo esc_html($primary_btn_text); ?></span>
-      </button>
-
-      <?php
-      $hero_wa_url = function_exists('shrestha_get_whatsapp_inquiry_url') 
-          ? shrestha_get_whatsapp_inquiry_url($specimen_sku, $specimen_title) 
-          : 'https://wa.me/9779841234567?text=' . rawurlencode('Namaste! I would like to inquire about acquiring "' . $specimen_title . '" (SKU: ' . $specimen_sku . '). Please share details.');
-      ?>
-      <button type="button"
-        data-action="inquiry"
-        data-sku="<?php echo esc_attr($specimen_sku); ?>"
-        onclick="if(typeof openWhatsAppInquiry==='function'){openWhatsAppInquiry('<?php echo esc_js($specimen_sku); ?>');}else if(typeof bookNowByProdId==='function'){bookNowByProdId('<?php echo esc_js($specimen_sku); ?>');}else{window.open('<?php echo esc_url($hero_wa_url); ?>', '_blank');}"
-        class="inquiry-btn px-6 py-3.5 bg-white dark:bg-patina-900 border border-slate-300 dark:border-gold/40 hover:border-gold text-slate-800 dark:text-parchment hover:text-gold font-mono font-bold text-xs tracking-wider uppercase rounded-lg transition-colors flex items-center gap-2 shadow-sm">
-        <i data-lucide="message-square" class="w-4 h-4 text-copper"></i>
-        <span>Inquiry</span>
-      </button>
-
-      <a href="<?php echo esc_url($specimen_link); ?>"
-        class="px-5 py-3.5 bg-slate-100 dark:bg-patina-800/80 hover:bg-gold/10 border border-slate-200 dark:border-gold/20 text-slate-700 dark:text-slate-300 hover:text-gold font-mono font-medium text-xs tracking-wider uppercase rounded-lg transition-colors flex items-center gap-2 shadow-sm">
-        <i data-lucide="scan" class="w-4 h-4"></i>
-        <span><?php echo esc_html($secondary_btn); ?></span>
-      </a>
-    </div>
-  </div>
-
-  <!-- Hero Right Column (Visual Card) -->
-  <div class="lg:col-span-5 relative">
+    <!-- Hero Right Column (Visual Card) -->
+    <div class="w-full lg:w-[40%] xl:w-[38%] relative">
     <div
       class="relative bg-white dark:bg-patina-900 border border-gold/30 rounded-2xl p-4 shadow-2xl overflow-hidden group">
       <div class="relative w-full h-[460px] rounded-xl overflow-hidden bg-black flex items-center justify-center">
@@ -168,4 +173,5 @@ if (!empty($attributes['inspectUrl'])) {
       </svg>
     </div>
   </div>
+</div>
 </div>

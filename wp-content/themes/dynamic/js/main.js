@@ -1171,20 +1171,140 @@ function handleContactSubmit(e) {
 
 // 9. CATALOG FILTERING & RENDERING ENGINE
 let activeFilter = 'all';
+let activeAlloyFilter = 'all';
 
-function renderCatalog() {
+function setAlloyFilter(alloySlug, btnEl) {
+  activeAlloyFilter = (alloySlug || 'all').toLowerCase();
+
+  // Update button visual styles
+  document.querySelectorAll('.alloy-filter-btn').forEach(b => {
+    b.className = 'alloy-filter-btn px-4 py-2 rounded-lg font-mono text-xs font-semibold uppercase tracking-wider transition-colors bg-white dark:bg-patina-900 border border-slate-200 dark:border-gold/30 text-slate-700 dark:text-slate-300 hover:border-gold';
+  });
+
+  if (btnEl) {
+    btnEl.className = 'alloy-filter-btn px-4 py-2 rounded-lg font-mono text-xs font-semibold uppercase tracking-wider transition-colors bg-gold text-white dark:text-patina-950 shadow-sm';
+  }
+
+  filterCatalog();
+}
+
+function filterCatalog() {
+  const catalogGrid = document.getElementById('catalogGrid');
+
+  // Modern server-rendered Specimen Grid (#catalogGrid)
+  if (catalogGrid) {
+    const searchInput = document.getElementById('catalogSearchInput') || document.getElementById('searchInput');
+    const sortSelect = document.getElementById('catalogSortSelect');
+    const noResults = document.getElementById('noResultsNotice');
+
+    const searchVal = (searchInput ? searchInput.value : '').toLowerCase().trim();
+    const sortVal = sortSelect ? sortSelect.value : 'default';
+
+    const cards = Array.from(catalogGrid.querySelectorAll('.specimen-card'));
+    if (!cards.length) return;
+
+    // Cache initial DOM order for default sort
+    cards.forEach((card, idx) => {
+      if (card.dataset.defaultOrder === undefined) {
+        card.dataset.defaultOrder = idx;
+      }
+    });
+
+    let visibleCount = 0;
+
+    cards.forEach(card => {
+      const sku = (card.getAttribute('data-sku') || '').toLowerCase();
+      const name = (card.getAttribute('data-name') || '').toLowerCase();
+      const alloys = (card.getAttribute('data-alloys') || '').toLowerCase();
+      const fullText = (card.textContent || '').toLowerCase();
+
+      // Search match (matches SKU, Title, Alloy name, or card description)
+      const matchesSearch = !searchVal || 
+        sku.includes(searchVal) || 
+        name.includes(searchVal) || 
+        alloys.includes(searchVal) || 
+        fullText.includes(searchVal);
+
+      // Alloy taxonomy filter match
+      const alloySlugs = alloys.split(/[\s,]+/);
+      const matchesAlloy = (activeAlloyFilter === 'all') || 
+        alloySlugs.includes(activeAlloyFilter) ||
+        alloys.includes(activeAlloyFilter);
+
+      const isVisible = matchesSearch && matchesAlloy;
+      if (isVisible) {
+        card.style.display = '';
+        visibleCount++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    // Sort cards according to chosen sort option
+    const sortedCards = [...cards].sort((a, b) => {
+      if (sortVal === 'price-asc') {
+        const priceA = parseFloat(a.getAttribute('data-price')) || 0;
+        const priceB = parseFloat(b.getAttribute('data-price')) || 0;
+        return priceA - priceB;
+      } else if (sortVal === 'price-desc') {
+        const priceA = parseFloat(a.getAttribute('data-price')) || 0;
+        const priceB = parseFloat(b.getAttribute('data-price')) || 0;
+        return priceB - priceA;
+      } else if (sortVal === 'name-asc') {
+        const nameA = (a.getAttribute('data-name') || '').toLowerCase();
+        const nameB = (b.getAttribute('data-name') || '').toLowerCase();
+        return nameA.localeCompare(nameB);
+      } else {
+        const orderA = parseInt(a.dataset.defaultOrder, 10) || 0;
+        const orderB = parseInt(b.dataset.defaultOrder, 10) || 0;
+        return orderA - orderB;
+      }
+    });
+
+    // Re-insert cards in sorted order
+    sortedCards.forEach(card => catalogGrid.appendChild(card));
+
+    // Show/hide no results notice
+    if (noResults) {
+      if (visibleCount === 0) {
+        noResults.classList.remove('hidden');
+      } else {
+        noResults.classList.add('hidden');
+      }
+    }
+
+    return;
+  }
+
+  // Fallback for legacy #productGrid
+  renderLegacyCatalog();
+}
+
+function renderLegacyCatalog() {
   const grid = document.getElementById('productGrid');
-  if (!grid) return;
+  if (!grid || typeof PRODUCTS === 'undefined') return;
 
-  const searchVal = (document.getElementById('searchInput') ? document.getElementById('searchInput').value : '').toLowerCase();
+  const searchInput = document.getElementById('catalogSearchInput') || document.getElementById('searchInput');
+  const sortSelect = document.getElementById('catalogSortSelect');
+  const searchVal = (searchInput ? searchInput.value : '').toLowerCase().trim();
+  const sortVal = sortSelect ? sortSelect.value : 'default';
 
-  const filtered = PRODUCTS.filter(p => {
+  let filtered = PRODUCTS.filter(p => {
     const matchesFilter = (activeFilter === 'all') || (p.category === activeFilter);
-    const matchesSearch = p.name.toLowerCase().includes(searchVal) ||
+    const matchesSearch = !searchVal ||
+      p.name.toLowerCase().includes(searchVal) ||
       p.alloy.toLowerCase().includes(searchVal) ||
       p.id.toLowerCase().includes(searchVal);
     return matchesFilter && matchesSearch;
   });
+
+  if (sortVal === 'price-asc') {
+    filtered.sort((a, b) => a.price - b.price);
+  } else if (sortVal === 'price-desc') {
+    filtered.sort((a, b) => b.price - a.price);
+  } else if (sortVal === 'name-asc') {
+    filtered.sort((a, b) => a.name.localeCompare(b.name));
+  }
 
   if (filtered.length === 0) {
     grid.innerHTML = `
@@ -1252,6 +1372,19 @@ function renderCatalog() {
   renderIcons();
 }
 
+function renderCatalog() {
+  filterCatalog();
+}
+
+function resetCatalogFilters() {
+  const searchInput = document.getElementById('catalogSearchInput') || document.getElementById('searchInput');
+  if (searchInput) searchInput.value = '';
+  const sortSelect = document.getElementById('catalogSortSelect');
+  if (sortSelect) sortSelect.value = 'default';
+  const allAlloyBtn = document.querySelector('.alloy-filter-btn[data-alloy="all"]');
+  setAlloyFilter('all', allAlloyBtn);
+}
+
 function setFilter(filterName, btnEl) {
   activeFilter = filterName;
   document.querySelectorAll('#filterGroup button').forEach(b => {
@@ -1260,11 +1393,7 @@ function setFilter(filterName, btnEl) {
   if (btnEl) {
     btnEl.className = 'filter-btn px-3.5 py-1.5 font-mono text-xs rounded-md bg-gold/15 text-gold border border-gold';
   }
-  renderCatalog();
-}
-
-function filterCatalog() {
-  renderCatalog();
+  filterCatalog();
 }
 
 // 10. LUCIDE SVG MAP & RENDERING ENGINE
@@ -1594,6 +1723,7 @@ if (typeof window !== 'undefined') {
   window.toggleMobileMenu = toggleMobileMenu;
   window.toggleTheme = toggleTheme;
   if (typeof filterCatalog === 'function') window.filterCatalog = filterCatalog;
+  if (typeof setAlloyFilter === 'function') window.setAlloyFilter = setAlloyFilter;
   if (typeof resetCatalogFilters === 'function') window.resetCatalogFilters = resetCatalogFilters;
   if (typeof renderCatalog === 'function') window.renderCatalog = renderCatalog;
   if (typeof openReviewModal === 'function') window.openReviewModal = openReviewModal;

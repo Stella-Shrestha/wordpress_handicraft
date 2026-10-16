@@ -14,7 +14,7 @@ $title_line1 = isset($attributes['titleLine1']) ? $attributes['titleLine1'] : 'S
 $title_line2 = isset($attributes['titleLine2']) ? $attributes['titleLine2'] : 'Uncompromising Standards.';
 $subtitle = isset($attributes['subtitle']) ? $attributes['subtitle'] : 'From master Newar lost-wax casting and strict iconometric proportions to museum-grade curation and worldwide insured delivery, discover why temples, monasteries, and discerning collectors entrust their sacred acquisitions to our Patan atelier.';
 
-$stat_years     = !empty($attributes['statYears']) ? $attributes['statYears'] : (function_exists('get_theme_mod') ? get_theme_mod('shrestha_stat_years', '40+') : '40+');
+$stat_years     = !empty($attributes['statYears']) ? $attributes['statYears'] : (function_exists('get_theme_mod') ? get_theme_mod('shrestha_stat_years', '20+') : '20+');
 $stat_countries = !empty($attributes['statCountries']) ? $attributes['statCountries'] : (function_exists('get_theme_mod') ? get_theme_mod('shrestha_stat_countries', '50+') : '50+');
 
 $default_features = array(
@@ -66,7 +66,7 @@ $features = (!empty($attributes['features']) && is_array($attributes['features']
 
 <!-- SECTION 05: WHY CHOOSE US BLOCK -->
 <section id="why-choose-us" aria-label="Why Choose Shrestha Handicraft"
-  class="max-w-[1584px] mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-24 border-t border-slate-200/60 dark:border-gold/10 relative overflow-hidden">
+  class="max-w-[1584px] mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-24 relative overflow-hidden">
   
   <div
     class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gold/5 dark:bg-gold/5 blur-[120px] rounded-full pointer-events-none">
@@ -141,7 +141,7 @@ $features = (!empty($attributes['features']) && is_array($attributes['features']
       </div>
       <div class="flex flex-col items-center justify-center p-2">
         <span class="counter-number font-display text-3xl sm:text-4xl font-bold text-gold" data-target="<?php echo esc_attr(rtrim($stat_countries, '+')); ?>" data-suffix="+" data-start="0" data-duration="1800"><?php echo esc_html($stat_countries); ?></span>
-        <span class="font-mono text-[11px] text-slate-700 dark:text-slate-300 font-semibold tracking-wider uppercase mt-1">Countries Delivered</span>
+        <span class="font-mono text-[11px] text-slate-700 dark:text-slate-300 font-semibold tracking-wider uppercase mt-1">Delivered</span>
         <span class="font-sans text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Safe white-glove transit</span>
       </div>
       <div class="flex flex-col items-center justify-center p-2">

@@ -20,7 +20,7 @@ $show_sort      = !isset($attributes['showSort']) || $attributes['showSort'] !==
 ?>
 
 <!-- CATALOG HERO & CONTROLS BLOCK -->
-<section class="border-b border-slate-200 dark:border-gold/20 pb-8 mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
+<section class="pb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
   <div>
     <?php if (!empty($badge_text)): ?>
     <div class="inline-flex items-center gap-2 px-3 py-1 bg-white dark:bg-patina-900 border border-gold/30 rounded font-mono text-xs text-gold mb-3 shadow-sm">
@@ -49,10 +49,13 @@ $show_sort      = !isset($attributes['showSort']) || $attributes['showSort'] !==
     <?php if ($show_search): ?>
     <!-- Live Search Box -->
     <div class="relative min-w-[240px]">
-      <i data-lucide="search" class="w-4 h-4 text-gold absolute left-3 top-1/2 -translate-y-1/2"></i>
+      <i data-lucide="search" class="w-4 h-4 text-gold absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
       <input type="text" id="catalogSearchInput" oninput="typeof filterCatalog === 'function' && filterCatalog()"
+        onkeydown="if(event.key==='Escape'){this.value='';typeof filterCatalog === 'function' && filterCatalog();}"
         placeholder="Search by deity or SKU..."
-        class="w-full pl-9 pr-4 py-2.5 bg-white dark:bg-patina-900 border border-slate-300 dark:border-gold/30 rounded-lg text-xs font-mono text-slate-800 dark:text-parchment focus:border-gold outline-none transition-colors shadow-sm" />
+        autocomplete="off"
+        spellcheck="false"
+        class="w-full pl-9 pr-4 py-2.5 bg-white dark:bg-patina-900 border border-slate-300 dark:border-gold/30 rounded-lg text-xs font-mono text-slate-800 dark:text-parchment placeholder-slate-400 dark:placeholder-slate-500 focus:border-gold outline-none transition-colors shadow-sm" />
     </div>
     <?php endif; ?>
 
@@ -60,10 +63,10 @@ $show_sort      = !isset($attributes['showSort']) || $attributes['showSort'] !==
     <!-- Sort Select -->
     <select id="catalogSortSelect" onchange="typeof filterCatalog === 'function' && filterCatalog()"
       class="px-3 py-2.5 bg-white dark:bg-patina-900 border border-slate-300 dark:border-gold/30 rounded-lg text-xs font-mono text-slate-800 dark:text-parchment focus:border-gold outline-none cursor-pointer transition-colors shadow-sm">
-      <option value="default">Sort: Default Order</option>
-      <option value="price-asc">Price: Low to High</option>
-      <option value="price-desc">Price: High to Low</option>
-      <option value="name-asc">Name: A to Z</option>
+      <option value="default" class="bg-white dark:bg-patina-900 text-slate-800 dark:text-parchment">Sort: Default Order</option>
+      <option value="price-asc" class="bg-white dark:bg-patina-900 text-slate-800 dark:text-parchment">Price: Low to High</option>
+      <option value="price-desc" class="bg-white dark:bg-patina-900 text-slate-800 dark:text-parchment">Price: High to Low</option>
+      <option value="name-asc" class="bg-white dark:bg-patina-900 text-slate-800 dark:text-parchment">Name: A to Z</option>
     </select>
     <?php endif; ?>
   </div>

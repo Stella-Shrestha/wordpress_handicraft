@@ -26,26 +26,51 @@
 
   /**
    * Generic Reusable Accordion Card Component for Gutenberg Blocks
+   * Enforces strict accordion behavior (only one section open at a time during manual navigation)
+   * while providing global "Expand All" and "Collapse All" controls.
    */
   function AccordionCard(props) {
     const { icon, title, subtitle, rows } = props;
+    
+    // Default: first row is open (idx === 0), others closed
     const [openStates, setOpenStates] = useState(
       rows.reduce((acc, _, idx) => ({ ...acc, [idx]: idx === 0 }), {})
     );
-    const [allExpanded, setAllExpanded] = useState(false);
 
-    const toggleRow = (idx) => {
-      setOpenStates(prev => ({ ...prev, [idx]: !prev[idx] }));
+    // Strict Accordion behavior:
+    // Clicking an open row toggles it closed.
+    // Clicking a closed row opens ONLY that row and collapses all others.
+    const toggleRow = (targetIdx) => {
+      setOpenStates(prev => {
+        const isTargetOpen = !!prev[targetIdx];
+        if (isTargetOpen) {
+          // Close target row -> all closed
+          return rows.reduce((acc, _, idx) => ({ ...acc, [idx]: false }), {});
+        } else {
+          // Open target row ONLY -> all others closed
+          return rows.reduce((acc, _, idx) => ({ ...acc, [idx]: idx === targetIdx }), {});
+        }
+      });
     };
 
-    const toggleAll = (e) => {
+    // Global Expand All: opens all rows simultaneously
+    const expandAll = (e) => {
       e.preventDefault();
-      const next = !allExpanded;
-      setAllExpanded(next);
       setOpenStates(
-        rows.reduce((acc, _, idx) => ({ ...acc, [idx]: next }), {})
+        rows.reduce((acc, _, idx) => ({ ...acc, [idx]: true }), {})
       );
     };
+
+    // Global Collapse All: closes all rows simultaneously
+    const collapseAll = (e) => {
+      e.preventDefault();
+      setOpenStates(
+        rows.reduce((acc, _, idx) => ({ ...acc, [idx]: false }), {})
+      );
+    };
+
+    const allExpanded = rows.length > 0 && rows.every((_, idx) => !!openStates[idx]);
+    const allCollapsed = rows.length > 0 && rows.every((_, idx) => !openStates[idx]);
 
     return el('div', { className: 'shrestha-block-card-container' },
       // Card Header
@@ -57,11 +82,48 @@
             el('p', { className: 'shrestha-block-card-subtitle' }, subtitle)
           )
         ),
-        el('button', {
-          type: 'button',
-          className: 'shrestha-block-expand-btn',
-          onClick: toggleAll
-        }, allExpanded ? __('Collapse All', 'shrestha-core') : __('Expand All', 'shrestha-core'))
+        el('div', { className: 'shrestha-block-actions-group' },
+          el('button', {
+            type: 'button',
+            className: `shrestha-block-btn shrestha-block-expand-btn ${allExpanded ? 'is-active' : ''}`,
+            onClick: expandAll,
+            title: __('Expand all sections', 'shrestha-core')
+          },
+            el('svg', {
+              width: '12',
+              height: '12',
+              viewBox: '0 0 24 24',
+              fill: 'none',
+              stroke: 'currentColor',
+              strokeWidth: '2.5',
+              style: { marginRight: '5px', verticalAlign: 'middle' }
+            },
+              el('polyline', { points: '7 13 12 18 17 13' }),
+              el('polyline', { points: '7 6 12 11 17 6' })
+            ),
+            __('Expand All', 'shrestha-core')
+          ),
+          el('button', {
+            type: 'button',
+            className: `shrestha-block-btn shrestha-block-collapse-btn ${allCollapsed ? 'is-active' : ''}`,
+            onClick: collapseAll,
+            title: __('Collapse all sections', 'shrestha-core')
+          },
+            el('svg', {
+              width: '12',
+              height: '12',
+              viewBox: '0 0 24 24',
+              fill: 'none',
+              stroke: 'currentColor',
+              strokeWidth: '2.5',
+              style: { marginRight: '5px', verticalAlign: 'middle' }
+            },
+              el('polyline', { points: '17 11 12 6 7 11' }),
+              el('polyline', { points: '17 18 12 13 7 18' })
+            ),
+            __('Collapse All', 'shrestha-core')
+          )
+        )
       ),
 
       // Accordion Rows

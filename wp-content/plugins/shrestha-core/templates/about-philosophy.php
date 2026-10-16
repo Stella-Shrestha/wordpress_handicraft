@@ -39,7 +39,7 @@ $pillars = (!empty($attributes['pillars']) && is_array($attributes['pillars'])) 
 
 <!-- SECTION 03: OUR PHILOSOPHY BLOCK -->
 <section id="our-philosophy" aria-label="Our Philosophy"
-  class="max-w-[1584px] mx-auto px-4 sm:px-6 lg:px-8 pb-[52px] sm:pb-[110px] border-t border-slate-200/60 dark:border-gold/10">
+  class="max-w-[1584px] mx-auto px-4 sm:px-6 lg:px-8 pb-[52px] sm:pb-[110px]">
   <div class="text-center max-w-3xl mx-auto mb-12">
     <div
       class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white dark:bg-patina-900 border border-gold/30 text-gold font-mono text-[11px] font-semibold tracking-wider uppercase mb-4 shadow-sm">

@@ -1,6 +1,9 @@
 <?php
 /**
- * Template Renderer: About Artisans Block (Section 03: The Hands Behind the Art)
+ * Template Renderer: About Artisans Block (Section 02: The Hands Behind the Art)
+ *
+ * Converted from 12-column grid to 2-div flexbox layout with justify-between,
+ * matching the architecture of the homepage "FROM WAX TO PRESENCE." and "ABOUT ATELIER" sections.
  *
  * @package ShresthaCore
  */
@@ -11,7 +14,7 @@ if (!defined('ABSPATH')) {
 
 $attributes = isset($attributes) ? $attributes : array();
 
-$kicker          = isset($attributes['kicker']) && !empty($attributes['kicker']) ? $attributes['kicker'] : '03 - OUR ARTISANS';
+$kicker          = isset($attributes['kicker']) && !empty($attributes['kicker']) ? $attributes['kicker'] : '02 — OUR ARTISANS';
 $title_line1     = isset($attributes['titleLine1']) && !empty($attributes['titleLine1']) ? $attributes['titleLine1'] : 'The Hands Behind the';
 $title_line2     = isset($attributes['titleLine2']) && !empty($attributes['titleLine2']) ? $attributes['titleLine2'] : 'Art.';
 $description1    = isset($attributes['description1']) && !empty($attributes['description1']) ? $attributes['description1'] : 'A sculpture carries the character of the hands that create it. Our artisans work patiently through every stage of the process, from the first wax model to the final surface finish.';
@@ -32,35 +35,31 @@ if (!$image_url) {
 }
 ?>
 
-<!-- SECTION 03: OUR ARTISANS BLOCK -->
-<section
-  class="max-w-[1584px] mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-24 border-t border-slate-200/60 dark:border-gold/10">
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+<!-- SECTION 02: OUR ARTISANS BLOCK -->
+<section id="our-artisans" aria-label="Our Artisans"
+  class="w-full max-w-[1584px] mx-auto px-4 sm:px-6 lg:px-8 pb-[52px] sm:pb-[110px] border-t border-slate-200/60 dark:border-gold/10">
 
-    <!-- Left Image Column with Overlay -->
-    <div class="lg:col-span-6 relative">
+  <!-- 2 DIVS WITH JUSTIFY-BETWEEN (REPLACING 12-GRID, MATCHING "FROM WAX TO PRESENCE") -->
+  <div class="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-14 xl:gap-16 w-full">
+
+    <!-- Left Column: Visual Card -->
+    <div class="w-full lg:w-[46%] xl:w-[45%] relative">
       <div
-        class="relative w-full h-[400px] sm:h-[480px] rounded-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-gold/20 bg-slate-900">
+        class="w-full h-[380px] sm:h-[460px] rounded-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-gold/20 bg-black relative group">
         <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($title_line1 . ' ' . $title_line2); ?>"
-          class="w-full h-full object-cover filter brightness-95" />
+          class="w-full h-full object-contain filter brightness-95 group-hover:scale-105 transition-transform duration-700 ease-out" />
       </div>
 
-      <!-- Floating Dark Overlay Card -->
-      <div
-        class="absolute bottom-6 right-6 left-6 sm:left-auto sm:max-w-xs bg-[#0E131B]/95 border border-gold/30 backdrop-blur-md p-5 rounded-xl text-white shadow-2xl">
-        <span class="font-mono text-[10px] text-gold tracking-widest uppercase font-semibold"><?php echo esc_html($overlay_kicker); ?></span>
-        <h4 class="font-display font-bold text-base text-parchment mt-0.5"><?php echo esc_html($overlay_title); ?></h4>
-        <p class="text-slate-300 text-xs mt-1 font-sans leading-relaxed">
-          <?php echo esc_html($overlay_desc); ?>
-        </p>
-      </div>
     </div>
 
-    <!-- Right Content Column -->
-    <div class="lg:col-span-6 flex flex-col gap-6">
-      <span class="font-mono text-xs text-gold font-semibold tracking-widest uppercase"><?php echo esc_html($kicker); ?></span>
+    <!-- Right Column: Content Column -->
+    <div class="w-full lg:w-[50%] xl:w-[51%] flex flex-col gap-6">
+      <div class="flex items-center gap-2.5 font-mono text-xs text-gold tracking-[0.25em] uppercase font-semibold">
+        <i data-lucide="users" class="w-4 h-4 text-gold"></i>
+        <span><?php echo esc_html($kicker); ?></span>
+      </div>
       <h2
-        class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-parchment leading-tight">
+        class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-parchment leading-tight tracking-tight">
         <?php echo esc_html($title_line1); ?> <span
           class="bg-gradient-to-r from-gold-bright via-gold to-copper bg-clip-text text-transparent"><?php echo esc_html($title_line2); ?></span>
       </h2>

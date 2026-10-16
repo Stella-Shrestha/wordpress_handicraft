@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-$kicker = isset($attributes['kicker']) ? $attributes['kicker'] : '05 - OUR PHILOSOPHY';
+$kicker = isset($attributes['kicker']) && !empty($attributes['kicker']) ? $attributes['kicker'] : (isset($attributes['sectionLabel']) && $attributes['sectionLabel'] !== 'OUR SACRED PHILOSOPHY' && !empty($attributes['sectionLabel']) ? $attributes['sectionLabel'] : '03 — OUR PHILOSOPHY');
 $title = isset($attributes['title']) ? $attributes['title'] : 'What We Believe.';
 
 $default_pillars = array(
@@ -37,11 +37,15 @@ $default_pillars = array(
 $pillars = (!empty($attributes['pillars']) && is_array($attributes['pillars'])) ? $attributes['pillars'] : $default_pillars;
 ?>
 
-<!-- SECTION 05: OUR PHILOSOPHY BLOCK -->
-<section
-  class="max-w-[1584px] mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-24 border-t border-slate-200/60 dark:border-gold/10">
+<!-- SECTION 03: OUR PHILOSOPHY BLOCK -->
+<section id="our-philosophy" aria-label="Our Philosophy"
+  class="max-w-[1584px] mx-auto px-4 sm:px-6 lg:px-8 pb-[52px] sm:pb-[110px] border-t border-slate-200/60 dark:border-gold/10">
   <div class="text-center max-w-3xl mx-auto mb-12">
-    <span class="font-mono text-xs text-gold font-semibold tracking-widest uppercase block mb-2"><?php echo esc_html($kicker); ?></span>
+    <div
+      class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white dark:bg-patina-900 border border-gold/30 text-gold font-mono text-[11px] font-semibold tracking-wider uppercase mb-4 shadow-sm">
+      <i data-lucide="compass" class="w-3.5 h-3.5"></i>
+      <span><?php echo esc_html($kicker); ?></span>
+    </div>
     <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-parchment">
       What We <span
         class="bg-gradient-to-r from-gold-bright via-gold to-copper bg-clip-text text-transparent">Believe.</span>

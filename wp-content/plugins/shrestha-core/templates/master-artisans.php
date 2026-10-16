@@ -9,6 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+$kicker   = isset($attributes['kicker']) && !empty($attributes['kicker']) ? $attributes['kicker'] : '02 — CRAFTED WITH HERITAGE';
 $title    = isset($attributes['title']) ? $attributes['title'] : 'Crafted with Heritage, Made to Last';
 $subtitle = isset($attributes['subtitle']) ? $attributes['subtitle'] : 'What makes our sacred sculptures different is the craftsmanship, patience and Nepalese heritage behind every piece we create.';
 
@@ -45,11 +46,21 @@ $default_cards = array(
     ),
 );
 $cards = (!empty($attributes['cards']) && is_array($attributes['cards'])) ? $attributes['cards'] : $default_cards;
+// Title gradient formatting matching other sections
+$title_clean = esc_html($title);
+if (strpos($title, 'Made to Last') !== false) {
+    $title_display = str_replace('Made to Last', '<span class="bg-gradient-to-r from-gold-bright via-gold to-copper bg-clip-text text-transparent">Made to Last</span>', $title_clean);
+} elseif (strpos($title, ',') !== false) {
+    $parts = explode(',', $title, 2);
+    $title_display = esc_html(trim($parts[0])) . ', <span class="bg-gradient-to-r from-gold-bright via-gold to-copper bg-clip-text text-transparent">' . esc_html(trim($parts[1])) . '</span>';
+} else {
+    $title_display = $title_clean;
+}
 ?>
 
 <!-- CRAFTED WITH HERITAGE, MADE TO LAST SECTION -->
-<section id="heritage-craft"
-  class="sm:pb-12 lg:pb-24 relative overflow-hidden bg-patina-50 dark:bg-[#12100C] transition-colors duration-300">
+<section id="heritage-craft" aria-label="Crafted with Heritage, Made to Last"
+  class="pb-14 sm:pb-[52px] lg:pb-[110px] relative overflow-hidden bg-patina-50 dark:bg-[#0B0C0E] bg-grid-pattern transition-colors duration-300">
 
   <div
     class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-gold/10 dark:bg-gold/5 blur-[140px] rounded-full pointer-events-none">
@@ -57,9 +68,14 @@ $cards = (!empty($attributes['cards']) && is_array($attributes['cards'])) ? $att
 
   <div class="max-w-[1584px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     <div class="text-center max-w-3xl mx-auto mb-6 sm:mb-14">
+      <div
+        class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white dark:bg-patina-900 border border-gold/30 text-gold font-mono text-[11px] font-semibold tracking-wider uppercase mb-4 shadow-sm">
+        <i data-lucide="hammer" class="w-3.5 h-3.5"></i>
+        <span><?php echo esc_html($kicker); ?></span>
+      </div>
       <h2
         class="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-slate-900 dark:text-parchment tracking-tight leading-tight mb-4">
-        <?php echo esc_html($title); ?>
+        <?php echo $title_display; ?>
       </h2>
       <div class="text-slate-600 dark:text-slate-400 text-sm sm:text-base font-sans leading-relaxed">
         <?php echo wp_kses_post(wpautop($subtitle)); ?>

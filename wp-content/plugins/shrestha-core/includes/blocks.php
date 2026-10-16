@@ -150,6 +150,7 @@ function shrestha_core_register_blocks() {
         'editor_style'    => 'shrestha-core-editor-css',
         'render_callback' => 'shrestha_core_render_master_artisans',
         'attributes'      => array(
+            'kicker'      => array('type' => 'string', 'default' => '02 — CRAFTED WITH HERITAGE'),
             'title'       => array('type' => 'string', 'default' => 'Crafted with Heritage, Made to Last'),
             'subtitle'    => array('type' => 'string', 'default' => 'What makes our sacred sculptures different is the craftsmanship, patience and Nepalese heritage behind every piece we create.'),
             'cards'       => array(
@@ -310,7 +311,8 @@ function shrestha_core_register_blocks() {
         'render_callback' => 'shrestha_core_render_about_story',
         'attributes'      => array(
             'sectionNumber'    => array('type' => 'string', 'default' => '01'),
-            'sectionLabel'     => array('type' => 'string', 'default' => 'OUR FOUNDING STORY'),
+            'sectionLabel'     => array('type' => 'string', 'default' => '01 — OUR STORY'),
+            'kicker'           => array('type' => 'string', 'default' => '01 — OUR STORY'),
             'title'            => array('type' => 'string', 'default' => 'Born from Devotion,'),
             'titleHighlight'   => array('type' => 'string', 'default' => 'Carried through Fire and Metal.'),
             'introText'        => array('type' => 'string', 'default' => "In 1982, amidst the ancient courtyards of Patan — Nepal's historic epicentre of sacred metallurgy — Master Sculptor Rajendra Shrestha founded our family atelier with a single, uncompromising vision: to preserve the authentic Newar lost-wax casting traditions passed down across generations."),
@@ -345,13 +347,13 @@ function shrestha_core_register_blocks() {
         ),
     ));
 
-    // 9b. About Artisans Block (Section 03: The Hands Behind the Art)
+    // 9b. About Artisans Block (Section 02: The Hands Behind the Art)
     register_block_type('shrestha/about-artisans', array(
         'editor_script'   => 'shrestha-core-editor-js',
         'editor_style'    => 'shrestha-core-editor-css',
         'render_callback' => 'shrestha_core_render_about_artisans',
         'attributes'      => array(
-            'kicker'        => array('type' => 'string', 'default' => '03 - OUR ARTISANS'),
+            'kicker'        => array('type' => 'string', 'default' => '02 — OUR ARTISANS'),
             'titleLine1'    => array('type' => 'string', 'default' => 'The Hands Behind the'),
             'titleLine2'    => array('type' => 'string', 'default' => 'Art.'),
             'description1'  => array('type' => 'string', 'default' => 'A sculpture carries the character of the hands that create it. Our artisans work patiently through every stage of the process, from the first wax model to the final surface finish.'),
@@ -388,8 +390,9 @@ function shrestha_core_register_blocks() {
         'editor_style'    => 'shrestha-core-editor-css',
         'render_callback' => 'shrestha_core_render_about_philosophy',
         'attributes'      => array(
-            'sectionNumber'    => array('type' => 'string', 'default' => '04'),
-            'sectionLabel'     => array('type' => 'string', 'default' => 'OUR SACRED PHILOSOPHY'),
+            'sectionNumber'    => array('type' => 'string', 'default' => '03'),
+            'sectionLabel'     => array('type' => 'string', 'default' => '03 — OUR PHILOSOPHY'),
+            'kicker'           => array('type' => 'string', 'default' => '03 — OUR PHILOSOPHY'),
             'title'            => array('type' => 'string', 'default' => 'Craft as Meditation,'),
             'titleHighlight'   => array('type' => 'string', 'default' => 'Form as Spiritual Truth.'),
             'description'      => array('type' => 'string', 'default' => 'In the Himalayan metallurgical tradition, casting a sacred deity is considered an act of spiritual merit (punya) and deep contemplative devotion (sadhana). Our work is guided by five foundational principles.'),
@@ -403,8 +406,9 @@ function shrestha_core_register_blocks() {
         'editor_style'    => 'shrestha-core-editor-css',
         'render_callback' => 'shrestha_core_render_about_atelier',
         'attributes'      => array(
-            'sectionNumber'    => array('type' => 'string', 'default' => '06'),
-            'sectionLabel'     => array('type' => 'string', 'default' => 'OUR WORKSHOP & COMMUNITY'),
+            'sectionNumber'    => array('type' => 'string', 'default' => '04'),
+            'sectionLabel'     => array('type' => 'string', 'default' => '04 — OUR ATELIER'),
+            'kicker'           => array('type' => 'string', 'default' => '04 — OUR ATELIER'),
             'title'            => array('type' => 'string', 'default' => 'The Heart of Our Craft:'),
             'titleHighlight'   => array('type' => 'string', 'default' => 'The Patan Atelier.'),
             'description'      => array('type' => 'string', 'default' => 'Located in the historic artisanal quarters of Patan, our multi-level atelier is where ancient fire meets dedicated hands. We are more than a workshop — we are an artisanal family and a living craft school.'),
@@ -418,8 +422,9 @@ function shrestha_core_register_blocks() {
         'editor_style'    => 'shrestha-core-editor-css',
         'render_callback' => 'shrestha_core_render_why_choose_us',
         'attributes'      => array(
-            'sectionNumber'    => array('type' => 'string', 'default' => '07'),
-            'sectionLabel'     => array('type' => 'string', 'default' => 'WHY CHOOSE SHRESTHA HANDICRAFT'),
+            'sectionNumber'    => array('type' => 'string', 'default' => '05'),
+            'sectionLabel'     => array('type' => 'string', 'default' => '05 — WHY CHOOSE SHRESTHA HANDICRAFT'),
+            'kicker'           => array('type' => 'string', 'default' => '05 — WHY CHOOSE SHRESTHA HANDICRAFT'),
             'title'            => array('type' => 'string', 'default' => 'Sacred Heritage,'),
             'titleHighlight'   => array('type' => 'string', 'default' => 'Uncompromising Standards.'),
             'description'      => array('type' => 'string', 'default' => 'From master Newar lost-wax casting and strict iconometric proportions to museum-grade curation and worldwide insured delivery, discover why temples, monasteries, and discerning collectors entrust their sacred acquisitions to our Patan atelier.'),

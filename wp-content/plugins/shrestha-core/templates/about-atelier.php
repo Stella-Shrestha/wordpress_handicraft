@@ -2,6 +2,9 @@
 /**
  * Template Renderer: About Atelier Showroom & Foundry Block
  *
+ * Converted from 12-column grid to 2-div flexbox layout with justify-between,
+ * matching the architecture of the homepage "FROM WAX TO PRESENCE." section.
+ *
  * @package ShresthaCore
  */
 
@@ -9,7 +12,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-$kicker = isset($attributes['kicker']) ? $attributes['kicker'] : '06 - OUR ATELIER';
+$kicker = isset($attributes['kicker']) && !empty($attributes['kicker']) ? $attributes['kicker'] : (isset($attributes['sectionLabel']) && $attributes['sectionLabel'] !== 'OUR WORKSHOP & COMMUNITY' && !empty($attributes['sectionLabel']) ? $attributes['sectionLabel'] : '04 — OUR ATELIER');
 $title_line1 = isset($attributes['titleLine1']) ? $attributes['titleLine1'] : 'Where the Work';
 $title_line2 = isset($attributes['titleLine2']) ? $attributes['titleLine2'] : 'Begins.';
 $description = isset($attributes['description']) ? $attributes['description'] : 'Our atelier is the heart of Shrestha Handicraft. It is where designs become wax models, wax models become molten alloy forms, and raw surfaces gradually become consecrated sacred sculptures.';
@@ -26,25 +29,30 @@ if (!$image_url) {
 }
 ?>
 
-<!-- SECTION 06: OUR ATELIER BLOCK -->
-<section id="our-atelier"
-  class="max-w-[1584px] mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-24 border-t border-slate-200/60 dark:border-gold/10">
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+<!-- SECTION 04: OUR ATELIER BLOCK -->
+<section id="our-atelier" aria-label="Our Atelier"
+  class="w-full max-w-[1584px] mx-auto px-4 sm:px-6 lg:px-8 pb-[52px] sm:pb-[110px] border-t border-slate-200/60 dark:border-gold/10">
 
-    <!-- Left Column Visual -->
-    <div class="lg:col-span-6">
+  <!-- 2 DIVS WITH JUSTIFY-BETWEEN (REPLACING 12-GRID, MATCHING "FROM WAX TO PRESENCE") -->
+  <div class="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-14 xl:gap-16 w-full">
+
+    <!-- Left Column: Visual Card -->
+    <div class="w-full lg:w-[46%] xl:w-[45%]">
       <div
-        class="w-full h-[380px] sm:h-[450px] rounded-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-gold/20 bg-slate-900 relative">
+        class="w-full h-[380px] sm:h-[460px] rounded-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-gold/20 bg-black relative flex items-center justify-center group">
         <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($title_line1 . ' ' . $title_line2); ?>"
-          class="w-full h-full object-cover filter brightness-95" />
+          class="max-h-full max-w-full object-contain filter brightness-95 group-hover:scale-105 transition-transform duration-700 ease-out" />
       </div>
     </div>
 
-    <!-- Right Content Column -->
-    <div class="lg:col-span-6 flex flex-col gap-6">
-      <span class="font-mono text-xs text-gold font-semibold tracking-widest uppercase"><?php echo esc_html($kicker); ?></span>
+    <!-- Right Column: Content Column -->
+    <div class="w-full lg:w-[50%] xl:w-[51%] flex flex-col gap-6">
+      <div class="flex items-center gap-2.5 font-mono text-xs text-gold tracking-[0.25em] uppercase font-semibold">
+        <i data-lucide="map-pin" class="w-4 h-4 text-gold"></i>
+        <span><?php echo esc_html($kicker); ?></span>
+      </div>
       <h2
-        class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-parchment leading-tight">
+        class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-parchment leading-tight tracking-tight">
         <?php echo esc_html($title_line1); ?> <span
           class="bg-gradient-to-r from-gold-bright via-gold to-copper bg-clip-text text-transparent"><?php echo esc_html($title_line2); ?></span>
       </h2>

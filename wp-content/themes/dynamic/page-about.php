@@ -22,9 +22,7 @@ get_header();
             } else {
                 echo do_blocks('<!-- wp:shrestha/about-hero /-->');
                 echo do_blocks('<!-- wp:shrestha/about-story /-->');
-                echo do_blocks('<!-- wp:shrestha/about-heritage /-->');
                 echo do_blocks('<!-- wp:shrestha/about-artisans /-->');
-                echo do_blocks('<!-- wp:shrestha/about-materials /-->');
                 echo do_blocks('<!-- wp:shrestha/about-philosophy /-->');
                 echo do_blocks('<!-- wp:shrestha/about-atelier /-->');
                 echo do_blocks('<!-- wp:shrestha/why-choose-us /-->');
@@ -34,9 +32,7 @@ get_header();
     else:
         echo do_blocks('<!-- wp:shrestha/about-hero /-->');
         echo do_blocks('<!-- wp:shrestha/about-story /-->');
-        echo do_blocks('<!-- wp:shrestha/about-heritage /-->');
         echo do_blocks('<!-- wp:shrestha/about-artisans /-->');
-        echo do_blocks('<!-- wp:shrestha/about-materials /-->');
         echo do_blocks('<!-- wp:shrestha/about-philosophy /-->');
         echo do_blocks('<!-- wp:shrestha/about-atelier /-->');
         echo do_blocks('<!-- wp:shrestha/why-choose-us /-->');

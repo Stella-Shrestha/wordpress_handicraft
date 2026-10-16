@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-$kicker = isset($attributes['kicker']) ? $attributes['kicker'] : '07 — WHY CHOOSE SHRESTHA HANDICRAFT';
+$kicker = isset($attributes['kicker']) && !empty($attributes['kicker']) ? $attributes['kicker'] : (isset($attributes['sectionLabel']) && $attributes['sectionLabel'] !== 'WHY CHOOSE SHRESTHA HANDICRAFT' && !empty($attributes['sectionLabel']) ? $attributes['sectionLabel'] : '05 — WHY CHOOSE SHRESTHA HANDICRAFT');
 $title_line1 = isset($attributes['titleLine1']) ? $attributes['titleLine1'] : 'Sacred Heritage,';
 $title_line2 = isset($attributes['titleLine2']) ? $attributes['titleLine2'] : 'Uncompromising Standards.';
 $subtitle = isset($attributes['subtitle']) ? $attributes['subtitle'] : 'From master Newar lost-wax casting and strict iconometric proportions to museum-grade curation and worldwide insured delivery, discover why temples, monasteries, and discerning collectors entrust their sacred acquisitions to our Patan atelier.';
@@ -64,8 +64,8 @@ $default_features = array(
 $features = (!empty($attributes['features']) && is_array($attributes['features'])) ? $attributes['features'] : $default_features;
 ?>
 
-<!-- SECTION 07: WHY CHOOSE US BLOCK -->
-<section id="why-choose-us"
+<!-- SECTION 05: WHY CHOOSE US BLOCK -->
+<section id="why-choose-us" aria-label="Why Choose Shrestha Handicraft"
   class="max-w-[1584px] mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-24 border-t border-slate-200/60 dark:border-gold/10 relative overflow-hidden">
   
   <div

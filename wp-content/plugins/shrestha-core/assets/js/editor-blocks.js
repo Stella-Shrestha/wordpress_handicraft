@@ -1452,6 +1452,7 @@
     icon: 'admin-users',
     category: 'shrestha-blocks',
     attributes: {
+      kicker: { type: 'string', default: '02 — CRAFTED WITH HERITAGE' },
       title: { type: 'string', default: 'Crafted with Heritage, Made to Last' },
       subtitle: { type: 'string', default: 'What makes our sacred sculptures different is the craftsmanship, patience and Nepalese heritage behind every piece we create.' },
       cards: { type: 'array', default: defaultMasterArtisanCards }
@@ -2286,7 +2287,7 @@
   });
 
   /* =========================================================================
-     9b. ABOUT ARTISANS BLOCK (SECTION 03: THE HANDS BEHIND THE ART)
+     9b. ABOUT ARTISANS BLOCK (SECTION 02: THE HANDS BEHIND THE ART)
      ========================================================================= */
   registerBlockType('shrestha/about-artisans', {
     title: __('About Master Artisans (Hands Behind the Art)', 'shrestha-core'),
@@ -2294,7 +2295,7 @@
     icon: 'groups',
     category: 'shrestha-blocks',
     attributes: {
-      kicker: { type: 'string', default: '03 - OUR ARTISANS' },
+      kicker: { type: 'string', default: '02 — OUR ARTISANS' },
       titleLine1: { type: 'string', default: 'The Hands Behind the' },
       titleLine2: { type: 'string', default: 'Art.' },
       description1: { type: 'string', default: 'A sculpture carries the character of the hands that create it. Our artisans work patiently through every stage of the process, from the first wax model to the final surface finish.' },
@@ -2473,7 +2474,7 @@
     icon: 'heart',
     category: 'shrestha-blocks',
     attributes: {
-      sectionNumber: { type: 'string', default: '04' },
+      sectionNumber: { type: 'string', default: '03' },
       sectionLabel: { type: 'string', default: 'OUR SACRED PHILOSOPHY' },
       title: { type: 'string', default: 'Craft as Meditation,' },
       titleHighlight: { type: 'string', default: 'Form as Spiritual Truth.' },
@@ -2535,7 +2536,7 @@
     icon: 'groups',
     category: 'shrestha-blocks',
     attributes: {
-      sectionNumber: { type: 'string', default: '06' },
+      sectionNumber: { type: 'string', default: '04' },
       sectionLabel: { type: 'string', default: 'OUR WORKSHOP & COMMUNITY' },
       title: { type: 'string', default: 'The Heart of Our Craft:' },
       titleHighlight: { type: 'string', default: 'The Patan Atelier.' },
@@ -2597,7 +2598,7 @@
     icon: 'star-filled',
     category: 'shrestha-blocks',
     attributes: {
-      sectionNumber: { type: 'string', default: '07' },
+      sectionNumber: { type: 'string', default: '05' },
       sectionLabel: { type: 'string', default: 'WHY CHOOSE SHRESTHA HANDICRAFT' },
       title: { type: 'string', default: 'Sacred Heritage,' },
       titleHighlight: { type: 'string', default: 'Uncompromising Standards.' },

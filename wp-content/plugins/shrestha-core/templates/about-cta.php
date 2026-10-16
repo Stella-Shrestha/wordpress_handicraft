@@ -18,7 +18,8 @@ $secondary_btn_text = isset($attributes['secondaryBtnText']) && !empty($attribut
 $secondary_btn_url  = isset($attributes['secondaryBtnUrl']) && !empty($attributes['secondaryBtnUrl']) ? $attributes['secondaryBtnUrl'] : home_url('/contact/');
 ?>
 
-<section class="max-w-[1584px] mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-20">
+<!-- BOTTOM CALL TO ACTION BANNER -->
+<section id="about-cta" aria-label="Continue Your Journey" class="max-w-[1584px] mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-20">
   <div
     class="bg-[#F6F0E4] dark:bg-patina-900 border border-gold/30 rounded-3xl p-8 sm:p-14 relative overflow-hidden shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-8">
 
@@ -40,7 +41,10 @@ $secondary_btn_url  = isset($attributes['secondaryBtnUrl']) && !empty($attribute
     </div>
 
     <div class="flex flex-col gap-3 max-w-2xl z-10">
-      <span class="font-mono text-xs text-gold font-semibold tracking-widest uppercase"><?php echo esc_html($subtitle); ?></span>
+      <div class="flex items-center gap-2 font-mono text-xs text-gold tracking-[0.25em] uppercase font-semibold">
+        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-gold"></i>
+        <span><?php echo esc_html($subtitle); ?></span>
+      </div>
       <h2 class="font-display text-3xl sm:text-4xl font-bold text-slate-900 dark:text-parchment leading-tight">
         <?php echo esc_html($title); ?><span
           class="bg-gradient-to-r from-gold-bright via-gold to-copper bg-clip-text text-transparent"><?php echo esc_html($title_highlight); ?></span>
